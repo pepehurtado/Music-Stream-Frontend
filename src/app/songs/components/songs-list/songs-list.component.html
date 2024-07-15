@@ -1,20 +1,20 @@
 <div class="card">
   <div class="card-body">
-    <h4 class="card-title">Project Listing</h4>
-    <h5 class="card-subtitle text-muted">Overview of the projects</h5>
+    <h4 class="card-title">Song Listing</h4>
+    <h5 class="card-subtitle text-muted">Overview of all songs</h5>
 
     <div class="row mb-3">
       <div class="col">
-        <input type="text" class="form-control" placeholder="Filter by name" [(ngModel)]="filters.title">
+        <input type="text" class="form-control" placeholder="Filter by title" [(ngModel)]="filters.title">
       </div>
       <div class="col">
-        <input type="text" class="form-control" placeholder="Filter by age" [(ngModel)]="filters.time">
+        <input type="text" class="form-control" placeholder="Filter by time" [(ngModel)]="filters.time">
       </div>
       <div class="col">
-        <input type="text" class="form-control" placeholder="Filter by country" [(ngModel)]="filters.url">
+        <input type="text" class="form-control" placeholder="Filter by url" [(ngModel)]="filters.url">
       </div>
       <div class="col">
-        <input type="text" class="form-control" placeholder="Filter by date of birth" [(ngModel)]="filters.album_id">
+        <input type="text" class="form-control" placeholder="Filter by album id" [(ngModel)]="filters.album_id">
       </div>
       <div class="col">
         <button class="btn btn-primary" (click)="applyFilters()">Apply</button>
