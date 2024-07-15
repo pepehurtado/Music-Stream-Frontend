@@ -1,0 +1,103 @@
+<div class="card">
+  <div class="card-body">
+    <h4 class="card-title">Album Listing</h4>
+    <h5 class="card-subtitle text-muted">Overview of all albums</h5>
+
+    <div class="row mb-3">
+      <div class="col">
+        <input type="text" class="form-control" placeholder="Filter by title" [(ngModel)]="filters.title">
+      </div>
+      <div class="col">
+        <input type="text" class="form-control" placeholder="Filter by description" [(ngModel)]="filters.description">
+      </div>
+      <div class="col">
+        <input type="text" class="form-control" placeholder="Filter by year" [(ngModel)]="filters.year">
+      </div>
+      <div class="col">
+        <input type="text" class="form-control" placeholder="Filter by url" [(ngModel)]="filters.url">
+      </div>
+      <div class="col">
+        <input type="text" class="form-control" placeholder="Filter by artist id" [(ngModel)]="filters.artist_id">
+      </div>
+      <div class="col">
+        <button class="btn btn-primary" (click)="applyFilters()">Apply</button>
+        <button class="btn btn-secondary" (click)="clearFilters()">Clear</button>
+      </div>
+    </div>
+
+    <div class="table-responsive">
+      <table class="table align-middle text-nowrap">
+        <thead>
+          <tr>
+            <th class="text-dark font-medium fs-4" (click)="setSortColumn('title')">
+              Title
+              <span *ngIf="sortColumn === 'title'">
+                <i [ngClass]="sortDirection === 'asc' ? 'fa fa-arrow-up' : 'fa fa-arrow-down'"></i>
+              </span>
+            </th>
+            <th class="text-dark font-medium fs-4" (click)="setSortColumn('description')">
+              Description
+              <span *ngIf="sortColumn === 'description'">
+                <i [ngClass]="sortDirection === 'asc' ? 'fa fa-arrow-up' : 'fa fa-arrow-down'"></i>
+              </span>
+            </th>
+            <th class="text-dark font-medium fs-4" (click)="setSortColumn('year')">
+              Year
+              <span *ngIf="sortColumn === 'year'">
+                <i [ngClass]="sortDirection === 'asc' ? 'fa fa-arrow-up' : 'fa fa-arrow-down'"></i>
+              </span>
+            </th>
+
+            <th class="text-dark font-medium fs-4" (click)="setSortColumn('url')">
+              URL
+              <span *ngIf="sortColumn === 'url'">
+                <i [ngClass]="sortDirection === 'asc' ? 'fa fa-arrow-up' : 'fa fa-arrow-down'"></i>
+              </span>
+            </th>
+            <th class="text-dark font-medium fs-4" (click)="setSortColumn('number_of_songs')">
+              Number of Songs
+              <span *ngIf="sortColumn === 'number_of_songs'">
+                <i [ngClass]="sortDirection === 'asc' ? 'fa fa-arrow-up' : 'fa fa-arrow-down'"></i>
+              </span>
+            </th>
+            <th class="text-dark font-medium fs-4" (click)="setSortColumn('artist_id')">
+              Artist ID
+              <span *ngIf="sortColumn === 'artist_id'">
+                <i [ngClass]="sortDirection === 'asc' ? 'fa fa-arrow-up' : 'fa fa-arrow-down'"></i>
+              </span>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let album of albumsList">
+            <td>
+              <div class="d-flex align-items-center">
+                <div class="ms-3">
+                  <h5 class="mb-0 font-medium">{{album.title}}</h5>
+                </div>
+              </div>
+            </td>
+            <td class="fs-4">{{album.description}}</td>
+            <td>
+              <h5 class="mb-0 fw-normal">{{album.year}}</h5>
+            </td>
+            <td>
+              <h5 class="mb-0 fw-normal">{{album.url}}</h5>
+            </td>
+            <td>
+              <h5 class="mb-0 fw-normal">{{album.number_of_songs}}</h5>
+            </td>
+            <td>
+              <h5 class="mb-0 fw-normal">{{album.artist_id}}</h5>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="d-flex justify-content-between">
+      <button class="btn btn-primary" (click)="previousPage()" [disabled]="currentPage === 1">Previous</button>
+      <button class="btn btn-primary" (click)="nextPage()" [disabled]="albumsList.length < 10">Next</button>
+    </div>
+  </div>
+</div>
