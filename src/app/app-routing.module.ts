@@ -29,6 +29,6 @@ export const Approutes: Routes = [
   },
   {
     path: '**',
-    redirectTo: '/starter'
+    redirectTo: '/dashboard' // Redirigir a '/dashboard' para rutas no reconocidas
   }
 ];

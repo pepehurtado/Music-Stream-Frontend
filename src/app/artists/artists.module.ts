@@ -4,14 +4,15 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { Routes, RouterModule } from "@angular/router";
 
 import { ArtistsListComponent } from "./components/artists-list/artists-list.component";
+import { ArtistsFormComponent } from './components/artists-form/artists-form.component';
 
 const routes: Routes = [
   {
+    path: "create-artist",
+    component: ArtistsFormComponent,
+  },
+  {
     path: "",
-    data: {
-      title: "Artists",
-      urls: [{ title: "Artists", url: "/artists" }, { title: "Artists" }],
-    },
     component: ArtistsListComponent,
   },
 ];
@@ -24,6 +25,8 @@ const routes: Routes = [
     RouterModule.forChild(routes),
   ],
   declarations: [
+
+    ArtistsFormComponent
   ],
 })
 export class ArtistsModule {}
