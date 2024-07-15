@@ -1,0 +1,33 @@
+<div class="card">
+  <div class="card-body">
+    <h4 class="card-title">Add New Song</h4>
+
+    <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
+      {{ errorMessage }}
+    </div>
+
+    <div *ngIf="successMessage" class="alert alert-success" role="alert">
+      {{ successMessage }}
+    </div>
+
+    <form [formGroup]="songForm" (ngSubmit)="submitForm()">
+      <div class="mb-3">
+        <label for="title" class="form-label">Title</label>
+        <input type="text" id="name" class="form-control" formControlName="title">
+      </div>
+      <div class="mb-3">
+        <label for="time" class="form-label">Time</label>
+        <input type="number" id="time" class="form-control" formControlName="time">
+      </div>
+      <div class="mb-3">
+        <label for="url" class="form-label">URL</label>
+        <input type="text" id="url" class="form-control" formControlName="url">
+      </div>
+      <div class="mb-3">
+        <label for="album_id" class="form-label">Album ID</label>
+        <input type="number" id="album_id" class="form-album_id" formControlName="album_id">
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+</div>

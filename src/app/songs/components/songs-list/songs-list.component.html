@@ -1,20 +1,20 @@
 <div class="card">
   <div class="card-body">
-    <h4 class="card-title">Artist Listing</h4>
-    <h5 class="card-subtitle text-muted">Overview of all artists</h5>
+    <h4 class="card-title">Song Listing</h4>
+    <h5 class="card-subtitle text-muted">Overview of all songs</h5>
 
     <div class="row mb-3">
       <div class="col">
-        <input type="text" class="form-control" placeholder="Filter by name" [(ngModel)]="filters.name">
+        <input type="text" class="form-control" placeholder="Filter by title" [(ngModel)]="filters.title">
       </div>
       <div class="col">
-        <input type="text" class="form-control" placeholder="Filter by age" [(ngModel)]="filters.age">
+        <input type="text" class="form-control" placeholder="Filter by time" [(ngModel)]="filters.time">
       </div>
       <div class="col">
-        <input type="text" class="form-control" placeholder="Filter by country" [(ngModel)]="filters.country">
+        <input type="text" class="form-control" placeholder="Filter by url" [(ngModel)]="filters.url">
       </div>
       <div class="col">
-        <input type="text" class="form-control" placeholder="Filter by date of birth" [(ngModel)]="filters.date_of_birth">
+        <input type="text" class="form-control" placeholder="Filter by album id" [(ngModel)]="filters.album_id">
       </div>
       <div class="col">
         <button class="btn btn-primary" (click)="applyFilters()">Apply</button>
@@ -26,47 +26,47 @@
       <table class="table align-middle text-nowrap">
         <thead>
           <tr>
-            <th class="text-dark font-medium fs-4" (click)="setSortColumn('name')">
-              Name
-              <span *ngIf="sortColumn === 'name'">
+            <th class="text-dark font-medium fs-4" (click)="setSortColumn('title')">
+              Title
+              <span *ngIf="sortColumn === 'title'">
                 <i [ngClass]="sortDirection === 'asc' ? 'fa fa-arrow-up' : 'fa fa-arrow-down'"></i>
               </span>
             </th>
-            <th class="text-dark font-medium fs-4" (click)="setSortColumn('age')">
-              Age
-              <span *ngIf="sortColumn === 'age'">
+            <th class="text-dark font-medium fs-4" (click)="setSortColumn('time')">
+              Time
+              <span *ngIf="sortColumn === 'time'">
                 <i [ngClass]="sortDirection === 'asc' ? 'fa fa-arrow-up' : 'fa fa-arrow-down'"></i>
               </span>
             </th>
-            <th class="text-dark font-medium fs-4" (click)="setSortColumn('country')">
-              Country
-              <span *ngIf="sortColumn === 'country'">
+            <th class="text-dark font-medium fs-4" (click)="setSortColumn('url')">
+              URL
+              <span *ngIf="sortColumn === 'url'">
                 <i [ngClass]="sortDirection === 'asc' ? 'fa fa-arrow-up' : 'fa fa-arrow-down'"></i>
               </span>
             </th>
-            <th class="text-dark font-medium fs-4" (click)="setSortColumn('date_of_birth')">
-              Date
-              <span *ngIf="sortColumn === 'date_of_birth'">
+            <th class="text-dark font-medium fs-4" (click)="setSortColumn('album_id')">
+              Album ID
+              <span *ngIf="sortColumn === 'album_id'">
                 <i [ngClass]="sortDirection === 'asc' ? 'fa fa-arrow-up' : 'fa fa-arrow-down'"></i>
               </span>
             </th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let artist of artistList">
+          <tr *ngFor="let song of songsList">
             <td>
               <div class="d-flex align-items-center">
                 <div class="ms-3">
-                  <h5 class="mb-0 font-medium">{{artist.name}}</h5>
+                  <h5 class="mb-0 font-medium">{{song.title}}</h5>
                 </div>
               </div>
             </td>
-            <td class="fs-4">{{artist.age}}</td>
+            <td class="fs-4">{{song.time}}</td>
             <td>
-              <h5 class="mb-0 fw-normal">{{artist.country}}</h5>
+              <h5 class="mb-0 fw-normal">{{song.url}}</h5>
             </td>
             <td>
-              <h5 class="mb-0 fw-normal">{{artist.date_of_birth}}</h5>
+              <h5 class="mb-0 fw-normal">{{song.album_id}}</h5>
             </td>
           </tr>
         </tbody>
@@ -75,7 +75,7 @@
 
     <div class="d-flex justify-content-between">
       <button class="btn btn-primary" (click)="previousPage()" [disabled]="currentPage === 1">Previous</button>
-      <button class="btn btn-primary" (click)="nextPage()" [disabled]="artistList.length < 10">Next</button>
+      <button class="btn btn-primary" (click)="nextPage()" [disabled]="songsList.length < 10">Next</button>
     </div>
   </div>
 </div>
