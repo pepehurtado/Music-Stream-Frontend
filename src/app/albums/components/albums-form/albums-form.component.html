@@ -1,0 +1,41 @@
+<div class="card">
+  <div class="card-body">
+    <h4 class="card-title">Add New Album</h4>
+
+    <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
+      {{ errorMessage }}
+    </div>
+
+    <div *ngIf="successMessage" class="alert alert-success" role="alert">
+      {{ successMessage }}
+    </div>
+
+    <form [formGroup]="albumForm" (ngSubmit)="submitForm()">
+      <div class="mb-3">
+        <label for="title" class="form-label">Title</label>
+        <input type="text" id="title" class="form-control" formControlName="title">
+      </div>
+      <div class="mb-3">
+        <label for="description" class="form-label">Description</label>
+        <input type="text" id="description" class="form-control" formControlName="description">
+      </div>
+      <div class="mb-3">
+        <label for="url" class="form-label">URL</label>
+        <input type="text" id="url" class="form-control" formControlName="url">
+      </div>
+      <div class="mb-3">
+        <label for="year" class="form-label">Year</label>
+        <input type="text" id="year" class="form-control" formControlName="year">
+      </div>
+      <div class="mb-3">
+        <label for="artist_id" class="form-label">Artist Id</label>
+        <input type="text" id="artist_id" class="form-control" formControlName="artist_id">
+      </div>
+      <div class="mb-3">
+        <label for="number_of_songs" class="form-label">Songs Number</label>
+        <input type="number" id="number_of_songs" class="form-control" formControlName="number_of_songs">
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+</div>

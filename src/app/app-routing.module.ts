@@ -22,6 +22,10 @@ export const Approutes: Routes = [
         loadChildren: () => import('./songs/songs.module').then(m => m.SongsModule)
       },
       {
+        path: 'albums',
+        loadChildren: () => import('./albums/albums.module').then(m => m.AlbumsModule)
+      },
+      {
         path: 'about',
         loadChildren: () => import('./about/about.module').then(m => m.AboutModule)
       },
