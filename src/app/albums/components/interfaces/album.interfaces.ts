@@ -1,9 +1,9 @@
 export interface Album {
-  id:              number;
-  description:     null | string;
-  number_of_songs: number | null;
-  title:           string;
-  url:             null | string;
-  year:            string;
-  artist_id:       number;
+  id:            number;
+  title:         string;
+  year:          string;
+  artist:        number;
+  description:   null | string;
+  numberOfSongs: number | null;
+  url:           null | string;
 }

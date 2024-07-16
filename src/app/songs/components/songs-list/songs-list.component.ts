@@ -1,7 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { Song } from '../interfaces/song.interfaces';
 import { AlbumService } from './../../../albums/services/albums.service';
+import { Component, Input, OnInit } from '@angular/core';
 import { SongService } from '../../services/songs.service';
+import { Song } from '../interfaces/song.interfaces';
 
 @Component({
   selector: 'app-songs-list',
@@ -10,9 +10,8 @@ import { SongService } from '../../services/songs.service';
 })
 export class SongsListComponent implements OnInit {
   @Input()
-  public songsList: Song[] = []; // Lista de canciones proporcionada desde el componente padre
+  public songsList: Song[] = [];
 
-  public allSongs: Song[] = []; // Variable para almacenar todas las canciones cargadas desde la API
   public sortColumn: keyof Song = 'title';
   public sortDirection: 'asc' | 'desc' = 'asc';
   public currentPage: number = 1;
@@ -24,32 +23,37 @@ export class SongsListComponent implements OnInit {
     album: ''
   };
 
-  constructor(private songService: SongService, private albumService: AlbumService) { }
+  constructor(private songService: SongService, private albumService : AlbumService) { }
 
   ngOnInit(): void {
-    if (this.songsList.length === 0) {
-      // Si no se proporciona ninguna lista de canciones, cargar todas las canciones desde la API
-      this.loadAllSongs();
-    } else {
-      // Si se proporciona una lista de canciones, utilizar esa lista
-      this.songsList = [...this.songsList]; // Clonar la lista para evitar mutaciones inesperadas
-      this.sortArtists(); // Ordenar después de recibir los datos
-    }
+    this.loadArtists();
   }
 
-  loadAllSongs(): void {
+  loadArtists(): void {
     const rangeStart = (this.currentPage - 1) * this.itemsPerPage;
     const rangeEnd = this.currentPage * this.itemsPerPage - 1;
 
     this.songService.getSongs().subscribe(
       (data) => {
-        this.allSongs = data;
-        this.songsList = [...this.allSongs]; // Copiar todas las canciones a la lista mostrada
+        //Para cada album quiero que busque el album por id en caso de que el album no sea null y guarde su atributo title
+        data.forEach(song => {
+          if(song.album != null){
+            this.albumService.getAlbumById(song.album).subscribe(
+              (album) => {
+                song.album_name = album.title;
+              },
+              (error) => {
+                console.error('Error fetching album:', error);
+              }
+            );
+          }
+        });
+        this.songsList = data;
         this.sortArtists(); // Ordenar después de recibir los datos
         console.log('Songs:', this.songsList);
       },
       (error) => {
-        console.error('Error fetching songs:', error);
+        console.error('Error fetching artists:', error);
       }
     );
   }
@@ -62,6 +66,7 @@ export class SongsListComponent implements OnInit {
     this.songsList.sort((a, b) => {
       const aValue = this.getProperty(a, this.sortColumn) ?? '';
       const bValue = this.getProperty(b, this.sortColumn) ?? '';
+
 
       if (aValue < bValue) {
         return this.sortDirection === 'asc' ? -1 : 1;
@@ -85,33 +90,27 @@ export class SongsListComponent implements OnInit {
 
   nextPage(): void {
     this.currentPage++;
-    if (this.songsList.length === 0) {
-      this.loadAllSongs();
-    }
+    this.loadArtists();
   }
 
   previousPage(): void {
     if (this.currentPage > 1) {
       this.currentPage--;
-      if (this.songsList.length === 0) {
-        this.loadAllSongs();
-      }
+      this.loadArtists();
     }
   }
 
   applyFilters(): void {
     this.currentPage = 1; // Reset to first page when filters are applied
-    if (this.songsList.length === 0) {
-      this.loadAllSongs();
-    }
+    this.loadArtists();
   }
 
   clearFilters(): void {
     this.filters = {
-      title: '',
-      time: '',
-      url: '',
-      album: ''
+      name: '',
+      age: '',
+      country: '',
+      dateOfBirth: ''
     };
     this.applyFilters();
   }

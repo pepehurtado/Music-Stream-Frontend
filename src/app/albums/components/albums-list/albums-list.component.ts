@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AlbumService } from '../../services/albums.service';
 import { Album } from '../interfaces/album.interfaces';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-albums-list',
@@ -23,7 +24,7 @@ export class AlbumsListComponent implements OnInit {
     artist_id: ''
   };
 
-  constructor(private albumService: AlbumService) { }
+  constructor(private albumService: AlbumService, private router : Router) { }
 
   ngOnInit(): void {
     this.loadArtists();
@@ -99,5 +100,9 @@ export class AlbumsListComponent implements OnInit {
       artist_id: ''
     };
     this.applyFilters();
+  }
+  navigateToSongs(album: Album): void {
+    console.log('Navigating to songs:', album.title);
+    this.router.navigate(['/albums/albums-list-songs'], { state: { album: album.title } });
   }
 }

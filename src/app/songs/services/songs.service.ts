@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Song } from '../components/interfaces/song.interfaces';
 
@@ -17,4 +17,12 @@ export class SongService {
   createSong(artistData: Song): Observable<any> {
     return this.http.post(this.apiUrl, artistData);
   }
+
+  getSongsByAlbum(album: string): Observable<any> {
+    // Construir los parámetros de la consulta
+    let params = new HttpParams().set('album', album);
+    // Realizar la solicitud GET con los parámetros
+    return this.http.get<any>(this.apiUrl, { params: params });
+  }
+
 }

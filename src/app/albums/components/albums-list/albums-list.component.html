@@ -54,15 +54,9 @@
                 <i [ngClass]="sortDirection === 'asc' ? 'fa fa-arrow-up' : 'fa fa-arrow-down'"></i>
               </span>
             </th>
-            <th class="text-dark font-medium fs-4" (click)="setSortColumn('number_of_songs')">
+            <th class="text-dark font-medium fs-4" (click)="setSortColumn('numberOfSongs')">
               Number of Songs
-              <span *ngIf="sortColumn === 'number_of_songs'">
-                <i [ngClass]="sortDirection === 'asc' ? 'fa fa-arrow-up' : 'fa fa-arrow-down'"></i>
-              </span>
-            </th>
-            <th class="text-dark font-medium fs-4" (click)="setSortColumn('artist_id')">
-              Artist ID
-              <span *ngIf="sortColumn === 'artist_id'">
+              <span *ngIf="sortColumn === 'numberOfSongs'">
                 <i [ngClass]="sortDirection === 'asc' ? 'fa fa-arrow-up' : 'fa fa-arrow-down'"></i>
               </span>
             </th>
@@ -85,10 +79,7 @@
               <h5 class="mb-0 fw-normal">{{album.url}}</h5>
             </td>
             <td>
-              <h5 class="mb-0 fw-normal">{{album.number_of_songs}}</h5>
-            </td>
-            <td>
-              <h5 class="mb-0 fw-normal">{{album.artist_id}}</h5>
+              <a class="btn btn-primary" (click)="navigateToSongs(album)">{{album.numberOfSongs}}</a>
             </td>
           </tr>
         </tbody>
