@@ -1,7 +1,29 @@
 export interface Artist {
-  id: string;
-  name: string;
-  age: number;
-  country: string;
-  date_of_birth: string;
+  id:             number;
+  name:           string;
+  dateOfBirth:    Date;
+  country:        string;
+  age:            number;
+  singleSongList: SingleSongList[];
+  albumList:      AlbumList[];
+}
+
+export interface AlbumList {
+  id:            number;
+  title:         string;
+  year:          string;
+  artist:        number;
+  description:   null | string;
+  numberOfSongs: number | null;
+  url:           null | string;
+}
+
+export interface SingleSongList {
+  id:        number;
+  title:     string;
+  time:      number;
+  url:       null | string;
+  artists:   number[];
+  album:     number | null;
+  genreList: number[];
 }

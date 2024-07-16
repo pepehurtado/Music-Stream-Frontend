@@ -5,11 +5,16 @@ import { Routes, RouterModule } from "@angular/router";
 
 import { ArtistsListComponent } from "./components/artists-list/artists-list.component";
 import { ArtistsFormComponent } from './components/artists-form/artists-form.component';
+import { ArtistListSongsComponent } from "./components/artists-list-songs/artists-list-songs.component";
 
 const routes: Routes = [
   {
     path: "create-artist",
     component: ArtistsFormComponent,
+  },
+  {
+    path: "artists-list-songs",
+    component: ArtistListSongsComponent,
   },
   {
     path: "",
@@ -26,7 +31,8 @@ const routes: Routes = [
   ],
   declarations: [
 
-    ArtistsFormComponent
+    ArtistsFormComponent,
+      ArtistListSongsComponent,
   ],
 })
 export class ArtistsModule {}

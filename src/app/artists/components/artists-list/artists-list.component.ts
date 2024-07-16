@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ArtistService } from '../../services/artists.service';
 import { Artist } from '../interfaces/artists.interfaces';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-artists-list',
@@ -8,8 +9,7 @@ import { Artist } from '../interfaces/artists.interfaces';
   styleUrls: ['./artists-list.component.scss']
 })
 export class ArtistsListComponent implements OnInit {
-  @Input()
-  public artistList: Artist[] = [];
+  @Input() artistList: Artist[] = []; // Esto debería recibir la lista de artistas desde otro componente
 
   public sortColumn: keyof Artist = 'name';
   public sortDirection: 'asc' | 'desc' = 'asc';
@@ -19,10 +19,10 @@ export class ArtistsListComponent implements OnInit {
     name: '',
     age: '',
     country: '',
-    date_of_birth: ''
+    dateOfBirth: ''
   };
 
-  constructor(private artistService: ArtistService) { }
+  constructor(private artistService: ArtistService, private router: Router) { }
 
   ngOnInit(): void {
     this.loadArtists();
@@ -32,9 +32,10 @@ export class ArtistsListComponent implements OnInit {
     const rangeStart = (this.currentPage - 1) * this.itemsPerPage;
     const rangeEnd = this.currentPage * this.itemsPerPage - 1;
 
-    this.artistService.getArtists(rangeStart, rangeEnd, this.filters).subscribe(
+    this.artistService.getArtists().subscribe(
       (data) => {
         this.artistList = data;
+        console.log('Artists:', this.artistList);
         this.sortArtists(); // Ordenar después de recibir los datos
       },
       (error) => {
@@ -94,8 +95,16 @@ export class ArtistsListComponent implements OnInit {
       name: '',
       age: '',
       country: '',
-      date_of_birth: ''
+      dateOfBirth: ''
     };
     this.applyFilters();
+  }
+
+  navigateToSongs(artist: Artist): void {
+    // Navegar a la ruta de canciones con el identificador de lista de canciones del artista
+    // Esto asume que artist.singleSongList contiene la lista de canciones del artista
+    // Si artist.singleSongList es un array de IDs de canciones, deberás cargar esas canciones primero
+    console.log('Navigating to songs:', artist.singleSongList);
+    this.router.navigate(['/artists/artists-list-songs'], { state: { songsList: artist.singleSongList } });
   }
 }

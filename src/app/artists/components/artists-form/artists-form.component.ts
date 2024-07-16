@@ -22,7 +22,7 @@ export class ArtistsFormComponent implements OnInit {
       name: ['', Validators.required],
       age: ['', Validators.required],
       country: ['', Validators.required],
-      date_of_birth: ['', Validators.required]
+      dateOfBirth: ['', Validators.required]
     });
   }
 

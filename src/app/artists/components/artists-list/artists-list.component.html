@@ -3,6 +3,7 @@
     <h4 class="card-title">Artist Listing</h4>
     <h5 class="card-subtitle text-muted">Overview of all artists</h5>
 
+    <!-- Filtros de búsqueda -->
     <div class="row mb-3">
       <div class="col">
         <input type="text" class="form-control" placeholder="Filter by name" [(ngModel)]="filters.name">
@@ -14,7 +15,7 @@
         <input type="text" class="form-control" placeholder="Filter by country" [(ngModel)]="filters.country">
       </div>
       <div class="col">
-        <input type="text" class="form-control" placeholder="Filter by date of birth" [(ngModel)]="filters.date_of_birth">
+        <input type="text" class="form-control" placeholder="Filter by date of birth" [(ngModel)]="filters.dateOfBirth">
       </div>
       <div class="col">
         <button class="btn btn-primary" (click)="applyFilters()">Apply</button>
@@ -22,7 +23,30 @@
       </div>
     </div>
 
-    <div class="table-responsive">
+    <!-- Indicador de carga -->
+    <div class="text-center" *ngIf="artistList.length === 0">
+      <!-- Puedes ajustar este SVG según tu diseño -->
+      <svg width="50px" height="50px" viewBox="0 0 38 38" xmlns="http://www.w3.org/2000/svg" stroke="#007bff">
+        <g fill="none" fill-rule="evenodd">
+          <g transform="translate(1 1)" stroke-width="2">
+            <circle stroke-opacity=".5" cx="18" cy="18" r="18"/>
+            <path d="M36 18c0-9.94-8.06-18-18-18">
+              <animateTransform
+                attributeName="transform"
+                type="rotate"
+                from="0 18 18"
+                to="360 18 18"
+                dur="1s"
+                repeatCount="indefinite"/>
+            </path>
+          </g>
+        </g>
+      </svg>
+      <p>Loading...</p>
+    </div>
+
+    <!-- Tabla de artistas -->
+    <div class="table-responsive" *ngIf="artistList.length > 0">
       <table class="table align-middle text-nowrap">
         <thead>
           <tr>
@@ -44,11 +68,14 @@
                 <i [ngClass]="sortDirection === 'asc' ? 'fa fa-arrow-up' : 'fa fa-arrow-down'"></i>
               </span>
             </th>
-            <th class="text-dark font-medium fs-4" (click)="setSortColumn('date_of_birth')">
+            <th class="text-dark font-medium fs-4" (click)="setSortColumn('dateOfBirth')">
               Date
-              <span *ngIf="sortColumn === 'date_of_birth'">
+              <span *ngIf="sortColumn === 'dateOfBirth'">
                 <i [ngClass]="sortDirection === 'asc' ? 'fa fa-arrow-up' : 'fa fa-arrow-down'"></i>
               </span>
+            </th>
+            <th class="text-dark font-medium fs-4" (click)="setSortColumn('dateOfBirth')">
+              Ver canciones
             </th>
           </tr>
         </thead>
@@ -66,13 +93,17 @@
               <h5 class="mb-0 fw-normal">{{artist.country}}</h5>
             </td>
             <td>
-              <h5 class="mb-0 fw-normal">{{artist.date_of_birth}}</h5>
+              <h5 class="mb-0 fw-normal">{{artist.dateOfBirth}}</h5>
+            </td>
+            <td>
+              <a class="btn btn-primary" (click)="navigateToSongs(artist)">Songs</a>
             </td>
           </tr>
         </tbody>
       </table>
     </div>
 
+    <!-- Navegación de paginación -->
     <div class="d-flex justify-content-between">
       <button class="btn btn-primary" (click)="previousPage()" [disabled]="currentPage === 1">Previous</button>
       <button class="btn btn-primary" (click)="nextPage()" [disabled]="artistList.length < 10">Next</button>

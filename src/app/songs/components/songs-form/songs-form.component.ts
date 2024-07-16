@@ -22,7 +22,7 @@ export class SongsFormComponent implements OnInit {
       title: ['', Validators.required],
       time: ['', Validators.required],
       url: ['', Validators.required],
-      album_id: ['', Validators.required]
+      album: ['', Validators.required]
     });
   }
 

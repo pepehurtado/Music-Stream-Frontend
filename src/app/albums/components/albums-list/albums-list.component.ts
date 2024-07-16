@@ -33,7 +33,7 @@ export class AlbumsListComponent implements OnInit {
     const rangeStart = (this.currentPage - 1) * this.itemsPerPage;
     const rangeEnd = this.currentPage * this.itemsPerPage - 1;
 
-    this.albumService.getArtists(rangeStart, rangeEnd, this.filters).subscribe(
+    this.albumService.getAlbums().subscribe(
       (data) => {
         this.albumsList = data;
         this.sortArtists(); // Ordenar después de recibir los datos
