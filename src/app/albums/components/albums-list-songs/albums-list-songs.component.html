@@ -24,7 +24,7 @@
     </div>
     <div class="card">
       <div class="card-body">
-        <h4 class="card-title">Songs of the Artist</h4>
+        <h4 class="card-title">Songs of the album {{album}}</h4>
         <div class="table-responsive">
           <table class="table align-middle text-nowrap">
             <thead>
@@ -32,7 +32,6 @@
                 <th>Title</th>
                 <th>Time</th>
                 <th>URL</th>
-                <th>Album</th>
               </tr>
             </thead>
             <tbody>
@@ -40,7 +39,6 @@
                 <td>{{ song.title }}</td>
                 <td>{{ song.time }}</td>
                 <td>{{ song.url }}</td>
-                <td>{{ song.album }}</td>
               </tr>
             </tbody>
           </table>

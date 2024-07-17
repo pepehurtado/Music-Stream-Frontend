@@ -100,6 +100,6 @@ export class ArtistsListComponent implements OnInit {
 
   navigateToSongs(artist: Artist): void {
     console.log('Navigating to songs:', artist.singleSongList);
-    this.router.navigate(['/artists/artists-list-songs'], { state: { songsList: artist.singleSongList } });
+    this.router.navigate(['/artists/artists-list-songs'], { state: { songsList: artist.singleSongList, artist: artist.name } });
   }
 }

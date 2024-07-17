@@ -10,6 +10,7 @@ import { SongService } from 'src/app/songs/services/songs.service';
 })
 export class AlbumsListSongsComponent implements OnInit {
 
+  album : string = '';
   songs: Song[] = []; // Ajusta la estructura según la interfaz de canción que tengas
 
   constructor(
@@ -20,8 +21,8 @@ export class AlbumsListSongsComponent implements OnInit {
   ngOnInit(): void {
     const state = window.history.state;
     if (state && state.album) {
-      const albumName = state.album;
-      this.fetchSongsByAlbum(albumName);
+      this.album = state.album;
+      this.fetchSongsByAlbum(this.album);
     } else {
       console.error('No album name found in navigation state');
     }
