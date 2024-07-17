@@ -43,7 +43,7 @@ export class AlbumsFormComponent implements OnInit {
           }, 2000); // Redirigir a la lista de artistas después de 2 segundos
         },
         (error) => {
-          this.errorMessage = 'Error creating album. Please try again.';
+          this.errorMessage = 'Error creating album.' + error.error.description;
           this.successMessage = null;
           console.error('Error creating album:', error);
         }

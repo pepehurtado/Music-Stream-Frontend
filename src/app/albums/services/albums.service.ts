@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Album } from '../components/interfaces/album.interfaces';
 
@@ -11,8 +11,26 @@ export class AlbumService {
 
   constructor(private http: HttpClient) { }
 
-  getAlbums(): Observable<Album[]> {
-    return this.http.get<Album[]>(this.apiUrl);
+  getAlbums(page: number, size: number, sortColumn: string, sortDirection: string, filters: any): Observable<Album[]> {
+    const body = {
+      listOrderCriteria: [
+        {
+          sortBy: sortColumn,
+          valuesorOrder: sortDirection.toUpperCase()
+        }
+      ],
+      listSearchCriteria: Object.keys(filters).map(key => ({
+        key: key,
+        operation: filters[key] ? 'CONTAINS' : 'EQUALS',
+        value: filters[key]
+      })).filter(criteria => criteria.value),
+      page: {
+        pageIndex: page,
+        pageSize: size
+      }
+    };
+
+    return this.http.post<Album[]>(this.apiUrl + '/filter', body);
   }
 
   createAlbum(albumData: Album): Observable<any> {

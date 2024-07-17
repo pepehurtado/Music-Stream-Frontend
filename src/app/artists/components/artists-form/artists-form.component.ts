@@ -42,7 +42,7 @@ export class ArtistsFormComponent implements OnInit {
           }, 2000); // Redirigir a la lista de artistas después de 2 segundos
         },
         (error) => {
-          this.errorMessage = 'Error creating artist. Please try again.';
+          this.errorMessage = 'Error creating artist.' + error.error.description;
           this.successMessage = null;
           console.error('Error creating artist:', error);
         }

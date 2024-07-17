@@ -23,50 +23,60 @@ export class SongsListComponent implements OnInit {
     album: ''
   };
 
-  constructor(private songService: SongService, private albumService : AlbumService) { }
+  constructor(private songService: SongService, private albumService: AlbumService) { }
 
   ngOnInit(): void {
-    this.loadArtists();
+    this.loadSongs();
   }
 
-  loadArtists(): void {
-    const rangeStart = (this.currentPage - 1) * this.itemsPerPage;
-    const rangeEnd = this.currentPage * this.itemsPerPage - 1;
+  loadSongs(): void {
+    console.log('Filters:', this.filters);
+    if(this.filters.album != null) {
+      this.songService.getSongsByAlbum(this.filters.album).subscribe(
+        (data: Song[]) => {
+          this.songsList = data; // Asigna los datos de las canciones recibidas
+          console.log('Songs:', this.songsList);
+        },
+        (error) => {
+          console.error('Error fetching songs:', error);
+        }
+      );
+    }
 
-    this.songService.getSongs().subscribe(
-      (data) => {
-        //Para cada album quiero que busque el album por id en caso de que el album no sea null y guarde su atributo title
-        data.forEach(song => {
-          if(song.album != null){
-            this.albumService.getAlbumById(song.album).subscribe(
-              (album) => {
-                song.album_name = album.title;
-              },
-              (error) => {
-                console.error('Error fetching album:', error);
-              }
-            );
-          }
-        });
-        this.songsList = data;
-        this.sortArtists(); // Ordenar después de recibir los datos
-        console.log('Songs:', this.songsList);
-      },
-      (error) => {
-        console.error('Error fetching artists:', error);
-      }
-    );
+    this.songService.getSongs(this.currentPage - 1, this.itemsPerPage, this.sortColumn, this.sortDirection, this.filters)
+      .subscribe(
+        (data) => {
+          // Para cada álbum, busca el álbum por ID en caso de que el álbum no sea null y guarda su atributo title
+          data.forEach(song => {
+            if (song.album != null) {
+              this.albumService.getAlbumById(song.album).subscribe(
+                (album) => {
+                  song.album_name = album.title;
+                },
+                (error) => {
+                  console.error('Error fetching album:', error);
+                }
+              );
+            }
+          });
+          this.songsList = data;
+          this.sortSongs(); // Ordenar después de recibir los datos
+          console.log('Songs:', this.songsList);
+        },
+        (error) => {
+          console.error('Error fetching songs:', error);
+        }
+      );
   }
 
   getProperty<T, K extends keyof T>(obj: T, key: K): T[K] {
     return obj[key];
   }
 
-  sortArtists(): void {
+  sortSongs(): void {
     this.songsList.sort((a, b) => {
       const aValue = this.getProperty(a, this.sortColumn) ?? '';
       const bValue = this.getProperty(b, this.sortColumn) ?? '';
-
 
       if (aValue < bValue) {
         return this.sortDirection === 'asc' ? -1 : 1;
@@ -85,32 +95,32 @@ export class SongsListComponent implements OnInit {
       this.sortColumn = column;
       this.sortDirection = 'asc';
     }
-    this.sortArtists();
+    this.loadSongs();
   }
 
   nextPage(): void {
     this.currentPage++;
-    this.loadArtists();
+    this.loadSongs();
   }
 
   previousPage(): void {
     if (this.currentPage > 1) {
       this.currentPage--;
-      this.loadArtists();
+      this.loadSongs();
     }
   }
 
   applyFilters(): void {
     this.currentPage = 1; // Reset to first page when filters are applied
-    this.loadArtists();
+    this.loadSongs();
   }
 
   clearFilters(): void {
     this.filters = {
-      name: '',
-      age: '',
-      country: '',
-      dateOfBirth: ''
+      title: '',
+      time: '',
+      url: '',
+      album: ''
     };
     this.applyFilters();
   }

@@ -24,32 +24,31 @@ export class AlbumsListComponent implements OnInit {
     artist_id: ''
   };
 
-  constructor(private albumService: AlbumService, private router : Router) { }
+  constructor(private albumService: AlbumService, private router: Router) { }
 
   ngOnInit(): void {
-    this.loadArtists();
+    this.loadAlbums();
   }
 
-  loadArtists(): void {
-    const rangeStart = (this.currentPage - 1) * this.itemsPerPage;
-    const rangeEnd = this.currentPage * this.itemsPerPage - 1;
-
-    this.albumService.getAlbums().subscribe(
-      (data) => {
-        this.albumsList = data;
-        this.sortArtists(); // Ordenar después de recibir los datos
-      },
-      (error) => {
-        console.error('Error fetching artists:', error);
-      }
-    );
+  loadAlbums(): void {
+    this.albumService.getAlbums(this.currentPage - 1, this.itemsPerPage, this.sortColumn, this.sortDirection, this.filters)
+      .subscribe(
+        (data) => {
+          this.albumsList = data;
+          this.sortAlbums(); // Ordenar después de recibir los datos
+          console.log('Albums:', this.albumsList);
+        },
+        (error) => {
+          console.error('Error fetching albums:', error);
+        }
+      );
   }
 
   getProperty<T, K extends keyof T>(obj: T, key: K): T[K] {
     return obj[key];
   }
 
-  sortArtists(): void {
+  sortAlbums(): void {
     this.albumsList.sort((a, b) => {
       const aValue = this.getProperty(a, this.sortColumn) ?? '';
       const bValue = this.getProperty(b, this.sortColumn) ?? '';
@@ -71,24 +70,24 @@ export class AlbumsListComponent implements OnInit {
       this.sortColumn = column;
       this.sortDirection = 'asc';
     }
-    this.sortArtists();
+    this.loadAlbums();
   }
 
   nextPage(): void {
     this.currentPage++;
-    this.loadArtists();
+    this.loadAlbums();
   }
 
   previousPage(): void {
     if (this.currentPage > 1) {
       this.currentPage--;
-      this.loadArtists();
+      this.loadAlbums();
     }
   }
 
   applyFilters(): void {
     this.currentPage = 1; // Reset to first page when filters are applied
-    this.loadArtists();
+    this.loadAlbums();
   }
 
   clearFilters(): void {
@@ -101,6 +100,7 @@ export class AlbumsListComponent implements OnInit {
     };
     this.applyFilters();
   }
+
   navigateToSongs(album: Album): void {
     console.log('Navigating to songs:', album.title);
     this.router.navigate(['/albums/albums-list-songs'], { state: { album: album.title } });

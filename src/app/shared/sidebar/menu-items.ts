@@ -5,7 +5,7 @@ export const ROUTES: RouteInfo[] = [
   {
     path: '/artists',
     title: 'Artists',
-    icon: 'bi bi-speedometer2',
+    icon: 'bi bi-person-badge',
     class: '',
     extralink: false,
     submenu: []
@@ -13,7 +13,7 @@ export const ROUTES: RouteInfo[] = [
   {
     path: '/songs',
     title: 'Songs',
-    icon: 'bi bi-speedometer2',
+    icon: 'bi bi-music-note-beamed',
     class: '',
     extralink: false,
     submenu: []
@@ -21,7 +21,7 @@ export const ROUTES: RouteInfo[] = [
   {
     path: '/albums',
     title: 'Albums',
-    icon: 'bi bi-speedometer2',
+    icon: 'bi bi-music-note-list',
     class: '',
     extralink: false,
     submenu: []

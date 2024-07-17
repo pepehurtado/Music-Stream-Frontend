@@ -11,8 +11,33 @@ export class ArtistService {
 
   constructor(private http: HttpClient) { }
 
-  getArtists(): Observable<Artist[]> {
+
+  getArtist(): Observable<Artist[]> {
     return this.http.get<Artist[]>(this.apiUrl);
+  }
+
+  getArtists(page: number, size: number, sortColumn: string, sortDirection: string, filters: any): Observable<Artist[]> {
+    const body = {
+      listOrderCriteria: [
+        {
+          sortBy: sortColumn,
+          valuesorOrder: sortDirection.toUpperCase()
+        }
+      ],
+      listSearchCriteria: Object.keys(filters).map(key => ({
+
+        key: key,
+        //si la key es 'age' entonces la operación es EQUALS, si no es CONTAINS
+        operation: key === 'age' ? 'EQUALS' : 'CONTAINS',
+        value: filters[key]
+      })).filter(criteria => criteria.value), // Filtrar criterios vacíos
+      page: {
+        pageIndex: page,
+        pageSize: size
+      }
+    };
+
+    return this.http.post<Artist[]>(this.apiUrl + '/filter', body);
   }
 
   createArtist(artistData: Artist): Observable<any> {

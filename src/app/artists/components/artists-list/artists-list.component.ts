@@ -29,19 +29,17 @@ export class ArtistsListComponent implements OnInit {
   }
 
   loadArtists(): void {
-    const rangeStart = (this.currentPage - 1) * this.itemsPerPage;
-    const rangeEnd = this.currentPage * this.itemsPerPage - 1;
-
-    this.artistService.getArtists().subscribe(
-      (data) => {
-        this.artistList = data;
-        console.log('Artists:', this.artistList);
-        this.sortArtists(); // Ordenar después de recibir los datos
-      },
-      (error) => {
-        console.error('Error fetching artists:', error);
-      }
-    );
+    this.artistService.getArtists(this.currentPage - 1, this.itemsPerPage, this.sortColumn, this.sortDirection, this.filters)
+      .subscribe(
+        (data) => {
+          this.artistList = data;
+          console.log('Artists:', this.artistList);
+          this.sortArtists(); // Ordenar después de recibir los datos si es necesario
+        },
+        (error) => {
+          console.error('Error fetching artists:', error);
+        }
+      );
   }
 
   getProperty<T, K extends keyof T>(obj: T, key: K): T[K] {
@@ -70,7 +68,7 @@ export class ArtistsListComponent implements OnInit {
       this.sortColumn = column;
       this.sortDirection = 'asc';
     }
-    this.sortArtists();
+    this.loadArtists();
   }
 
   nextPage(): void {
@@ -101,9 +99,6 @@ export class ArtistsListComponent implements OnInit {
   }
 
   navigateToSongs(artist: Artist): void {
-    // Navegar a la ruta de canciones con el identificador de lista de canciones del artista
-    // Esto asume que artist.singleSongList contiene la lista de canciones del artista
-    // Si artist.singleSongList es un array de IDs de canciones, deberás cargar esas canciones primero
     console.log('Navigating to songs:', artist.singleSongList);
     this.router.navigate(['/artists/artists-list-songs'], { state: { songsList: artist.singleSongList } });
   }

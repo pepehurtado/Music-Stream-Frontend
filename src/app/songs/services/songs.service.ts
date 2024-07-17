@@ -8,14 +8,36 @@ import { Song } from '../components/interfaces/song.interfaces';
 })
 export class SongService {
   private apiUrl = 'https://musicstream.onrender.com/songs';
+
   constructor(private http: HttpClient) { }
 
-  getSongs(): Observable<Song[]> {
-    return this.http.get<Song[]>(this.apiUrl);
+  getSongs(page: number, size: number, sortColumn: string, sortDirection: string, filters: any): Observable<Song[]> {
+    const body = {
+      listOrderCriteria: [
+        {
+          sortBy: sortColumn,
+          valuesorOrder: sortDirection.toUpperCase()
+        }
+      ],
+      listSearchCriteria: Object.keys(filters).map(key => ({
+        key: key,
+        //Si la key es 'time' entonces la operación es EQUALS, si no es CONTAINS
+        operation: key === 'time' ? 'EQUALS' : 'CONTAINS',
+        value: filters[key]
+      })).filter(criteria => criteria.value),
+      page: {
+        pageIndex: page,
+        pageSize: size
+      }
+    };
+
+    return this.http.post<Song[]>(this.apiUrl + '/filter', body);
   }
 
-  createSong(artistData: Song): Observable<any> {
-    return this.http.post(this.apiUrl, artistData);
+  createSong(songData: Song): Observable<any> {
+    //ver el objeto en json
+    console.log(JSON.stringify(songData));
+    return this.http.post(this.apiUrl, songData);
   }
 
   getSongsByAlbum(album: string): Observable<any> {
@@ -24,5 +46,4 @@ export class SongService {
     // Realizar la solicitud GET con los parámetros
     return this.http.get<any>(this.apiUrl, { params: params });
   }
-
 }
