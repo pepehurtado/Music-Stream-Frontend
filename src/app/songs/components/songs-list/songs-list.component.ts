@@ -55,6 +55,7 @@ export class SongsListComponent implements OnInit {
                 },
                 (error) => {
                   console.error('Error fetching album:', error);
+                  //Volver a cargar
                 }
               );
             }

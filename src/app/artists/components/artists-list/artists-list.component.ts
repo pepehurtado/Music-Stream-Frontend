@@ -38,6 +38,7 @@ export class ArtistsListComponent implements OnInit {
         },
         (error) => {
           console.error('Error fetching artists:', error);
+          this.loadArtists(); // Intentar cargar de nuevo en caso de error
         }
       );
   }

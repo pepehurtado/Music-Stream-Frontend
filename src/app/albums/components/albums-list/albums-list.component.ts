@@ -40,6 +40,7 @@ export class AlbumsListComponent implements OnInit {
         },
         (error) => {
           console.error('Error fetching albums:', error);
+          this.loadAlbums(); // Intentar cargar de nuevo en caso de error
         }
       );
   }

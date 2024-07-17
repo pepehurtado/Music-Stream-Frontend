@@ -45,6 +45,7 @@ export class SongsFormComponent implements OnInit {
       },
       (error) => {
         console.error('Error fetching artists:', error);
+        this.loadArtists();
       }
     );
   }
