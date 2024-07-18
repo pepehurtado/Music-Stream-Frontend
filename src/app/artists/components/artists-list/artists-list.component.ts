@@ -15,6 +15,7 @@ export class ArtistsListComponent implements OnInit {
   public sortDirection: 'asc' | 'desc' = 'asc';
   public currentPage: number = 1;
   public itemsPerPage: number = 10;
+  public errorMessage: string = '';
   public filters: any = {
     name: '',
     age: '',
@@ -35,6 +36,10 @@ export class ArtistsListComponent implements OnInit {
           this.artistList = data;
           console.log('Artists:', this.artistList);
           this.sortArtists(); // Ordenar después de recibir los datos si es necesario
+          if (this.artistList.length === 0) {
+            this.errorMessage = 'No artists found';
+            console.error('No artists found');
+          }
         },
         (error) => {
           console.error('Error fetching artists:', error);
@@ -89,6 +94,7 @@ export class ArtistsListComponent implements OnInit {
   applyFilters(): void {
     this.currentPage = 1; // Reset to first page when filters are applied
     this.artistList = [];
+    this.errorMessage = '';
     this.loadArtists();
   }
 
@@ -99,6 +105,7 @@ export class ArtistsListComponent implements OnInit {
       country: '',
       dateOfBirth: ''
     };
+    this.errorMessage = '';
     this.applyFilters();
   }
 

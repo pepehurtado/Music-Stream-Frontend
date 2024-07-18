@@ -17,6 +17,7 @@ export class AlbumsListComponent implements OnInit {
   public sortDirection: 'asc' | 'desc' = 'asc';
   public currentPage: number = 1;
   public itemsPerPage: number = 10;
+  public errorMessage: string = '';
   public filters: any = {
     title: '',
     description: '',
@@ -45,6 +46,10 @@ export class AlbumsListComponent implements OnInit {
           this.albumsList = data;
           this.sortAlbums(); // Ordenar después de recibir los datos
           console.log('Albums:', this.albumsList);
+          if (this.albumsList.length === 0) {
+            this.errorMessage = 'No albums found';
+            console.error('No albums found');
+          }
         },
         (error) => {
           console.error('Error fetching albums:', error);
@@ -98,6 +103,7 @@ export class AlbumsListComponent implements OnInit {
   applyFilters(): void {
     this.currentPage = 1; // Reset to first page when filters are applied
     this.albumsList = [];
+    this.errorMessage = '';
     this.loadAlbums();
   }
 
@@ -109,6 +115,7 @@ export class AlbumsListComponent implements OnInit {
       url: '',
       artist_id: ''
     };
+    this.errorMessage = '';
     this.applyFilters();
   }
 

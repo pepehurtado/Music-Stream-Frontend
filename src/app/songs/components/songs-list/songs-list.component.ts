@@ -18,6 +18,7 @@ export class SongsListComponent implements OnInit {
   public sortDirection: 'asc' | 'desc' = 'asc';
   public currentPage: number = 1;
   public itemsPerPage: number = 10;
+  public errorMessage: string = '';
   public filters: any = {
     title: '',
     time: '',
@@ -40,6 +41,7 @@ export class SongsListComponent implements OnInit {
         (data: Song[]) => {
           this.songsList = data;
           console.log('Songs:', this.songsList);
+          console.log('No songs found');
         },
         (error) => {
           console.error('Error fetching songs:', error);
@@ -78,6 +80,10 @@ export class SongsListComponent implements OnInit {
         this.songsList = data;
         this.sortSongs();
         console.log('Songs:', this.songsList);
+        if (this.songsList.length === 0) {
+          this.errorMessage = 'No songs found';
+          console.log('No songs found');
+        }
       },
       (error) => {
         console.error('Error fetching songs:', error);
@@ -132,6 +138,7 @@ export class SongsListComponent implements OnInit {
     this.currentPage = 1;
     this.songsList = [];
     this.selectedSong = null;
+    this.errorMessage = '';
     this.loadSongs();
   }
 
@@ -142,6 +149,7 @@ export class SongsListComponent implements OnInit {
       url: '',
       album: ''
     };
+    this.errorMessage = '';
     this.applyFilters();
   }
 

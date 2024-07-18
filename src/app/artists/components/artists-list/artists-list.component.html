@@ -24,7 +24,7 @@
     </div>
 
     <!-- Indicador de carga -->
-    <div class="text-center" *ngIf="artistList.length === 0">
+    <div class="text-center" *ngIf="artistList.length === 0 && errorMessage==='' ">
       <!-- Puedes ajustar este SVG según tu diseño -->
       <svg width="50px" height="50px" viewBox="0 0 38 38" xmlns="http://www.w3.org/2000/svg" stroke="#007bff">
         <g fill="none" fill-rule="evenodd">
@@ -43,6 +43,10 @@
         </g>
       </svg>
       <p>Loading...</p>
+    </div>
+
+    <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
+      {{ errorMessage }}
     </div>
 
     <!-- Tabla de artistas -->
