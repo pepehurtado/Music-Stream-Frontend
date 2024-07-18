@@ -101,12 +101,12 @@
           </tr>
         </tbody>
       </table>
-    </div>
-
-    <!-- Navegación de paginación -->
+          <!-- Navegación de paginación -->
     <div class="d-flex justify-content-between">
       <button class="btn btn-primary" (click)="previousPage()" [disabled]="currentPage === 1">Previous</button>
+      <span>Page {{ currentPage }}</span>
       <button class="btn btn-primary" (click)="nextPage()" [disabled]="artistList.length < 10">Next</button>
+    </div>
     </div>
   </div>
 </div>

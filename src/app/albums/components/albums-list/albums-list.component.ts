@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { AlbumService } from '../../services/albums.service';
 import { Album } from '../interfaces/album.interfaces';
 import { Router } from '@angular/router';
+import { catchError, retry } from 'rxjs';
 
 @Component({
   selector: 'app-albums-list',
@@ -32,6 +33,13 @@ export class AlbumsListComponent implements OnInit {
 
   loadAlbums(): void {
     this.albumService.getAlbums(this.currentPage - 1, this.itemsPerPage, this.sortColumn, this.sortDirection, this.filters)
+    .pipe(
+      retry(12),
+      catchError(error => {
+        console.error('Error fetching songs after retries:', error);
+        return [];
+      })
+    )
       .subscribe(
         (data) => {
           this.albumsList = data;
@@ -40,7 +48,6 @@ export class AlbumsListComponent implements OnInit {
         },
         (error) => {
           console.error('Error fetching albums:', error);
-          this.loadAlbums(); // Intentar cargar de nuevo en caso de error
         }
       );
   }
@@ -76,18 +83,21 @@ export class AlbumsListComponent implements OnInit {
 
   nextPage(): void {
     this.currentPage++;
+    this.albumsList = [];
     this.loadAlbums();
   }
 
   previousPage(): void {
     if (this.currentPage > 1) {
       this.currentPage--;
+      this.albumsList = [];
       this.loadAlbums();
     }
   }
 
   applyFilters(): void {
     this.currentPage = 1; // Reset to first page when filters are applied
+    this.albumsList = [];
     this.loadAlbums();
   }
 

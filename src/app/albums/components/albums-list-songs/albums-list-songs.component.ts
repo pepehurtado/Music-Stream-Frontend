@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { retry } from 'rxjs';
 import { Song } from 'src/app/songs/components/interfaces/song.interfaces';
 import { SongService } from 'src/app/songs/services/songs.service';
 
@@ -29,7 +30,11 @@ export class AlbumsListSongsComponent implements OnInit {
   }
 
   fetchSongsByAlbum(albumName: string): void {
-    this.songService.getSongsByAlbum(albumName).subscribe(
+    this.songService.getSongsByAlbum(albumName)
+    .pipe(
+      retry(12)
+    )
+    .subscribe(
       (data: Song[]) => {
         this.songs = data; // Asigna los datos de las canciones recibidas
         console.log('Songs:', this.songs);

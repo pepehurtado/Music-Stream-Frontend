@@ -2,6 +2,8 @@ import { AlbumService } from './../../../albums/services/albums.service';
 import { Component, Input, OnInit } from '@angular/core';
 import { SongService } from '../../services/songs.service';
 import { Song } from '../interfaces/song.interfaces';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { catchError, retry } from 'rxjs';
 
 @Component({
   selector: 'app-songs-list',
@@ -22,8 +24,10 @@ export class SongsListComponent implements OnInit {
     url: '',
     album: ''
   };
+  public selectedSong: Song | null = null;
+  public safeUrl: SafeResourceUrl | null = null;
 
-  constructor(private songService: SongService, private albumService: AlbumService) { }
+  constructor(private songService: SongService, private albumService: AlbumService, private sanitizer: DomSanitizer) { }
 
   ngOnInit(): void {
     this.loadSongs();
@@ -31,10 +35,10 @@ export class SongsListComponent implements OnInit {
 
   loadSongs(): void {
     console.log('Filters:', this.filters);
-    if(this.filters.album != null) {
+    if (this.filters.album != null) {
       this.songService.getSongsByAlbum(this.filters.album).subscribe(
         (data: Song[]) => {
-          this.songsList = data; // Asigna los datos de las canciones recibidas
+          this.songsList = data;
           console.log('Songs:', this.songsList);
         },
         (error) => {
@@ -44,30 +48,41 @@ export class SongsListComponent implements OnInit {
     }
 
     this.songService.getSongs(this.currentPage - 1, this.itemsPerPage, this.sortColumn, this.sortDirection, this.filters)
-      .subscribe(
-        (data) => {
-          // Para cada álbum, busca el álbum por ID en caso de que el álbum no sea null y guarda su atributo title
-          data.forEach(song => {
-            if (song.album != null) {
-              this.albumService.getAlbumById(song.album).subscribe(
-                (album) => {
-                  song.album_name = album.title;
-                },
-                (error) => {
-                  console.error('Error fetching album:', error);
-                  //Volver a cargar
-                }
-              );
-            }
-          });
-          this.songsList = data;
-          this.sortSongs(); // Ordenar después de recibir los datos
-          console.log('Songs:', this.songsList);
-        },
-        (error) => {
-          console.error('Error fetching songs:', error);
-        }
-      );
+    .pipe(
+      retry(12),
+      catchError(error => {
+        console.error('Error fetching songs after retries:', error);
+        return [];
+      })
+    ).subscribe(
+      (data) => {
+        data.forEach(song => {
+          if (song.album != null) {
+            this.albumService.getAlbumById(song.album)
+            .pipe(
+              retry(12),
+              catchError(error => {
+                console.error('Error fetching album after retries:', error);
+                return [];
+              })
+            ).subscribe(
+              (album) => {
+                song.album_name = album.title;
+              },
+              (error) => {
+                console.error('Error fetching album:', error);
+              }
+            );
+          }
+        });
+        this.songsList = data;
+        this.sortSongs();
+        console.log('Songs:', this.songsList);
+      },
+      (error) => {
+        console.error('Error fetching songs:', error);
+      }
+    );
   }
 
   getProperty<T, K extends keyof T>(obj: T, key: K): T[K] {
@@ -101,18 +116,22 @@ export class SongsListComponent implements OnInit {
 
   nextPage(): void {
     this.currentPage++;
+    this.songsList = [];
     this.loadSongs();
   }
 
   previousPage(): void {
     if (this.currentPage > 1) {
       this.currentPage--;
+      this.songsList = [];
       this.loadSongs();
     }
   }
 
   applyFilters(): void {
-    this.currentPage = 1; // Reset to first page when filters are applied
+    this.currentPage = 1;
+    this.songsList = [];
+    this.selectedSong = null;
     this.loadSongs();
   }
 
@@ -125,4 +144,17 @@ export class SongsListComponent implements OnInit {
     };
     this.applyFilters();
   }
+
+  selectSong(song: Song): void {
+    this.selectedSong = song;
+
+    // Expresión regular para extraer el ID de la canción de Spotify
+    const regex = /\/track\/([a-zA-Z0-9]+)/;
+    const match = song.url ? song.url.match(regex) : null;
+
+        const songId = match ? match[1] : null;
+
+        // Construir la URL segura usando el ID de la canción
+        this.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(`https://open.spotify.com/embed/track/${songId}?utm_source=generator&autoplay=1`);
+}
 }

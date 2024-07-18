@@ -74,18 +74,21 @@ export class ArtistsListComponent implements OnInit {
 
   nextPage(): void {
     this.currentPage++;
+    this.artistList = [];
     this.loadArtists();
   }
 
   previousPage(): void {
     if (this.currentPage > 1) {
       this.currentPage--;
+      this.artistList = [];
       this.loadArtists();
     }
   }
 
   applyFilters(): void {
     this.currentPage = 1; // Reset to first page when filters are applied
+    this.artistList = [];
     this.loadArtists();
   }
 

@@ -4,6 +4,7 @@
     <h5 class="card-subtitle text-muted">Overview of all songs</h5>
 
     <div class="row mb-3">
+      <!-- Filtros de búsqueda -->
       <div class="col">
         <input type="text" class="form-control" placeholder="Filter by title" [(ngModel)]="filters.title">
       </div>
@@ -22,8 +23,39 @@
       </div>
     </div>
 
+    <!-- Indicador de carga -->
+    <div class="text-center" *ngIf="songsList.length === 0">
+      <!-- SVG de carga (puedes personalizar este SVG según tu diseño) -->
+      <svg width="50px" height="50px" viewBox="0 0 38 38" xmlns="http://www.w3.org/2000/svg" stroke="#007bff">
+        <g fill="none" fill-rule="evenodd">
+          <g transform="translate(1 1)" stroke-width="2">
+            <circle stroke-opacity=".5" cx="18" cy="18" r="18"/>
+            <path d="M36 18c0-9.94-8.06-18-18-18">
+              <animateTransform
+                attributeName="transform"
+                type="rotate"
+                from="0 18 18"
+                to="360 18 18"
+                dur="1s"
+                repeatCount="indefinite"/>
+            </path>
+          </g>
+        </g>
+      </svg>
+      <p>Loading...</p>
+    </div>
 
-    <div class="table-responsive">
+    <!-- Lista de canciones -->
+    <div class="table-responsive" *ngIf="songsList.length !== 0">
+        <!-- Mostrar tarjeta con iframe seleccionado -->
+  <div class="" *ngIf="selectedSong && safeUrl">
+    <div class="card-body text-center">
+      <h4 class="card-title">Selected Song</h4>
+      <div class="embed-responsive embed-responsive-16by9">
+        <iframe style="border-radius:12px" [src]="safeUrl" width="35%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+      </div>
+    </div>
+  </div>
       <table class="table align-middle text-nowrap">
         <thead>
           <tr>
@@ -54,29 +86,31 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let song of songsList">
+          <tr *ngFor="let song of songsList" (click)="selectSong(song)">
             <td>
               <div class="d-flex align-items-center">
                 <div class="ms-3">
-                  <h5 class="mb-0 font-medium">{{song.title}}</h5>
+                  <h5 class="mb-0 font-medium">{{ song.title }}</h5>
                 </div>
               </div>
             </td>
-            <td class="fs-4">{{song.time}}</td>
+            <td class="fs-4">{{ song.time }}</td>
             <td>
-              <h5 class="mb-0 fw-normal">{{song.url}}</h5>
+              <h5 class="mb-0 fw-normal">{{ song.url }}</h5>
             </td>
             <td>
-              <h5 class="mb-0 fw-normal">{{song.album_name}}</h5>
+              <span class="fs-4">{{ song.album_name }}</span>
             </td>
           </tr>
         </tbody>
       </table>
-    </div>
 
-    <div class="d-flex justify-content-between">
-      <button class="btn btn-primary" (click)="previousPage()" [disabled]="currentPage === 1">Previous</button>
-      <button class="btn btn-primary" (click)="nextPage()" [disabled]="songsList.length < 10">Next</button>
+      <!-- Paginación -->
+      <div class="d-flex justify-content-between mt-3">
+        <button class="btn btn-primary" (click)="previousPage()" [disabled]="currentPage === 1">Previous</button>
+        <span>Page {{ currentPage }}</span>
+        <button class="btn btn-primary" (click)="nextPage()">Next</button>
+      </div>
     </div>
   </div>
 </div>
