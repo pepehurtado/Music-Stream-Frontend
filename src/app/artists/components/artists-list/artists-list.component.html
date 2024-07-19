@@ -57,25 +57,25 @@
             <th class="text-dark font-medium fs-4" (click)="setSortColumn('name')">
               Nombre
               <span *ngIf="sortColumn === 'name'">
-                <i [ngClass]="sortDirection === 'asc' ? 'fa fa-arrow-up' : 'fa fa-arrow-down'"></i>
+                <i [ngClass]="sortDirection === 'asc' ? 'bi bi-arrow-up' : 'bi bi-arrow-down'"></i>
               </span>
             </th>
             <th class="text-dark font-medium fs-4" (click)="setSortColumn('age')">
               Edad
               <span *ngIf="sortColumn === 'age'">
-                <i [ngClass]="sortDirection === 'asc' ? 'fa fa-arrow-up' : 'fa fa-arrow-down'"></i>
+                <i [ngClass]="sortDirection === 'asc' ? 'bi bi-arrow-up' : 'bi bi-arrow-down'"></i>
               </span>
             </th>
             <th class="text-dark font-medium fs-4" (click)="setSortColumn('country')">
               País
               <span *ngIf="sortColumn === 'country'">
-                <i [ngClass]="sortDirection === 'asc' ? 'fa fa-arrow-up' : 'fa fa-arrow-down'"></i>
+                <i [ngClass]="sortDirection === 'asc' ? 'bi bi-arrow-up' : 'bi bi-arrow-down'"></i>
               </span>
             </th>
             <th class="text-dark font-medium fs-4" (click)="setSortColumn('dateOfBirth')">
               Fecha de nacimiento
               <span *ngIf="sortColumn === 'dateOfBirth'">
-                <i [ngClass]="sortDirection === 'asc' ? 'fa fa-arrow-up' : 'fa fa-arrow-down'"></i>
+                <i [ngClass]="sortDirection === 'asc' ? 'bi bi-arrow-up' : 'bi bi-arrow-down'"></i>
               </span>
             </th>
             <th class="text-dark font-medium fs-4">Acciones</th>
@@ -98,9 +98,15 @@
               <h5 class="mb-0 fw-normal">{{artist.dateOfBirth | date:'dd/MM/yyyy'}} </h5>
             </td>
             <td>
-              <button class="btn btn-danger" (click)="openDeleteModal(artist)">Eliminar</button>
-              <a class="btn btn-primary" (click)="navigateToSongs(artist)">Canciones</a>
-              <a class="btn btn-secondary" [routerLink]="['/artists/edit', artist.id]">Editar</a>
+              <button class="btn btn-danger" (click)="openDeleteModal(artist)">
+                <i class="bi bi-trash"></i>
+              </button>
+              <a class="btn btn-primary" (click)="navigateToSongs(artist)">
+                <i class="bi bi-music-note-list"></i>
+              </a>
+              <a class="btn btn-secondary" [routerLink]="['/artists/edit', artist.id]">
+                <i class="bi bi-pencil"></i>
+              </a>
             </td>
           </tr>
         </tbody>
