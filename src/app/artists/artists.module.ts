@@ -6,6 +6,7 @@ import { Routes, RouterModule } from "@angular/router";
 import { ArtistsListComponent } from "./components/artists-list/artists-list.component";
 import { ArtistsFormComponent } from './components/artists-form/artists-form.component';
 import { ArtistListSongsComponent } from "./components/artists-list-songs/artists-list-songs.component";
+import { BrowserModule } from "@angular/platform-browser";
 
 const routes: Routes = [
   {
@@ -15,6 +16,10 @@ const routes: Routes = [
   {
     path: "artists-list-songs",
     component: ArtistListSongsComponent,
+  },
+  {
+    path: "edit/:id",
+    component: ArtistsFormComponent,
   },
   {
     path: "",
@@ -28,6 +33,7 @@ const routes: Routes = [
     ReactiveFormsModule,
     CommonModule,
     RouterModule.forChild(routes),
+    FormsModule
   ],
   declarations: [
 

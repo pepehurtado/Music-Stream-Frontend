@@ -7,7 +7,7 @@ import { Artist } from '../components/interfaces/artists.interfaces';
   providedIn: 'root'
 })
 export class ArtistService {
-  private apiUrl = 'https://musicstream.onrender.com/artists';
+  private apiUrl = 'http://localhost:9000/artists';
 
   constructor(private http: HttpClient) { }
 
@@ -42,5 +42,17 @@ export class ArtistService {
 
   createArtist(artistData: Artist): Observable<any> {
     return this.http.post(this.apiUrl, artistData);
+  }
+
+  deleteArtist(id: string): Observable<any> {
+    return this.http.delete(this.apiUrl + '/' + id);
+  }
+
+  getArtistById(id: string): Observable<Artist> {
+    return this.http.get<Artist>(this.apiUrl + '/' + id);
+  }
+
+  updateArtist(id: string, artistData: Artist): Observable<any> {
+    return this.http.patch(this.apiUrl + '/' + id, artistData);
   }
 }

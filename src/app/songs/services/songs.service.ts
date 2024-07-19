@@ -7,7 +7,7 @@ import { Song } from '../components/interfaces/song.interfaces';
   providedIn: 'root'
 })
 export class SongService {
-  private apiUrl = 'https://musicstream.onrender.com/songs';
+  private apiUrl = 'http://localhost:9000/songs';
 
   constructor(private http: HttpClient) { }
 

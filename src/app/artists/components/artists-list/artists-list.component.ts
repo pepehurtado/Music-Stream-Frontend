@@ -22,6 +22,8 @@ export class ArtistsListComponent implements OnInit {
     country: '',
     dateOfBirth: ''
   };
+  showModal = false;
+  artistToDelete: any = null;
 
   constructor(private artistService: ArtistService, private router: Router) { }
 
@@ -113,4 +115,38 @@ export class ArtistsListComponent implements OnInit {
     console.log('Navigating to songs:', artist.singleSongList);
     this.router.navigate(['/artists/artists-list-songs'], { state: { songsList: artist.singleSongList, artist: artist.name } });
   }
+
+
+  openDeleteModal(artist: any) {
+    this.artistToDelete = artist;
+    this.showModal = true;
+  }
+
+  closeDeleteModal() {
+    this.showModal = false;
+    this.artistToDelete = null;
+  }
+
+  confirmDelete() {
+    // Lógica para eliminar al artista
+    if (this.artistToDelete) {
+      // Elimina al artista de la lista (o realiza una llamada a un servicio para eliminarlo)
+      this.artistService.deleteArtist(this.artistToDelete.id).subscribe(
+        (response) => {
+          console.log('Artist deleted successfully:', response);
+          this.artistToDelete = null;
+          this.closeDeleteModal();
+          this.loadArtists();
+        },
+        (error) => {
+          console.error('Error deleting artist:', error);
+          this.artistToDelete = null;
+          this.closeDeleteModal();
+        }
+      );
+      this.artistToDelete = null;
+      this.closeDeleteModal();
+    }
+  }
+
 }

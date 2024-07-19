@@ -7,7 +7,7 @@ import { Album } from '../components/interfaces/album.interfaces';
   providedIn: 'root'
 })
 export class AlbumService {
-  private apiUrl = 'https://musicstream.onrender.com/albums';
+  private apiUrl = 'http://localhost:9000/albums';
 
   constructor(private http: HttpClient) { }
 

@@ -1,6 +1,6 @@
 <div class="card">
   <div class="card-body">
-    <h4 class="card-title">Crear nuevo artista</h4>
+    <h4 class="card-title">{{ isEditMode ? 'Editar artista' : 'Crear nuevo artista' }}</h4>
 
     <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
       {{ errorMessage }}
@@ -27,7 +27,7 @@
         <label for="dateOfBirth" class="form-label">Fecha de nacimiento</label>
         <input type="date" id="dateOfBirth" class="form-control" formControlName="dateOfBirth">
       </div>
-      <button type="submit" class="btn btn-primary">Crear</button>
+      <button type="submit" class="btn btn-primary">{{ isEditMode ? 'Guardar cambios' : 'Crear' }}</button>
     </form>
   </div>
 </div>

@@ -78,9 +78,7 @@
                 <i [ngClass]="sortDirection === 'asc' ? 'fa fa-arrow-up' : 'fa fa-arrow-down'"></i>
               </span>
             </th>
-            <th class="text-dark font-medium fs-4" (click)="setSortColumn('dateOfBirth')">
-              Ver canciones
-            </th>
+            <th class="text-dark font-medium fs-4">Acciones</th>
           </tr>
         </thead>
         <tbody>
@@ -100,17 +98,39 @@
               <h5 class="mb-0 fw-normal">{{artist.dateOfBirth | date:'dd/MM/yyyy'}} </h5>
             </td>
             <td>
+              <button class="btn btn-danger" (click)="openDeleteModal(artist)">Eliminar</button>
               <a class="btn btn-primary" (click)="navigateToSongs(artist)">Canciones</a>
+              <a class="btn btn-secondary" [routerLink]="['/artists/edit', artist.id]">Editar</a>
             </td>
           </tr>
         </tbody>
       </table>
-          <!-- Navegación de paginación -->
-    <div class="d-flex justify-content-between">
-      <button class="btn btn-primary" (click)="previousPage()" [disabled]="currentPage === 1">Anterior</button>
-      <span>Página {{ currentPage }}</span>
-      <button class="btn btn-primary" (click)="nextPage()" [disabled]="artistList.length < 10">Siguiente</button>
+
+      <!-- Navegación de paginación -->
+      <div class="d-flex justify-content-between">
+        <button class="btn btn-primary" (click)="previousPage()" [disabled]="currentPage === 1">Anterior</button>
+        <span>Página {{ currentPage }}</span>
+        <button class="btn btn-primary" (click)="nextPage()" [disabled]="artistList.length < 10">Siguiente</button>
+      </div>
     </div>
+  </div>
+</div>
+
+<!-- Modal para eliminar artista -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true" [ngClass]="{'show': showModal, 'd-block': showModal}">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteModalLabel">Eliminar Artista</h5>
+        <button type="button" class="btn-close" (click)="closeDeleteModal()"></button>
+      </div>
+      <div class="modal-body">
+        ¿Estás seguro de que deseas eliminar al artista {{ artistToDelete?.name }}?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeDeleteModal()">Cancelar</button>
+        <button type="button" class="btn btn-danger" (click)="confirmDelete()">Eliminar</button>
+      </div>
     </div>
   </div>
 </div>
