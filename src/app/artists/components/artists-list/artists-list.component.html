@@ -97,7 +97,7 @@
               <h5 class="mb-0 fw-normal">{{artist.country}}</h5>
             </td>
             <td>
-              <h5 class="mb-0 fw-normal">{{artist.dateOfBirth}}</h5>
+              <h5 class="mb-0 fw-normal">{{artist.dateOfBirth | date:'dd/MM/yyyy'}} </h5>
             </td>
             <td>
               <a class="btn btn-primary" (click)="navigateToSongs(artist)">Canciones</a>
