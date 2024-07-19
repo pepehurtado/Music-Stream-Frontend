@@ -1,6 +1,6 @@
 <div class="card">
   <div class="card-body">
-    <h4 class="card-title">Add New Song</h4>
+    <h4 class="card-title">Crear nueva canción</h4>
 
     <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
       {{ errorMessage }}
@@ -12,11 +12,11 @@
 
     <form [formGroup]="songForm" (ngSubmit)="submitForm()">
       <div class="mb-3">
-        <label for="title" class="form-label">Title</label>
+        <label for="title" class="form-label">Título</label>
         <input type="text" id="title" class="form-control" formControlName="title">
       </div>
       <div class="mb-3">
-        <label for="time" class="form-label">Time</label>
+        <label for="time" class="form-label">Duración</label>
         <input type="number" id="time" class="form-control" formControlName="time">
       </div>
       <div class="mb-3">
@@ -24,7 +24,7 @@
         <input type="text" id="url" class="form-control" formControlName="url">
       </div>
       <div class="mb-3">
-        <label for="artistSearch" class="form-label">Artist</label>
+        <label for="artistSearch" class="form-label">Artista/s</label>
         <!-- Input para búsqueda de artistas -->
         <input type="text" id="artistSearch" class="form-control" formControlName="artistSearch" (input)="searchArtists($event)">
         <!-- Lista desplegable de artistas filtrados -->
@@ -43,7 +43,7 @@
 
       <!-- Lista de artistas seleccionados -->
       <div class="mb-3">
-        <label>Selected Artists:</label>
+        <label>Artistas seleccionados:</label>
         <ul class="list-group">
           <li class="list-group-item" *ngFor="let selectedArtist of selectedArtists">
             {{ selectedArtist.name }}
@@ -51,7 +51,7 @@
           </li>
         </ul>
       </div>
-      <button type="submit" class="btn btn-primary">Submit</button>
+      <button type="submit" class="btn btn-primary">Crear</button>
     </form>
   </div>
 </div>

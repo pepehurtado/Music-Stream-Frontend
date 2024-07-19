@@ -1,7 +1,7 @@
 <div class="card">
   <div class="card-body">
-    <h4 class="card-title">Artist Listing</h4>
-    <h5 class="card-subtitle text-muted">Overview of all artists</h5>
+    <h4 class="card-title">Lista de artistas</h4>
+    <h5 class="card-subtitle text-muted">Listado de todos los artistas disponibles</h5>
 
     <!-- Filtros de búsqueda -->
     <div class="row mb-3">
@@ -18,8 +18,8 @@
         <input type="text" class="form-control" placeholder="Filter by date of birth" [(ngModel)]="filters.dateOfBirth">
       </div>
       <div class="col">
-        <button class="btn btn-primary" (click)="applyFilters()">Apply</button>
-        <button class="btn btn-secondary" (click)="clearFilters()">Clear</button>
+        <button class="btn btn-primary" (click)="applyFilters()">Aplicar</button>
+        <button class="btn btn-secondary" (click)="clearFilters()">Limpiar</button>
       </div>
     </div>
 
@@ -42,7 +42,7 @@
           </g>
         </g>
       </svg>
-      <p>Loading...</p>
+      <p>Cargando...</p>
     </div>
 
     <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
@@ -55,25 +55,25 @@
         <thead>
           <tr>
             <th class="text-dark font-medium fs-4" (click)="setSortColumn('name')">
-              Name
+              Nombre
               <span *ngIf="sortColumn === 'name'">
                 <i [ngClass]="sortDirection === 'asc' ? 'fa fa-arrow-up' : 'fa fa-arrow-down'"></i>
               </span>
             </th>
             <th class="text-dark font-medium fs-4" (click)="setSortColumn('age')">
-              Age
+              Edad
               <span *ngIf="sortColumn === 'age'">
                 <i [ngClass]="sortDirection === 'asc' ? 'fa fa-arrow-up' : 'fa fa-arrow-down'"></i>
               </span>
             </th>
             <th class="text-dark font-medium fs-4" (click)="setSortColumn('country')">
-              Country
+              País
               <span *ngIf="sortColumn === 'country'">
                 <i [ngClass]="sortDirection === 'asc' ? 'fa fa-arrow-up' : 'fa fa-arrow-down'"></i>
               </span>
             </th>
             <th class="text-dark font-medium fs-4" (click)="setSortColumn('dateOfBirth')">
-              Date
+              Fecha de nacimiento
               <span *ngIf="sortColumn === 'dateOfBirth'">
                 <i [ngClass]="sortDirection === 'asc' ? 'fa fa-arrow-up' : 'fa fa-arrow-down'"></i>
               </span>
@@ -100,16 +100,16 @@
               <h5 class="mb-0 fw-normal">{{artist.dateOfBirth}}</h5>
             </td>
             <td>
-              <a class="btn btn-primary" (click)="navigateToSongs(artist)">Songs</a>
+              <a class="btn btn-primary" (click)="navigateToSongs(artist)">Canciones</a>
             </td>
           </tr>
         </tbody>
       </table>
           <!-- Navegación de paginación -->
     <div class="d-flex justify-content-between">
-      <button class="btn btn-primary" (click)="previousPage()" [disabled]="currentPage === 1">Previous</button>
-      <span>Page {{ currentPage }}</span>
-      <button class="btn btn-primary" (click)="nextPage()" [disabled]="artistList.length < 10">Next</button>
+      <button class="btn btn-primary" (click)="previousPage()" [disabled]="currentPage === 1">Anterior</button>
+      <span>Página {{ currentPage }}</span>
+      <button class="btn btn-primary" (click)="nextPage()" [disabled]="artistList.length < 10">Siguiente</button>
     </div>
     </div>
   </div>

@@ -1,7 +1,7 @@
 <div class="card">
   <div class="card-body">
-    <h4 class="card-title">Album Listing</h4>
-    <h5 class="card-subtitle text-muted">Overview of all albums</h5>
+    <h4 class="card-title">Lista de albumes</h4>
+    <h5 class="card-subtitle text-muted">Listado de todos albumes disponibles</h5>
 
     <div class="row mb-3">
       <div class="col">
@@ -20,8 +20,8 @@
         <input type="text" class="form-control" placeholder="Filter by artist id" [(ngModel)]="filters.artist_id">
       </div>
       <div class="col">
-        <button class="btn btn-primary" (click)="applyFilters()">Apply</button>
-        <button class="btn btn-secondary" (click)="clearFilters()">Clear</button>
+        <button class="btn btn-primary" (click)="applyFilters()">Aplicar</button>
+        <button class="btn btn-secondary" (click)="clearFilters()">Limpiar</button>
       </div>
     </div>
 
@@ -44,7 +44,7 @@
               </g>
             </g>
           </svg>
-          <p>Loading...</p>
+          <p>Cargando...</p>
         </div>
 
         <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
@@ -57,19 +57,19 @@
         <thead>
           <tr>
             <th class="text-dark font-medium fs-4" (click)="setSortColumn('title')">
-              Title
+              Título
               <span *ngIf="sortColumn === 'title'">
                 <i [ngClass]="sortDirection === 'asc' ? 'fa fa-arrow-up' : 'fa fa-arrow-down'"></i>
               </span>
             </th>
             <th class="text-dark font-medium fs-4" (click)="setSortColumn('description')">
-              Description
+              Descripción
               <span *ngIf="sortColumn === 'description'">
                 <i [ngClass]="sortDirection === 'asc' ? 'fa fa-arrow-up' : 'fa fa-arrow-down'"></i>
               </span>
             </th>
             <th class="text-dark font-medium fs-4" (click)="setSortColumn('year')">
-              Year
+              Año
               <span *ngIf="sortColumn === 'year'">
                 <i [ngClass]="sortDirection === 'asc' ? 'fa fa-arrow-up' : 'fa fa-arrow-down'"></i>
               </span>
@@ -82,7 +82,7 @@
               </span>
             </th>
             <th class="text-dark font-medium fs-4" (click)="setSortColumn('numberOfSongs')">
-              Number of Songs
+              Número de canciones
               <span *ngIf="sortColumn === 'numberOfSongs'">
                 <i [ngClass]="sortDirection === 'asc' ? 'fa fa-arrow-up' : 'fa fa-arrow-down'"></i>
               </span>
@@ -114,9 +114,9 @@
         </tbody>
       </table>
       <div class="d-flex justify-content-between">
-        <button class="btn btn-primary" (click)="previousPage()" [disabled]="currentPage === 1">Previous</button>
+        <button class="btn btn-primary" (click)="previousPage()" [disabled]="currentPage === 1">Anterior</button>
         <span>Page {{ currentPage }}</span>
-        <button class="btn btn-primary" (click)="nextPage()" [disabled]="albumsList.length < 10">Next</button>
+        <button class="btn btn-primary" (click)="nextPage()" [disabled]="albumsList.length < 10">Siguiente</button>
       </div>
     </div>
   </div>

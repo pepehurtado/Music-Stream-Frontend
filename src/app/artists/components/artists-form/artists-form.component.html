@@ -1,6 +1,6 @@
 <div class="card">
   <div class="card-body">
-    <h4 class="card-title">Add New Artist</h4>
+    <h4 class="card-title">Crear nuevo artista</h4>
 
     <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
       {{ errorMessage }}
@@ -12,22 +12,22 @@
 
     <form [formGroup]="artistForm" (ngSubmit)="submitForm()">
       <div class="mb-3">
-        <label for="name" class="form-label">Name</label>
+        <label for="name" class="form-label">Nombre</label>
         <input type="text" id="name" class="form-control" formControlName="name">
       </div>
       <div class="mb-3">
-        <label for="age" class="form-label">Age</label>
+        <label for="age" class="form-label">Edad</label>
         <input type="number" id="age" class="form-control" formControlName="age">
       </div>
       <div class="mb-3">
-        <label for="country" class="form-label">Country</label>
+        <label for="country" class="form-label">País</label>
         <input type="text" id="country" class="form-control" formControlName="country">
       </div>
       <div class="mb-3">
-        <label for="dateOfBirth" class="form-label">Date of Birth</label>
+        <label for="dateOfBirth" class="form-label">Fecha de nacimiento</label>
         <input type="date" id="dateOfBirth" class="form-control" formControlName="dateOfBirth">
       </div>
-      <button type="submit" class="btn btn-primary">Submit</button>
+      <button type="submit" class="btn btn-primary">Crear</button>
     </form>
   </div>
 </div>

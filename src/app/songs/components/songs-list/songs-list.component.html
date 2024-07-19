@@ -1,7 +1,7 @@
 <div class="card">
   <div class="card-body">
-    <h4 class="card-title">Song Listing</h4>
-    <h5 class="card-subtitle text-muted">Overview of all songs</h5>
+    <h4 class="card-title">Lista de canciones</h4>
+    <h5 class="card-subtitle text-muted">Listado de todas las canciones disponibles</h5>
 
     <div class="row mb-3">
       <!-- Filtros de búsqueda -->
@@ -18,26 +18,20 @@
         <input type="text" class="form-control" placeholder="Filter by album id" [(ngModel)]="filters.album">
       </div>
       <div class="col">
-        <button class="btn btn-primary" (click)="applyFilters()">Apply</button>
-        <button class="btn btn-secondary" (click)="clearFilters()">Clear</button>
+        <button class="btn btn-primary" (click)="applyFilters()">Aplicar</button>
+        <button class="btn btn-secondary" (click)="clearFilters()">Limpiar</button>
       </div>
     </div>
 
     <!-- Indicador de carga -->
-    <div class="text-center" *ngIf="songsList.length === 0 && errorMessage===''">
+    <div class="text-center" *ngIf="songsList.length === 0 && errorMessage === ''">
       <!-- SVG de carga (puedes personalizar este SVG según tu diseño) -->
       <svg width="50px" height="50px" viewBox="0 0 38 38" xmlns="http://www.w3.org/2000/svg" stroke="#007bff">
         <g fill="none" fill-rule="evenodd">
           <g transform="translate(1 1)" stroke-width="2">
-            <circle stroke-opacity=".5" cx="18" cy="18" r="18"/>
+            <circle stroke-opacity=".5" cx="18" cy="18" r="18" />
             <path d="M36 18c0-9.94-8.06-18-18-18">
-              <animateTransform
-                attributeName="transform"
-                type="rotate"
-                from="0 18 18"
-                to="360 18 18"
-                dur="1s"
-                repeatCount="indefinite"/>
+              <animateTransform attributeName="transform" type="rotate" from="0 18 18" to="360 18 18" dur="1s" repeatCount="indefinite" />
             </path>
           </g>
         </g>
@@ -51,26 +45,30 @@
 
     <!-- Lista de canciones -->
     <div class="table-responsive" *ngIf="songsList.length !== 0">
-        <!-- Mostrar tarjeta con iframe seleccionado -->
-  <div class="" *ngIf="selectedSong && safeUrl">
-    <div class="card-body text-center">
-      <h4 class="card-title">Selected Song</h4>
-      <div class="embed-responsive embed-responsive-16by9">
-        <iframe style="border-radius:12px" [src]="safeUrl" width="35%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+      <!-- Mostrar tarjeta con iframe seleccionado o mensaje si no hay ninguna canción seleccionada -->
+      <div class="card-body text-center">
+        <h4 class="card-title">Canción seleccionada</h4>
+        <div *ngIf="selectedSong && safeUrl; else noSongSelected">
+          <div class="embed-responsive embed-responsive-16by9">
+            <iframe style="border-radius:12px" [src]="safeUrl" width="35%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+          </div>
+        </div>
+        <ng-template #noSongSelected>
+          <p>No hay ninguna canción seleccionada.</p>
+        </ng-template>
       </div>
-    </div>
-  </div>
+
       <table class="table align-middle text-nowrap">
         <thead>
           <tr>
             <th class="text-dark font-medium fs-4" (click)="setSortColumn('title')">
-              Title
+              Título
               <span *ngIf="sortColumn === 'title'">
                 <i [ngClass]="sortDirection === 'asc' ? 'fa fa-arrow-up' : 'fa fa-arrow-down'"></i>
               </span>
             </th>
             <th class="text-dark font-medium fs-4" (click)="setSortColumn('time')">
-              Time
+              Duración
               <span *ngIf="sortColumn === 'time'">
                 <i [ngClass]="sortDirection === 'asc' ? 'fa fa-arrow-up' : 'fa fa-arrow-down'"></i>
               </span>
@@ -111,9 +109,9 @@
 
       <!-- Paginación -->
       <div class="d-flex justify-content-between mt-3">
-        <button class="btn btn-primary" (click)="previousPage()" [disabled]="currentPage === 1">Previous</button>
-        <span>Page {{ currentPage }}</span>
-        <button class="btn btn-primary" (click)="nextPage()">Next</button>
+        <button class="btn btn-primary" (click)="previousPage()" [disabled]="currentPage === 1">Anterior</button>
+        <span>Página {{ currentPage }}</span>
+        <button class="btn btn-primary" (click)="nextPage()">Siguiente</button>
       </div>
     </div>
   </div>
