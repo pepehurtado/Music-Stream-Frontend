@@ -1,6 +1,9 @@
 <div class="card">
   <div class="card-body">
-    <h4 class="card-title">{{ isEditMode ? 'Editar artista' : 'Crear nuevo artista' }}</h4>
+    <h4 class="card-title"> <button class="btn btn-primary" routerLink="/artists">
+      <i class="bi bi-arrow-left"></i>
+    </button>
+    {{ isEditMode ? 'Editar artista' : 'Crear nuevo artista' }}</h4>
 
     <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
       {{ errorMessage }}

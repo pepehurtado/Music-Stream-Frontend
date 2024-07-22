@@ -1,16 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import {
-  ApexAxisChartSeries,
-  ApexChart,
-  ChartComponent,
-  ApexDataLabels,
-  ApexYAxis,
-  ApexLegend,
-  ApexXAxis,
-  ApexTooltip,
-  ApexTheme,
-  ApexGrid
-} from 'ng-apexcharts';
+import { ApexAxisChartSeries, ApexChart, ChartComponent, ApexDataLabels, ApexYAxis, ApexLegend, ApexXAxis, ApexTooltip, ApexTheme, ApexGrid } from 'ng-apexcharts';
+import { HistoryService } from '../../service/history.service';
 
 export type salesChartOptions = {
   series: ApexAxisChartSeries | any;
@@ -35,18 +25,10 @@ export class SalesSummaryComponent implements OnInit {
 
   @ViewChild("chart") chart: ChartComponent = Object.create(null);
   public salesChartOptions: Partial<salesChartOptions>;
-  constructor() {
+
+  constructor(private historyService: HistoryService) {
     this.salesChartOptions = {
-      series: [
-        {
-          name: "Iphone 13",
-          data: [0, 31, 40, 28, 51, 42, 109, 100],
-        },
-        {
-          name: "Oneplue 9",
-          data: [0, 11, 32, 45, 32, 34, 52, 41],
-        },
-      ],
+      series: [],
       chart: {
         fontFamily: 'Nunito Sans,sans-serif',
         height: 250,
@@ -65,17 +47,20 @@ export class SalesSummaryComponent implements OnInit {
       grid: {
         strokeDashArray: 3,
       },
-
       xaxis: {
         categories: [
-          "Jan",
-          "Feb",
-          "March",
-          "April",
-          "May",
-          "June",
-          "July",
-          "Aug",
+          "Enero",
+          "Febrero",
+          "Marzo",
+          "Abril",
+          "Mayo",
+          "Junio",
+          "Julio",
+          "Agosto",
+          "Septembre",
+          "Octubre",
+          "Noviembre",
+          "Diciembre",
         ],
       },
       tooltip: {
@@ -85,6 +70,36 @@ export class SalesSummaryComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.loadData();
   }
 
+  loadData(): void {
+    //Poner el ultimo dia del año actual, 31-12-AñoActual
+    const today = new Date().getFullYear() + '-12-31';
+    this.historyService.getAllEntitiesByDate(today).subscribe(data => {
+      const seriesData = this.processAllData(data);
+      this.salesChartOptions.series = seriesData;
+    });
+  }
+
+  processAllData(data: any[]): any[] {
+    const types = ['Artist', 'Song', 'Album', 'Genre'];
+    return data.map((typeData, index) => {
+      const counts = this.processData(typeData);
+      return {
+        name: types[index],
+        data: counts
+      };
+    });
+  }
+
+  processData(data: any[]): number[] {
+    const counts = Array(12).fill(0);
+    data.forEach(item => {
+      const date = new Date(item.timestamp);
+      const month = date.getMonth(); // Get month index (0-11)
+      counts[month]++;
+    });
+    return counts;
+  }
 }
