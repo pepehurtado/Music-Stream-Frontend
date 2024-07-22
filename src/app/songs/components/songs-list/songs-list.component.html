@@ -85,6 +85,9 @@
                 <i [ngClass]="sortDirection === 'asc' ? 'fa fa-arrow-up' : 'fa fa-arrow-down'"></i>
               </span>
             </th>
+            <th class="text-dark font-medium fs-4" (click)="setSortColumn('url')">
+                  Acciones
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -103,6 +106,14 @@
             <td>
               <span class="fs-4">{{ song.album_name }}</span>
             </td>
+            <td>
+              <button class="btn btn-danger" (click)="openDeleteModal(song)">
+                <i class="bi bi-trash"></i>
+              </button>
+              <a class="btn btn-secondary" [routerLink]="['/songs/edit', song.id]">
+                <i class="bi bi-pencil"></i>
+              </a>
+            </td>
           </tr>
         </tbody>
       </table>
@@ -113,6 +124,27 @@
         <span>Página {{ currentPage }}</span>
         <button class="btn btn-primary" (click)="nextPage()">Siguiente</button>
       </div>
+
+      <!-- Modal para eliminar artista -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true" [ngClass]="{'show': showModal, 'd-block': showModal}">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteModalLabel">Eliminar canción</h5>
+        <button type="button" class="btn-close" (click)="closeDeleteModal()"></button>
+      </div>
+      <div class="modal-body">
+        ¿Estás seguro de que deseas eliminar la cancion {{ songToDelete?.name }}?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeDeleteModal()">Cancelar</button>
+        <button type="button" class="btn btn-danger" (click)="confirmDelete()">Eliminar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
     </div>
   </div>
 </div>

@@ -11,6 +11,12 @@ const routes: Routes = [
     path: "create-song",
     component: SongsFormComponent
   },
+
+  {
+    path: "edit/:id",
+    component: SongsFormComponent
+  },
+
   {
     path: "",
     component: SongsListComponent,

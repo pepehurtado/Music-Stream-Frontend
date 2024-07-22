@@ -19,6 +19,7 @@ export class SongsListComponent implements OnInit {
   public currentPage: number = 1;
   public itemsPerPage: number = 10;
   public errorMessage: string = '';
+  public songToDelete: any = null;
   public filters: any = {
     title: '',
     time: '',
@@ -27,6 +28,7 @@ export class SongsListComponent implements OnInit {
   };
   public selectedSong: Song | null = null;
   public safeUrl: SafeResourceUrl | null = null;
+  showModal = false;
 
   constructor(private songService: SongService, private albumService: AlbumService, private sanitizer: DomSanitizer) { }
 
@@ -165,4 +167,37 @@ export class SongsListComponent implements OnInit {
         // Construir la URL segura usando el ID de la canción
         this.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(`https://open.spotify.com/embed/track/${songId}?utm_source=generator&autoplay=1`);
 }
+
+openDeleteModal(artist: any) {
+  this.songToDelete = artist;
+  this.showModal = true;
+}
+
+closeDeleteModal() {
+  this.showModal = false;
+  this.songToDelete = null;
+}
+
+confirmDelete() {
+  // Lógica para eliminar al artista
+  if (this.songToDelete) {
+    // Elimina al artista de la lista (o realiza una llamada a un servicio para eliminarlo)
+    this.songService.deleteSong(this.songToDelete.id).subscribe(
+      (response) => {
+        console.log('Song deleted successfully:', response);
+        this.songToDelete = null;
+        this.closeDeleteModal();
+        this.loadSongs();
+      },
+      (error) => {
+        console.error('Error deleting artist:', error);
+        this.songToDelete = null;
+        this.closeDeleteModal();
+      }
+    );
+    this.songToDelete = null;
+    this.closeDeleteModal();
+  }
+}
+
 }

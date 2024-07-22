@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { SongService } from '../../services/songs.service';
 import { Artist } from 'src/app/artists/components/interfaces/artists.interfaces';
 import { ArtistService } from 'src/app/artists/services/artists.service';
@@ -17,11 +17,14 @@ export class SongsFormComponent implements OnInit {
   artists: Artist[] = [];
   filteredArtists: Artist[] = [];
   selectedArtists: Artist[] = [];
+  isEditMode = false;
+  songId: number | null = null;
 
   constructor(
     private fb: FormBuilder,
     private songService: SongService,
-    private artistService: ArtistService, // Ajusta el servicio de artistas según sea necesario
+    private artistService: ArtistService,
+    private route: ActivatedRoute,
     private router: Router
   ) {
     this.songForm = this.fb.group({
@@ -30,12 +33,41 @@ export class SongsFormComponent implements OnInit {
       url: ['', Validators.required],
       artistSearch: [''],
       album: [''],
-      artists: [[]] // Agregar campo artists en el formulario
+      artists: [[]] // Campo para los artistas seleccionados
     });
   }
 
   ngOnInit(): void {
-    this.loadArtists();
+    this.route.paramMap.subscribe(params => {
+      this.loadArtists();
+      const id = params.get('id');
+      if (id) {
+        this.isEditMode = true;
+        this.songId = +id;
+        this.loadSongData(this.songId);
+      }
+    });
+  }
+
+  loadSongData(id: number): void {
+    this.songService.getSongById(id).subscribe(
+      (song) => {
+        this.songForm.patchValue({
+          title: song.title,
+          time: song.time,
+          url: song.url,
+          album: song.album || ''
+        });
+        //Como song.artists es un array de enteros, se debe buscar el objeto artista correspondiente
+        this.selectedArtists = song.artists.map((artistId: number) => this.artists.find(artist => artist.id === artistId)!);
+        console.log('Selected artists:', this.selectedArtists);
+        this.updateArtistsField();
+      },
+      (error) => {
+        this.errorMessage = 'Error loading song data. ' + error.error.description;
+        console.error('Error loading song data:', error);
+      }
+    );
   }
 
   loadArtists(): void {
@@ -45,15 +77,14 @@ export class SongsFormComponent implements OnInit {
       },
       (error) => {
         console.error('Error fetching artists:', error);
-        this.loadArtists();
       }
     );
   }
 
   searchArtists(event: Event): void {
-    const searchTerm = (event.target as HTMLInputElement).value.trim(); // Asegúrate de usar .trim() para eliminar espacios en blanco
+    const searchTerm = (event.target as HTMLInputElement).value.trim();
     if (searchTerm === '') {
-      this.filteredArtists = []; // Limpiar la lista si no hay término de búsqueda
+      this.filteredArtists = [];
       return;
     }
     this.filteredArtists = this.artists.filter(artist =>
@@ -65,14 +96,14 @@ export class SongsFormComponent implements OnInit {
     if (!this.selectedArtists.includes(artist)) {
       this.selectedArtists.push(artist);
     }
-    this.updateArtistsField(); // Actualizar el campo artists en el formulario
+    this.updateArtistsField();
     this.songForm.get('artistSearch')?.reset();
     this.filteredArtists = [];
   }
 
   removeArtist(artist: Artist): void {
     this.selectedArtists = this.selectedArtists.filter(a => a !== artist);
-    this.updateArtistsField(); // Actualizar el campo artists en el formulario
+    this.updateArtistsField();
   }
 
   updateArtistsField(): void {
@@ -84,27 +115,43 @@ export class SongsFormComponent implements OnInit {
   submitForm(): void {
     if (this.songForm.valid) {
       const formData = this.songForm.value;
-      //Eliminar del formulario el campo artistSearch
       delete formData.artistSearch;
-      if(formData.album === '') {
+      if (formData.album === '') {
         delete formData.album;
       }
-      this.songService.createSong(formData).subscribe(
-        (response) => {
-          this.successMessage = 'Song created successfully!';
-          this.errorMessage = null;
-          this.songForm.reset();
-          this.selectedArtists = [];
-          setTimeout(() => {
-            this.router.navigateByUrl('/songs');
-          }, 1300);
-        },
-        (error) => {
-          this.errorMessage = 'Error creating song. ' + error.error.description;
-          this.successMessage = null;
-          console.error('Error creating song:', error);
-        }
-      );
+      if (this.isEditMode && this.songId) {
+        this.songService.updateSong(this.songId, formData).subscribe(
+          (response) => {
+            this.successMessage = 'Song updated successfully!';
+            this.errorMessage = null;
+            setTimeout(() => {
+              this.router.navigateByUrl('/songs');
+            }, 2000);
+          },
+          (error) => {
+            this.errorMessage = 'Error updating song. ' + error.error.description;
+            this.successMessage = null;
+            console.error('Error updating song:', error);
+          }
+        );
+      } else {
+        this.songService.createSong(formData).subscribe(
+          (response) => {
+            this.successMessage = 'Song created successfully!';
+            this.errorMessage = null;
+            this.songForm.reset();
+            this.selectedArtists = [];
+            setTimeout(() => {
+              this.router.navigateByUrl('/songs');
+            }, 2000);
+          },
+          (error) => {
+            this.errorMessage = 'Error creating song. ' + error.error.description;
+            this.successMessage = null;
+            console.error('Error creating song:', error);
+          }
+        );
+      }
     } else {
       this.errorMessage = 'Please fill out all required fields.';
       this.successMessage = null;

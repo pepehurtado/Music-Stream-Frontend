@@ -46,4 +46,16 @@ export class SongService {
     // Realizar la solicitud GET con los parámetros
     return this.http.get<any>(this.apiUrl, { params: params });
   }
+
+  getSongById(id: number): Observable<any> {
+    return this.http.get(this.apiUrl + '/' + id);
+  }
+
+  updateSong(id: number, artistData: Song): Observable<any> {
+    return this.http.patch(this.apiUrl + '/' + id, artistData);
+  }
+
+  deleteSong(id: number): Observable<any> {
+    return this.http.delete(this.apiUrl + '/' + id);
+  }
 }
