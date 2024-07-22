@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Song } from 'src/app/songs/components/interfaces/song.interfaces';
 
@@ -8,8 +8,9 @@ import { Song } from 'src/app/songs/components/interfaces/song.interfaces';
   styleUrls: ['./artists-list-songs.component.scss']
 })
 export class ArtistListSongsComponent implements OnInit {
-  artist: string = '';
-  songsList: Song[] = [];
+  @Input() songsList: Song[] = [];
+  @Input() artist: string | undefined;
+
 
   constructor(private route: ActivatedRoute) { }
 

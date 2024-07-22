@@ -14,20 +14,31 @@ export class ArtistsListComponent implements OnInit {
   public sortColumn: keyof Artist = 'name';
   public sortDirection: 'asc' | 'desc' = 'asc';
   public currentPage: number = 1;
-  public itemsPerPage: number = 10;
+  public itemsPerPage: number = 2;
+  public itemsPerPageOptions: number[] = [2, 10, 20, 50];
   public errorMessage: string = '';
+  public artistToDelete: any = null;
+  public selectedArtist: any = null;
+  public collectionSize: number = 0;
+  public isFinalPage: boolean = false;
   public filters: any = {
     name: '',
     age: '',
     country: '',
     dateOfBirth: ''
   };
+
   showModal = false;
-  artistToDelete: any = null;
+  showSongsModal = false;
 
   constructor(private artistService: ArtistService, private router: Router) { }
 
   ngOnInit(): void {
+    this.loadArtists();
+  }
+
+  onPageChange(page: number): void {
+    this.currentPage = page;
     this.loadArtists();
   }
 
@@ -39,6 +50,14 @@ export class ArtistsListComponent implements OnInit {
           console.log('Artists:', this.artistList);
           this.sortArtists(); // Ordenar después de recibir los datos si es necesario
           if (this.artistList.length === 0) {
+            //Si no es la primera pagina y no hay artistas, regresar a la pagina anterior
+            if (this.currentPage > 1) {
+              this.currentPage--;
+              this.loadArtists();
+              //Bloquea el boton de siguiente si no hay artistas
+              this.isFinalPage = true;
+              return;
+            }
             this.errorMessage = 'No artists found';
             console.error('No artists found');
           }
@@ -79,8 +98,21 @@ export class ArtistsListComponent implements OnInit {
     this.loadArtists();
   }
 
+  firstPage(): void {
+    this.currentPage = 1;
+    this.artistList = [];
+    this.isFinalPage = false;
+    this.loadArtists();
+  }
+
   nextPage(): void {
     this.currentPage++;
+    this.artistList = [];
+    this.loadArtists();
+  }
+
+  lastPage(): void {
+    this.currentPage = Math.ceil(this.collectionSize / this.itemsPerPage);
     this.artistList = [];
     this.loadArtists();
   }
@@ -89,6 +121,7 @@ export class ArtistsListComponent implements OnInit {
     if (this.currentPage > 1) {
       this.currentPage--;
       this.artistList = [];
+      this.isFinalPage = false;
       this.loadArtists();
     }
   }
@@ -147,6 +180,20 @@ export class ArtistsListComponent implements OnInit {
       this.artistToDelete = null;
       this.closeDeleteModal();
     }
+  }
+
+  openSongsModal(artist: Artist) {
+    this.selectedArtist = artist;
+    this.showSongsModal = true;
+  }
+
+  closeSongsModal() {
+    this.selectedArtist = null;
+    this.showSongsModal = false;
+  }
+  onItemsPerPageChange(): void {
+    this.currentPage = 1; // Resetear a la primera página cuando cambie el número de ítems por página
+    this.loadArtists();
   }
 
 }

@@ -21,6 +21,8 @@ import { Approutes } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SpinnerComponent } from './shared/spinner.component';
 import { ArtistsListComponent } from './artists/components/artists-list/artists-list.component';
+import { ArtistsModule } from "./artists/artists.module";
+import { PipesModule } from './pipes/pipes.module';
 
 @NgModule({
   declarations: [
@@ -40,7 +42,9 @@ import { ArtistsListComponent } from './artists/components/artists-list/artists-
     FullComponent,
     NavigationComponent,
     SidebarComponent,
-  ],
+    ArtistsModule,
+    PipesModule,
+],
   providers: [
     {
       provide: LocationStrategy,

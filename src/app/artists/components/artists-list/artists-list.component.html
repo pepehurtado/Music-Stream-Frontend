@@ -3,6 +3,16 @@
     <h4 class="card-title">Lista de artistas</h4>
     <h5 class="card-subtitle text-muted">Listado de todos los artistas disponibles</h5>
 
+
+  <div class="row mb-3">
+    <div class="col">
+      <label for="itemsPerPageSelect" class="form-label">Items por página</label>
+      <select id="itemsPerPageSelect" class="form-select" [(ngModel)]="itemsPerPage" (change)="onItemsPerPageChange()">
+        <option *ngFor="let option of itemsPerPageOptions" [value]="option">{{ option }}</option>
+      </select>
+    </div>
+  </div>
+
     <!-- Filtros de búsqueda -->
     <div class="row mb-3">
       <div class="col">
@@ -101,7 +111,7 @@
               <button class="btn btn-danger" (click)="openDeleteModal(artist)">
                 <i class="bi bi-trash"></i>
               </button>
-              <a class="btn btn-primary" (click)="navigateToSongs(artist)">
+              <a class="btn btn-primary" (click)="openSongsModal(artist)">
                 <i class="bi bi-music-note-list"></i>
               </a>
               <a class="btn btn-secondary" [routerLink]="['/artists/edit', artist.id]">
@@ -114,9 +124,15 @@
 
       <!-- Navegación de paginación -->
       <div class="d-flex justify-content-between">
+      <button class="btn btn-primary" (click)="firstPage()" [disabled]="currentPage === 1">
+        <i class="bi bi-arrow-left"></i>
+      </button>
         <button class="btn btn-primary" (click)="previousPage()" [disabled]="currentPage === 1">Anterior</button>
         <span>Página {{ currentPage }}</span>
-        <button class="btn btn-primary" (click)="nextPage()" [disabled]="artistList.length < 10">Siguiente</button>
+        <button class="btn btn-primary" (click)="nextPage()" [disabled]="artistList.length < itemsPerPage || isFinalPage">Siguiente</button>
+        <button class="btn btn-primary" (click)="lastPage()" [disabled]="artistList.length < itemsPerPage">
+          <i class="bi bi-arrow-right"></i>
+        </button>
       </div>
     </div>
   </div>
@@ -136,6 +152,24 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" (click)="closeDeleteModal()">Cancelar</button>
         <button type="button" class="btn btn-danger" (click)="confirmDelete()">Eliminar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal para mostrar canciones del artista -->
+<div class="modal fade" id="songsModal" tabindex="-1" aria-labelledby="songsModalLabel" aria-hidden="true" [ngClass]="{'show': showSongsModal, 'd-block': showSongsModal}">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="songsModalLabel">Canciones de {{selectedArtist?.name}}</h5>
+        <button type="button" class="btn-close" aria-label="Close" (click)="closeSongsModal()"></button>
+      </div>
+      <div class="modal-body">
+        <app-artists-list-songs [songsList]="selectedArtist?.singleSongList" [artist]="selectedArtist?.name"></app-artists-list-songs>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeSongsModal()">Cerrar</button>
       </div>
     </div>
   </div>

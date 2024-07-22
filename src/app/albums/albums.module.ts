@@ -6,6 +6,7 @@ import { AlbumsListComponent} from "./components/albums-list/albums-list.compone
 import { AlbumsFormComponent } from "./components/albums-form/albums-form.component";
 import { Album } from './components/interfaces/album.interfaces';
 import { AlbumsListSongsComponent } from './components/albums-list-songs/albums-list-songs.component';
+import { PipesModule } from "../pipes/pipes.module";
 
 
 const routes: Routes = [
@@ -29,6 +30,7 @@ const routes: Routes = [
     ReactiveFormsModule,
     CommonModule,
     RouterModule.forChild(routes),
+    PipesModule,
   ],
   declarations: [
     AlbumsListComponent,

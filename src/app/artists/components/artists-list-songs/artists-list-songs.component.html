@@ -1,8 +1,7 @@
 <div class="card">
   <div class="card-body">
-    <h4 class="card-title">     <button class="btn btn-primary" routerLink="/artists">
-      <i class="bi bi-arrow-left"></i>
-    </button> Canciones de {{artist}}</h4>
+    <h4 class="card-title">
+    Canciones de {{artist}}</h4>
     <div class="table-responsive">
       <table class="table align-middle text-nowrap">
         <thead>
@@ -16,8 +15,10 @@
         <tbody>
           <tr *ngFor="let song of songsList">
             <td>{{ song.title }}</td>
-            <td>{{ song.time }}</td>
-            <td>{{ song.url }}</td>
+            <td>{{ song.time | duration }}</td>
+            <td>
+              <a [href]="song.url" target="_blank">Ver más</a>
+            </td>
             <td>{{ song.album_name }}</td>
           </tr>
         </tbody>

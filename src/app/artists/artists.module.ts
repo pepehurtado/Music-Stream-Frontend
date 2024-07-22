@@ -7,6 +7,8 @@ import { ArtistsListComponent } from "./components/artists-list/artists-list.com
 import { ArtistsFormComponent } from './components/artists-form/artists-form.component';
 import { ArtistListSongsComponent } from "./components/artists-list-songs/artists-list-songs.component";
 import { BrowserModule } from "@angular/platform-browser";
+import { PipesModule } from "../pipes/pipes.module";
+import { NgbPaginationModule } from "@ng-bootstrap/ng-bootstrap";
 
 const routes: Routes = [
   {
@@ -33,12 +35,15 @@ const routes: Routes = [
     ReactiveFormsModule,
     CommonModule,
     RouterModule.forChild(routes),
-    FormsModule
+    FormsModule,
+    PipesModule,
+    NgbPaginationModule,
   ],
   declarations: [
 
     ArtistsFormComponent,
       ArtistListSongsComponent,
   ],
+  exports: [ArtistListSongsComponent],
 })
 export class ArtistsModule {}
