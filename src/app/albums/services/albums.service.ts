@@ -34,6 +34,7 @@ export class AlbumService {
   }
 
   createAlbum(albumData: Album): Observable<any> {
+    console.log(JSON.stringify(albumData));
     return this.http.post(this.apiUrl, albumData);
   }
 
