@@ -62,7 +62,7 @@ export class SongsListComponent implements OnInit {
       (data) => {
         data.forEach(song => {
           if (song.album != null) {
-            this.albumService.getAlbumById(song.album)
+            this.albumService.getAlbumById(song.album.toString())
             .pipe(
               retry(12),
               catchError(error => {

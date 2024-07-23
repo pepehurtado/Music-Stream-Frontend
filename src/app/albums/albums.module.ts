@@ -19,6 +19,10 @@ const routes: Routes = [
     component: AlbumsListSongsComponent
   },
   {
+    path: "edit/:id",
+    component: AlbumsFormComponent
+  },
+  {
     path: "",
     component: AlbumsListComponent,
   },

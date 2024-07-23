@@ -59,34 +59,35 @@
             <th class="text-dark font-medium fs-4" (click)="setSortColumn('title')">
               Título
               <span *ngIf="sortColumn === 'title'">
-                <i [ngClass]="sortDirection === 'asc' ? 'fa fa-arrow-up' : 'fa fa-arrow-down'"></i>
+                <i [ngClass]="sortDirection === 'asc' ? 'bi bi-arrow-up' : 'bi bi-arrow-down'"></i>
               </span>
             </th>
             <th class="text-dark font-medium fs-4" (click)="setSortColumn('description')">
               Descripción
               <span *ngIf="sortColumn === 'description'">
-                <i [ngClass]="sortDirection === 'asc' ? 'fa fa-arrow-up' : 'fa fa-arrow-down'"></i>
+                <i [ngClass]="sortDirection === 'asc' ? 'bi bi-arrow-up' : 'bi bi-arrow-down'"></i>
               </span>
             </th>
             <th class="text-dark font-medium fs-4" (click)="setSortColumn('year')">
               Año
               <span *ngIf="sortColumn === 'year'">
-                <i [ngClass]="sortDirection === 'asc' ? 'fa fa-arrow-up' : 'fa fa-arrow-down'"></i>
+                <i [ngClass]="sortDirection === 'asc' ? 'bi bi-arrow-up' : 'bi bi-arrow-down'"></i>
               </span>
             </th>
 
             <th class="text-dark font-medium fs-4" (click)="setSortColumn('url')">
               URL
               <span *ngIf="sortColumn === 'url'">
-                <i [ngClass]="sortDirection === 'asc' ? 'fa fa-arrow-up' : 'fa fa-arrow-down'"></i>
+                <i [ngClass]="sortDirection === 'asc' ? 'bi bi-arrow-up' : 'bi bi-arrow-down'"></i>
               </span>
             </th>
             <th class="text-dark font-medium fs-4" (click)="setSortColumn('numberOfSongs')">
               Número de canciones
               <span *ngIf="sortColumn === 'numberOfSongs'">
-                <i [ngClass]="sortDirection === 'asc' ? 'fa fa-arrow-up' : 'fa fa-arrow-down'"></i>
+                <i [ngClass]="sortDirection === 'asc' ? 'bi bi-arrow-up' : 'bi bi-arrow-down'"></i>
               </span>
             </th>
+            <th class="text-dark font-medium fs-4">Acciones</th>
           </tr>
         </thead>
 
@@ -110,14 +111,42 @@
             <td>
               <a class="btn btn-primary" (click)="navigateToSongs(album)">{{album.numberOfSongs}}</a>
             </td>
+           <td>
+              <button class="btn btn-danger" (click)="openDeleteModal(album)">
+                <i class="bi bi-trash"></i>
+              </button>
+              <a class="btn btn-secondary" [routerLink]="['/albums/edit', album.id]">
+                <i class="bi bi-pencil"></i>
+              </a>
+            </td>
           </tr>
         </tbody>
       </table>
       <div class="d-flex justify-content-between">
         <button class="btn btn-primary" (click)="previousPage()" [disabled]="currentPage === 1">Anterior</button>
-        <span>Page {{ currentPage }}</span>
+        <span>Página {{ currentPage }}</span>
         <button class="btn btn-primary" (click)="nextPage()" [disabled]="albumsList.length < 10">Siguiente</button>
       </div>
     </div>
   </div>
+
+  <!-- Modal para eliminar artista -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true" [ngClass]="{'show': showModal, 'd-block': showModal}">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteModalLabel">Eliminar albúm</h5>
+        <button type="button" class="btn-close" (click)="closeDeleteModal()"></button>
+      </div>
+      <div class="modal-body">
+        ¿Estás seguro de que deseas eliminar al album {{ albumToDelete?.title }}?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeDeleteModal()">Cancelar</button>
+        <button type="button" class="btn btn-danger" (click)="confirmDelete()">Eliminar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 </div>

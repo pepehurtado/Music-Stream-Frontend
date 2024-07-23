@@ -64,25 +64,25 @@
             <th class="text-dark font-medium fs-4" (click)="setSortColumn('title')">
               Título
               <span *ngIf="sortColumn === 'title'">
-                <i [ngClass]="sortDirection === 'asc' ? 'fa fa-arrow-up' : 'fa fa-arrow-down'"></i>
+                <i [ngClass]="sortDirection === 'asc' ? 'bi bi-arrow-up' : 'bi bi-arrow-down'"></i>
               </span>
             </th>
             <th class="text-dark font-medium fs-4" (click)="setSortColumn('time')">
               Duración
               <span *ngIf="sortColumn === 'time'">
-                <i [ngClass]="sortDirection === 'asc' ? 'fa fa-arrow-up' : 'fa fa-arrow-down'"></i>
+                <i [ngClass]="sortDirection === 'asc' ? 'bi bi-arrow-up' : 'bi bi-arrow-down'"></i>
               </span>
             </th>
             <th class="text-dark font-medium fs-4" (click)="setSortColumn('url')">
               URL
               <span *ngIf="sortColumn === 'url'">
-                <i [ngClass]="sortDirection === 'asc' ? 'fa fa-arrow-up' : 'fa fa-arrow-down'"></i>
+                <i [ngClass]="sortDirection === 'asc' ? 'bi bi-arrow-up' : 'bi bi-arrow-down'"></i>
               </span>
             </th>
             <th class="text-dark font-medium fs-4" (click)="setSortColumn('album')">
               Album
               <span *ngIf="sortColumn === 'album'">
-                <i [ngClass]="sortDirection === 'asc' ? 'fa fa-arrow-up' : 'fa fa-arrow-down'"></i>
+                <i [ngClass]="sortDirection === 'asc' ? 'bi bi-arrow-up' : 'bi bi-arrow-down'"></i>
               </span>
             </th>
             <th class="text-dark font-medium fs-4" (click)="setSortColumn('url')">
@@ -95,13 +95,35 @@
             <td>
               <div class="d-flex align-items-center">
                 <div class="ms-3">
-                  <h5 class="mb-0 font-medium">{{ song.title }}</h5>
+                  <h5 class="mb-0 font-medium">
+                    <button style="
+  background-color: #85db34; /* Color de fondo azul */
+  color: #ffffff; /* Texto blanco */
+  border: none; /* Sin borde */
+  border-radius: 5px; /* Bordes redondeados */
+  padding: 5px 10px; /* Espaciado interno */
+  font-size: 18px; /* Tamaño de fuente */
+  font-weight: bold; /* Texto en negrita */
+  cursor: pointer; /* Cursor de mano */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra */
+  transition: background-color 0.3s, transform 0.3s; /* Transiciones suaves */
+  outline: none; /* Sin contorno en enfoque */
+  text-align: center; /* Centrar texto */
+  display: inline-block; /* Alinear el botón en línea */
+">
+  {{ song.title }}
+</button>
+                  </h5>
                 </div>
               </div>
             </td>
             <td class="fs-4">{{ song.time }}</td>
             <td>
-              <h5 class="mb-0 fw-normal">{{ song.url }}</h5>
+              <h5 class="mb-0 fw-normal">
+                <a [href]="song.url" target="_blank" rel="noopener noreferrer">
+                  https://open.spotify.com/track/{{ song.title }}
+                </a>
+                </h5>
             </td>
             <td>
               <span class="fs-4">{{ song.album_name }}</span>
@@ -148,3 +170,18 @@
     </div>
   </div>
 </div>
+
+
+<style>
+  button:hover {
+    background-color: #2980b9; /* Color de fondo al pasar el ratón */
+    transform: scale(1.05); /* Efecto de escala */
+  }
+
+  button:focus {
+    outline: none; /* Quitar el contorno en enfoque */
+  }
+  td {
+    cursor: pointer; /* Cursor de mano */
+  }
+</style>

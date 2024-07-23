@@ -1,6 +1,9 @@
 <div class="card">
   <div class="card-body">
-    <h4 class="card-title">Add New Album</h4>
+    <h4 class="card-title"> <button class="btn btn-primary" routerLink="/albums">
+      <i class="bi bi-arrow-left"></i>
+    </button>
+    {{ isEditMode ? 'Editar album' : 'Crear nuevo album' }}</h4>
 
     <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
       {{ errorMessage }}
@@ -48,11 +51,6 @@
 
         </ul>
       </div> -->
-
-      <div class="mb-3">
-        <label for="number_of_songs" class="form-label">Número de canciones</label>
-        <input type="number" id="number_of_songs" class="form-control" formControlName="number_of_songs">
-      </div>
       <button type="submit" class="btn btn-primary">Enviar</button>
     </form>
   </div>

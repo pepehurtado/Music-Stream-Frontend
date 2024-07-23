@@ -41,7 +41,15 @@ export class AlbumService {
     return this.http.post(this.apiUrl, albumData);
   }
 
-  getAlbumById(id: number): Observable<Album> {
+  getAlbumById(id: string): Observable<Album> {
     return this.http.get<Album>(`${this.apiUrl}/${id}`);
+  }
+
+  deleteAlbum(id: string): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/${id}`);
+  }
+
+  updateAlbum(id: string, albumData: Album): Observable<any> {
+    return this.http.patch(`${this.apiUrl}/${id}`, albumData);
   }
 }

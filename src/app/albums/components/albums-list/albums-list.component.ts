@@ -12,7 +12,7 @@ import { catchError, retry } from 'rxjs';
 export class AlbumsListComponent implements OnInit {
   @Input()
   public albumsList: Album[] = [];
-
+  public albumToDelete: Album | null = null;
   public sortColumn: keyof Album = 'title';
   public sortDirection: 'asc' | 'desc' = 'asc';
   public currentPage: number = 1;
@@ -25,6 +25,7 @@ export class AlbumsListComponent implements OnInit {
     url: '',
     artist_id: ''
   };
+  public showModal : boolean = false;
 
   constructor(private albumService: AlbumService, private router: Router) { }
 
@@ -123,4 +124,38 @@ export class AlbumsListComponent implements OnInit {
     console.log('Navigating to songs:', album.title);
     this.router.navigate(['/albums/albums-list-songs'], { state: { album: album.title } });
   }
+
+  openDeleteModal(album: Album) {
+    this.albumToDelete = album;
+    this.showModal = true;
+  }
+
+  closeDeleteModal() {
+    this.showModal = false;
+    this.albumToDelete = null;
+  }
+
+  confirmDelete() {
+    // Lógica para eliminar al artista
+    if (this.albumToDelete) {
+      // Elimina al artista de la lista (o realiza una llamada a un servicio para eliminarlo)
+      this.albumService.deleteAlbum(this.albumToDelete.id.toString()).subscribe(
+        (response) => {
+          console.log('Artist deleted successfully:', response);
+          this.albumToDelete = null;
+          this.closeDeleteModal();
+          this.loadAlbums();
+        },
+        (error) => {
+          console.error('Error deleting artist:', error);
+          this.albumToDelete = null;
+          this.closeDeleteModal();
+        }
+      );
+      this.albumToDelete = null;
+      this.closeDeleteModal();
+    }
+  }
+
+
 }
