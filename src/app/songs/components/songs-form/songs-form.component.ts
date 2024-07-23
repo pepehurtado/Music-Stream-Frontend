@@ -4,6 +4,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { SongService } from '../../services/songs.service';
 import { Artist } from 'src/app/artists/components/interfaces/artists.interfaces';
 import { ArtistService } from 'src/app/artists/services/artists.service';
+import { Album } from 'src/app/albums/components/interfaces/album.interfaces';
+import { AlbumService } from 'src/app/albums/services/albums.service';
+import { forkJoin, Observable, tap } from 'rxjs';
+
 
 @Component({
   selector: 'app-songs-form',
@@ -19,11 +23,16 @@ export class SongsFormComponent implements OnInit {
   selectedArtists: Artist[] = [];
   isEditMode = false;
   songId: number | null = null;
+  albums: Album[] = [];
+  filteredAlbums: Album[] = [];
+  selectedAlbum: Album | null = null;
+  albumInput  = '';
 
   constructor(
     private fb: FormBuilder,
     private songService: SongService,
     private artistService: ArtistService,
+    private albumService: AlbumService,
     private route: ActivatedRoute,
     private router: Router
   ) {
@@ -37,29 +46,57 @@ export class SongsFormComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
-    this.route.paramMap.subscribe(params => {
-      this.loadArtists();
-      const id = params.get('id');
-      if (id) {
-        this.isEditMode = true;
-        this.songId = +id;
-        this.loadSongData(this.songId);
+loadAlbums(): Observable<Album[]> {
+  return this.albumService.getAlbum().pipe(
+    tap({
+      next: (albums) => this.albums = albums,
+      error: (error) => console.error('Error fetching albums:', error)
+    })
+  );
+}
+
+ngOnInit(): void {
+  this.route.paramMap.subscribe(params => {
+    // Usamos forkJoin para cargar artistas y álbumes en paralelo
+    forkJoin([this.loadArtists(), this.loadAlbums()]).subscribe({
+      next: ([artists, albums]) => {
+        this.artists = artists;
+        this.albums = albums;
+        const id = params.get('id');
+        if (id) {
+          console.log('Edit mode:', id);
+          this.isEditMode = true;
+          this.songId = +id;
+          this.loadSongData(this.songId);
+        }
+      },
+      error: (error) => {
+        console.error('Error fetching data:', error);
       }
     });
-  }
+  });
+}
 
   loadSongData(id: number): void {
     this.songService.getSongById(id).subscribe(
       (song) => {
+        console.log('Song data:', song);
         this.songForm.patchValue({
           title: song.title,
           time: song.time,
           url: song.url,
-          album: song.album || ''
+          album: song.album || '',
         });
+        console.log('Artists:', song.artists);
+
+        console.log('Total artists:', this.artists);
         //Como song.artists es un array de enteros, se debe buscar el objeto artista correspondiente
         this.selectedArtists = song.artists.map((artistId: number) => this.artists.find(artist => artist.id === artistId)!);
+        //Poner el nombre del album en el campo de texto buscando el objeto correspondiente de albums por id
+        this.albumInput = song.album ? this.albums.find(album => album.id === song.album)!.title : '';
+        this.songForm.patchValue({
+          album: { id: song.album }
+        });
         console.log('Selected artists:', this.selectedArtists);
         this.updateArtistsField();
       },
@@ -70,14 +107,12 @@ export class SongsFormComponent implements OnInit {
     );
   }
 
-  loadArtists(): void {
-    this.artistService.getArtist().subscribe(
-      (data) => {
-        this.artists = data;
-      },
-      (error) => {
-        console.error('Error fetching artists:', error);
-      }
+  loadArtists(): Observable<Artist[]> {
+    return this.artistService.getArtist().pipe(
+      tap({
+        next: (artists) => this.artists = artists,
+        error: (error) => console.error('Error fetching artists:', error)
+      })
     );
   }
 
@@ -92,6 +127,17 @@ export class SongsFormComponent implements OnInit {
     );
   }
 
+  searchAlbum(event: Event): void {
+    const searchTerm = (event.target as HTMLInputElement).value.trim();
+    if (searchTerm === '') {
+      this.filteredAlbums = [];
+      return;
+    }
+    this.filteredAlbums = this.albums.filter(album =>
+      album.title.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  }
+
   addArtist(artist: Artist): void {
     if (!this.selectedArtists.includes(artist)) {
       this.selectedArtists.push(artist);
@@ -101,9 +147,25 @@ export class SongsFormComponent implements OnInit {
     this.filteredArtists = [];
   }
 
+  addAlbum(album: Album): void {
+    this.selectedAlbum = album;
+    this.songForm.patchValue({
+      album: { id: album.id }
+    });
+    this.albumInput = album.title;
+    this.filteredAlbums = [];
+  }
+
   removeArtist(artist: Artist): void {
     this.selectedArtists = this.selectedArtists.filter(a => a !== artist);
     this.updateArtistsField();
+  }
+
+  removeAlbum(): void {
+    this.selectedAlbum = null;
+    this.songForm.patchValue({
+      album: ''
+    });
   }
 
   updateArtistsField(): void {

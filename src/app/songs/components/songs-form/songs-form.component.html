@@ -38,9 +38,26 @@
         </ul>
       </div>
       <div class="mb-3">
-        <label for="album" class="form-label">Álbum</label>
-        <input type="number" id="album" class="form-control" formControlName="album">
+        <label for="album" class="form-label">Album</label>
+        <input type="text" id="album" class="form-control" formControlName="album" [value]="albumInput" (input)="searchAlbum($event)">
+        <ul class="list-group">
+          <li class="list-group-item" *ngFor="let album of filteredAlbums" (click)="addAlbum(album)">
+            <button type="button" class="btn btn-secondary" (click)="addAlbum(album)">{{ album.title }}</button>
+          </li>
+        </ul>
       </div>
+
+      <div class="mb-3">
+        <label>Album seleccionado:</label>
+        <ul class="list-group">
+          <li class="list-group
+          -item" *ngIf="selectedAlbum">
+            {{ selectedAlbum.title }}
+            <button type="button" class="btn-close" aria-label="Close" (click)="removeAlbum()"></button>
+          </li>
+        </ul>
+      </div>
+
       <div class="mb-3">
         <label>Artistas seleccionados:</label>
         <ul class="list-group">

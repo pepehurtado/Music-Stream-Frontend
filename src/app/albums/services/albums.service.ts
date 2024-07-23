@@ -10,6 +10,9 @@ export class AlbumService {
   private apiUrl = 'http://localhost:9000/albums';
 
   constructor(private http: HttpClient) { }
+  getAlbum(): Observable<Album[]> {
+    return this.http.get<Album[]>(this.apiUrl);
+  }
 
   getAlbums(page: number, size: number, sortColumn: string, sortDirection: string, filters: any): Observable<Album[]> {
     const body = {
