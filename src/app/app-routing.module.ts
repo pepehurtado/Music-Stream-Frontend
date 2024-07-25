@@ -1,6 +1,6 @@
+// src/app/app-routing.module.ts
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-
 import { FullComponent } from './layouts/full/full.component';
 
 export const Approutes: Routes = [
@@ -9,6 +9,10 @@ export const Approutes: Routes = [
     component: FullComponent,
     children: [
       { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
+      {
+        path: 'user',
+        loadChildren: () => import('./user/user.module').then(m => m.UsersModule)
+      },
       {
         path: 'dashboard',
         loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule)
@@ -40,3 +44,9 @@ export const Approutes: Routes = [
     redirectTo: '/dashboard' // Redirigir a '/dashboard' para rutas no reconocidas
   }
 ];
+
+@NgModule({
+  imports: [RouterModule.forRoot(Approutes)],
+  exports: [RouterModule]
+})
+export class AppRoutingModule { }
