@@ -1,0 +1,23 @@
+/* src/app/components/login/login.component.css */
+.login-container {
+  background: #f8f9fa;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.login-card {
+  background-color: #ffffff;
+  max-width: 400px;
+  width: 100%;
+  border-radius: 8px;
+}
+
+.error-message {
+  color: #dc3545;
+}
+
+.btn-secondary {
+  background-color: #6c757d;
+  border-color: #6c757d;
+}

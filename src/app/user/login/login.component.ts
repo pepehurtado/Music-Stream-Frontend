@@ -6,6 +6,7 @@ import { UserService } from '../service/user.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
+  styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
   loginForm: FormGroup;
@@ -30,7 +31,7 @@ export class LoginComponent {
         (response: any) => {
           console.log("response", response);
           localStorage.setItem('jwt', response.token);
-          this.router.navigate(['/']);
+          this.router.navigate(['/dashboard']);
         },
         //Si la respuesta es incorrecta, se muestra un mensaje de error
         error => {

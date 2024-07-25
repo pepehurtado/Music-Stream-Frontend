@@ -16,8 +16,19 @@ export class UserService {
     return this.http.post(`${this.apiUrl}/login?username=${username}&password=${password}`, {});
   }
 
-  register(user: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/register`, user);
+  register(username: string, email: string, password: string, image: string, securityQuestion: string, securityAnswer: string): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/register`, {
+      username,
+      email,
+      password,
+      image,
+      securityQuestion,
+      securityAnswer
+    });
+  }
+
+  getUserDetails(username: string): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/${username}`);
   }
 
 }
