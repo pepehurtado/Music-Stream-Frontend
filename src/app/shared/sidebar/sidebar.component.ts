@@ -1,9 +1,11 @@
+import { environment } from './../../../enviroments/enviroment';
 import { Component, AfterViewInit, OnInit } from '@angular/core';
-import { ROUTES } from './menu-items';
+import { ROUTES_DEV, ROUTES } from './menu-items';
 import { RouteInfo } from './sidebar.metadata';
 import { Router, ActivatedRoute, RouterModule } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CommonModule, NgIf } from '@angular/common';
+
 //declare var $: any;
 
 @Component({
@@ -33,6 +35,11 @@ export class SidebarComponent implements OnInit {
 
   // End open close
   ngOnInit() {
+  // Load routes based on the environment
+  if (environment.nodeEnv === 'development') {
+    this.sidebarnavItems = ROUTES_DEV.filter(sidebarnavItem => sidebarnavItem);
+  } else {
     this.sidebarnavItems = ROUTES.filter(sidebarnavItem => sidebarnavItem);
+  }
   }
 }

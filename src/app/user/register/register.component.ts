@@ -22,15 +22,13 @@ export class RegisterComponent {
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
       image: [''],
-      securityQuestion: [''],
-      securityAnswer: ['']
     });
   }
 
   submitForm(): void {
     if (this.registerForm.valid) {
-      const { username, email, password, image, securityQuestion, securityAnswer } = this.registerForm.value;
-      this.userService.register(username, email, password, image, securityQuestion, securityAnswer).subscribe(
+      const { username, email, password, image } = this.registerForm.value;
+      this.userService.register(username, email, password, image).subscribe(
         () => {
           this.router.navigate(['/user/login']);
         },

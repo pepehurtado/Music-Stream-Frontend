@@ -35,13 +35,6 @@ export class AlbumsListComponent implements OnInit {
 
   loadAlbums(): void {
     this.albumService.getAlbums(this.currentPage - 1, this.itemsPerPage, this.sortColumn, this.sortDirection, this.filters)
-    .pipe(
-      retry(12),
-      catchError(error => {
-        console.error('Error fetching songs after retries:', error);
-        return [];
-      })
-    )
       .subscribe(
         (data) => {
           this.albumsList = data;

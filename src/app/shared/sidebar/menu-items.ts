@@ -1,6 +1,6 @@
 import { RouteInfo } from './sidebar.metadata';
 
-export const ROUTES: RouteInfo[] = [
+export const ROUTES_DEV: RouteInfo[] = [
 
   {
     path: '/artists',
@@ -22,6 +22,14 @@ export const ROUTES: RouteInfo[] = [
     path: '/albums',
     title: 'Albums',
     icon: 'bi bi-music-note-list',
+    class: '',
+    extralink: false,
+    submenu: []
+  },
+  {
+    path: '/user/user-list',
+    title: 'Usuarios',
+    icon: 'bi bi-person',
     class: '',
     extralink: false,
     submenu: []
@@ -94,6 +102,58 @@ export const ROUTES: RouteInfo[] = [
     path: '/component/table',
     title: 'Table',
     icon: 'bi bi-layout-split',
+    class: '',
+    extralink: false,
+    submenu: []
+  },
+  {
+    path: '/about',
+    title: 'About',
+    icon: 'bi bi-people',
+    class: '',
+    extralink: false,
+    submenu: []
+  }
+];
+
+export const ROUTES: RouteInfo[] = [
+
+  {
+    path: '/artists',
+    title: 'Artists',
+    icon: 'bi bi-person-badge',
+    class: '',
+    extralink: false,
+    submenu: []
+  },
+  {
+    path: '/songs',
+    title: 'Songs',
+    icon: 'bi bi-music-note-beamed',
+    class: '',
+    extralink: false,
+    submenu: []
+  },
+  {
+    path: '/albums',
+    title: 'Albums',
+    icon: 'bi bi-music-note-list',
+    class: '',
+    extralink: false,
+    submenu: []
+  },
+  {
+    path: '/user/user-list',
+    title: 'Usuarios',
+    icon: 'bi bi-person',
+    class: '',
+    extralink: false,
+    submenu: []
+  },
+  {
+    path: '/dashboard',
+    title: 'Dashboard',
+    icon: 'bi bi-speedometer2',
     class: '',
     extralink: false,
     submenu: []

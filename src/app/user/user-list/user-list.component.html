@@ -1,0 +1,207 @@
+<div class="card">
+  <div class="card-body">
+    <h4 class="card-title">Lista de usuarios</h4>
+    <h5 class="card-subtitle text-muted">Listado de todos los usuarios disponibles</h5>
+
+    <!-- Selector de ítems por página -->
+    <div class="row mb-3">
+      <div class="col">
+        <label for="itemsPerPageSelect" class="form-label">Items por página</label>
+        <select id="itemsPerPageSelect" class="form-select" [(ngModel)]="itemsPerPage" (change)="onItemsPerPageChange()">
+          <option *ngFor="let option of itemsPerPageOptions" [value]="option">{{ option }}</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Filtros de búsqueda -->
+    <div class="row mb-3">
+      <div class="col">
+        <input type="text" class="form-control" placeholder="Filtrar por nombre" [(ngModel)]="filters.username">
+      </div>
+      <div class="col">
+        <input type="text" class="form-control" placeholder="Filtrar por correo electrónico" [(ngModel)]="filters.email">
+      </div>
+      <div class="col">
+        <input type="text" class="form-control" placeholder="Filtrar por rol" [(ngModel)]="filters.role">
+      </div>
+      <div class="col">
+        <input type="text" class="form-control" placeholder="Filtrar por estado" [(ngModel)]="filters.status">
+      </div>
+      <div class="col">
+        <button class="btn btn-primary" (click)="applyFilters()">Aplicar</button>
+        <button class="btn btn-secondary" (click)="clearFilters()">Limpiar</button>
+      </div>
+    </div>
+
+    <!-- Indicador de carga -->
+    <div class="text-center" *ngIf="userList.length === 0 && errorMessage===''">
+      <svg width="50px" height="50px" viewBox="0 0 38 38" xmlns="http://www.w3.org/2000/svg" stroke="#007bff">
+        <g fill="none" fill-rule="evenodd">
+          <g transform="translate(1 1)" stroke-width="2">
+            <circle stroke-opacity=".5" cx="18" cy="18" r="18"/>
+            <path d="M36 18c0-9.94-8.06-18-18-18">
+              <animateTransform
+                attributeName="transform"
+                type="rotate"
+                from="0 18 18"
+                to="360 18 18"
+                dur="1s"
+                repeatCount="indefinite"/>
+            </path>
+          </g>
+        </g>
+      </svg>
+      <p>Cargando...</p>
+    </div>
+
+    <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
+      {{ errorMessage }}
+    </div>
+
+    <!-- Tabla de usuarios -->
+    <div class="table-responsive" *ngIf="userList.length > 0">
+      <table class="table align-middle text-nowrap">
+        <thead>
+          <tr>
+            <th class="text-dark font-medium fs-4" (click)="setSortColumn('username')">
+              Nombre
+              <span *ngIf="sortColumn === 'username'">
+                <i [ngClass]="sortDirection === 'asc' ? 'bi bi-arrow-up' : 'bi bi-arrow-down'"></i>
+              </span>
+            </th>
+            <th class="text-dark font-medium fs-4" (click)="setSortColumn('email')">
+              Correo electrónico
+              <span *ngIf="sortColumn === 'email'">
+                <i [ngClass]="sortDirection === 'asc' ? 'bi bi-arrow-up' : 'bi bi-arrow-down'"></i>
+              </span>
+            </th>
+            <th class="text-dark font-medium fs-4" (click)="setSortColumn('active')">
+              Activo
+              <span *ngIf="sortColumn === 'active'">
+                <i [ngClass]="sortDirection === 'asc' ? 'bi bi-arrow-up' : 'bi bi-arrow-down'"></i>
+              </span>
+            </th>
+            <th class="text-dark font-medium fs-4" (click)="setSortColumn('softDelete')">
+              Eliminado
+              <span *ngIf="sortColumn === 'softDelete'">
+                <i [ngClass]="sortDirection === 'asc' ? 'bi bi-arrow-up' : 'bi bi-arrow-down'"></i>
+              </span>
+            </th>
+            <th class="text-dark font-medium fs-4">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of userList">
+            <td>
+              <div class="d-flex align-items-center">
+                <div class="ms-3">
+                  <h5 class="mb-0 font-medium">{{user.username}}</h5>
+                </div>
+              </div>
+            </td>
+            <td class="fs-4">{{user.email}}</td>
+            <td>
+              <ng-container *ngIf="user.active === 1">
+                <i class="bi bi-check-lg text-success" title="Activo"></i>
+              </ng-container>
+              <ng-container *ngIf="user.active === 0">
+                <i class="bi bi-x-lg text-danger" title="Desactivado"></i>
+              </ng-container>
+            </td>
+            <td>
+              <ng-container *ngIf="user.softDelete === 1">
+                <i class="bi bi-check-lg text-success" title="Activo"></i>
+              </ng-container>
+              <ng-container *ngIf="user.softDelete === 0">
+                <i class="bi bi-x-lg text-danger" title="Eliminado"></i>
+              </ng-container>
+            </td>
+
+            <td>
+              <button  *ngIf="canActivate('ROLE_ADMIN')" class="btn btn-danger" (click)="openDeleteModal(user)">
+                <i class="bi bi-trash"></i>
+              </button>
+              <button class="btn btn-success" (click)="openActivateModal(user)">
+                <i class="bi bi-check-lg"></i> Activar
+              </button>
+              <a class="btn btn-primary" (click)="viewUserDetails(user)">
+                <i class="bi bi-eye"></i>
+              </a>
+              <a class="btn btn-secondary" [routerLink]="['/users/edit', user.id]">
+                <i class="bi bi-pencil"></i>
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- Navegación de paginación -->
+      <div class="d-flex justify-content-between">
+        <button class="btn btn-primary" (click)="firstPage()" [disabled]="currentPage === 1">
+          <i class="bi bi-arrow-left"></i>
+        </button>
+        <button class="btn btn-primary" (click)="previousPage()" [disabled]="currentPage === 1">Anterior</button>
+        <span>Página {{ currentPage }}</span>
+        <button class="btn btn-primary" (click)="nextPage()" [disabled]="userList.length < itemsPerPage || isFinalPage">Siguiente</button>
+        <button class="btn btn-primary" (click)="lastPage()" [disabled]="userList.length < itemsPerPage">
+          <i class="bi bi-arrow-right"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal para eliminar usuario -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true" [ngClass]="{'show': showModal, 'd-block': showModal}">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteModalLabel">Eliminar Usuario</h5>
+        <button type="button" class="btn-close" (click)="closeDeleteModal()"></button>
+      </div>
+      <div class="modal-body">
+        ¿Estás seguro de que deseas eliminar al usuario {{ userToDelete?.username }}?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeDeleteModal()">Cancelar</button>
+        <button type="button" class="btn btn-danger" (click)="confirmDelete()">Eliminar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal para activar usuario -->
+<div class="modal fade" id="activateModal" tabindex="-1" aria-labelledby="activateModalLabel" aria-hidden="true" [ngClass]="{'show': showActivateModal, 'd-block': showActivateModal}">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="activateModalLabel">Activar Usuario</h5>
+        <button type="button" class="btn-close" (click)="closeActivateModal()"></button>
+      </div>
+      <div class="modal-body">
+        ¿Estás seguro de que deseas activar al usuario {{ userToActivate?.username }}?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeActivateModal()">Cancelar</button>
+        <button type="button" class="btn btn-success" (click)="confirmActivate()">Activar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal para mostrar detalles del usuario -->
+<div class="modal fade" id="detailsModal" tabindex="-1" aria-labelledby="detailsModalLabel" aria-hidden="true" [ngClass]="{'show': showDetailsModal, 'd-block': showDetailsModal}">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="detailsModalLabel">Detalles de {{selectedUser?.username}}</h5>
+        <button type="button" class="btn-close" aria-label="Close" (click)="closeDetailsModal()"></button>
+      </div>
+      <div class="modal-body">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeDetailsModal()">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
