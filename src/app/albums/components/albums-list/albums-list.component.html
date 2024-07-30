@@ -30,7 +30,7 @@
         <input type="text" class="form-control" placeholder="Filter by artist id" [(ngModel)]="filters.artist_id">
       </div>
       <div class="col">
-        <button class="btn btn-primary" (click)="applyFilters()">Aplicar</button>
+        <button class="btn btn-primary me-2" (click)="applyFilters()">Aplicar</button>
         <button class="btn btn-secondary" (click)="clearFilters()">Limpiar</button>
       </div>
     </div>
@@ -125,7 +125,7 @@
               <button class="btn btn-danger" (click)="openDeleteModal(album)">
                 <i class="bi bi-trash"></i>
               </button>
-              <a class="btn btn-secondary" [routerLink]="['/albums/edit', album.id]">
+              <a class="btn btn-warning" [routerLink]="['/albums/edit', album.id]">
                 <i class="bi bi-pencil"></i>
               </a>
             </td>

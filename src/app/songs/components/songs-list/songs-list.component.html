@@ -28,7 +28,7 @@
         <input type="text" class="form-control" placeholder="Filter by album id" [(ngModel)]="filters.album">
       </div>
       <div class="col">
-        <button class="btn btn-primary" (click)="applyFilters()">Aplicar</button>
+        <button class="btn btn-primary me-2" (click)="applyFilters()">Aplicar</button>
         <button class="btn btn-secondary" (click)="clearFilters()">Limpiar</button>
       </div>
     </div>
@@ -139,10 +139,10 @@
               <span class="fs-4">{{ song.album_name }}</span>
             </td>
             <td>
-              <button class="btn btn-danger" (click)="openDeleteModal(song)">
+              <button class="btn btn-danger me-2" (click)="openDeleteModal(song)">
                 <i class="bi bi-trash"></i>
               </button>
-              <a class="btn btn-secondary" [routerLink]="['/songs/edit', song.id]">
+              <a class="btn btn-warning" [routerLink]="['/songs/edit', song.id]">
                 <i class="bi bi-pencil"></i>
               </a>
             </td>

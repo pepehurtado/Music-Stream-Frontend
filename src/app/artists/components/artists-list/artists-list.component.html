@@ -27,7 +27,7 @@
         <input type="text" class="form-control" placeholder="Filter by date of birth" [(ngModel)]="filters.dateOfBirth">
       </div>
       <div class="col">
-        <button class="btn btn-primary" (click)="applyFilters()">Aplicar</button>
+        <button class="btn btn-primary me-2" (click)="applyFilters()">Aplicar</button>
         <button class="btn btn-secondary" (click)="clearFilters()">Limpiar</button>
       </div>
     </div>
@@ -106,13 +106,13 @@
               <h5 class="mb-0 fw-normal">{{ artist.dateOfBirth | date: 'dd/MM/yyyy' }}</h5>
             </td>
             <td>
-              <button class="btn btn-danger" (click)="openDeleteModal(artist)">
+              <button class="btn btn-danger me-2" (click)="openDeleteModal(artist)">
                 <i class="bi bi-trash"></i>
               </button>
-              <a class="btn btn-primary" (click)="openSongsModal(artist)">
+              <a class="btn btn-primary me-2" (click)="openSongsModal(artist)">
                 <i class="bi bi-music-note-list"></i>
               </a>
-              <a class="btn btn-secondary" [routerLink]="['/artists/edit', artist.id]">
+              <a class="btn btn-warning me-2" [routerLink]="['/artists/edit', artist.id]">
                 <i class="bi bi-pencil"></i>
               </a>
             </td>

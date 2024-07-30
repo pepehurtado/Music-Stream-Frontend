@@ -28,7 +28,7 @@
         <input type="text" class="form-control" placeholder="Filtrar por estado" [(ngModel)]="filters.status">
       </div>
       <div class="col">
-        <button class="btn btn-primary" (click)="applyFilters()">Aplicar</button>
+        <button class="btn btn-primary me-2" (click)="applyFilters()">Aplicar</button>
         <button class="btn btn-secondary" (click)="clearFilters()">Limpiar</button>
       </div>
     </div>
@@ -118,16 +118,16 @@
             </td>
 
             <td>
-              <button  *ngIf="canActivate('ROLE_ADMIN')" class="btn btn-danger" (click)="openDeleteModal(user)">
+              <button  *ngIf="canActivate('ROLE_ADMIN') && user.softDelete===0" class="btn btn-danger me-2" (click)="openDeleteModal(user)">
                 <i class="bi bi-trash"></i>
               </button>
-              <button class="btn btn-success" (click)="openActivateModal(user)">
+              <button *ngIf="user.active===0" class="btn btn-success me-2" (click)="openActivateModal(user)">
                 <i class="bi bi-check-lg"></i> Activar
               </button>
-              <a class="btn btn-primary" (click)="viewUserDetails(user)">
+              <a class="btn btn-primary me-2" (click)="viewUserDetails(user)">
                 <i class="bi bi-eye"></i>
               </a>
-              <a class="btn btn-secondary" [routerLink]="['/users/edit', user.id]">
+              <a class="btn btn-warning" [routerLink]="['/users/edit', user.id]">
                 <i class="bi bi-pencil"></i>
               </a>
             </td>

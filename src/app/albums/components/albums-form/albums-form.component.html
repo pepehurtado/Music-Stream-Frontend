@@ -35,7 +35,7 @@
         <input type="text" id="artist" class="form-control" formControlName="artist" [value]="artistInput" (input)="searchArtists($event)">
         <ul class="list-group">
           <li class="list-group-item" *ngFor="let artist of filteredArtists" (click)="addArtist(artist)">
-            <button type="button" class="btn btn-secondary" (click)="addArtist(artist)">{{ artist.name }}</button>
+            <button type="button" class="btn btn-warning" (click)="addArtist(artist)">{{ artist.name }}</button>
           </li>
         </ul>
       </div>
