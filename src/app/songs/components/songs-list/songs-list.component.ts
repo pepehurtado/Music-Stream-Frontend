@@ -4,6 +4,7 @@ import { SongService } from '../../services/songs.service';
 import { Song } from '../interfaces/song.interfaces';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { catchError, retry } from 'rxjs';
+import { HistoryService } from 'src/app/dashboard/service/history.service';
 
 @Component({
   selector: 'app-songs-list',
@@ -17,9 +18,11 @@ export class SongsListComponent implements OnInit {
   public sortColumn: keyof Song = 'title';
   public sortDirection: 'asc' | 'desc' = 'asc';
   public currentPage: number = 1;
-  public itemsPerPage: number = 10;
+  public itemsPerPage: number = 2;
+  public itemsPerPageOptions: number[] = [2, 10, 20, 50];
   public errorMessage: string = '';
   public songToDelete: any = null;
+  public collectionSize: number = 0;
   public filters: any = {
     title: '',
     time: '',
@@ -30,10 +33,20 @@ export class SongsListComponent implements OnInit {
   public safeUrl: SafeResourceUrl | null = null;
   showModal = false;
 
-  constructor(private songService: SongService, private albumService: AlbumService, private sanitizer: DomSanitizer) { }
+
+  constructor(private songService: SongService, private albumService: AlbumService, private sanitizer: DomSanitizer, private historyService : HistoryService) { }
 
   ngOnInit(): void {
     this.loadSongs();
+    this.historyService.getCounts().subscribe(
+      (data) => {
+        this.collectionSize = data.songs;
+        console.log('Songs:', this.collectionSize);
+      },
+      (error) => {
+        console.error('Error fetching history:', error);
+      }
+    );
   }
 
   loadSongs(): void {
@@ -198,6 +211,16 @@ confirmDelete() {
     this.songToDelete = null;
     this.closeDeleteModal();
   }
+}
+
+onItemsPerPageChange(): void {
+  this.currentPage = 1; // Resetear a la primera página cuando cambie el número de ítems por página
+  this.loadSongs();
+}
+
+onPageChange(page: number): void {
+  this.currentPage = page;
+  this.loadSongs();
 }
 
 }

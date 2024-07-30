@@ -4,6 +4,16 @@
     <h5 class="card-subtitle text-muted">Listado de todas las canciones disponibles</h5>
 
     <div class="row mb-3">
+      <div class="col">
+        <label for="itemsPerPageSelect" class="form-label">Items por página</label>
+        <select id="itemsPerPageSelect" class="form-select" [(ngModel)]="itemsPerPage" (change)="onItemsPerPageChange()">
+          <option *ngFor="let option of itemsPerPageOptions" [value]="option">{{ option }}</option>
+        </select>
+      </div>
+    </div>
+
+
+    <div class="row mb-3">
       <!-- Filtros de búsqueda -->
       <div class="col">
         <input type="text" class="form-control" placeholder="Filter by title" [(ngModel)]="filters.title">
@@ -140,11 +150,17 @@
         </tbody>
       </table>
 
-      <!-- Paginación -->
-      <div class="d-flex justify-content-between mt-3">
-        <button class="btn btn-primary" (click)="previousPage()" [disabled]="currentPage === 1">Anterior</button>
-        <span>Página {{ currentPage }}</span>
-        <button class="btn btn-primary" (click)="nextPage()">Siguiente</button>
+      <div class="d-flex justify-content-center">
+        <ngb-pagination
+        [collectionSize]="collectionSize"
+        [(page)]="currentPage"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [ellipses]="false"
+        [boundaryLinks]="true"
+        (pageChange)="onPageChange($event)"
+      ></ngb-pagination>
       </div>
 
       <!-- Modal para eliminar artista -->

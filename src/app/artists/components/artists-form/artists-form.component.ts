@@ -61,7 +61,7 @@ export class ArtistsFormComponent implements OnInit {
             this.successMessage = 'Artist updated successfully!';
             this.errorMessage = null;
             setTimeout(() => {
-              this.router.navigateByUrl('/artists');
+              this.router.navigateByUrl('/artists/list');
             }, 2000);
           },
           (error) => {
@@ -77,7 +77,7 @@ export class ArtistsFormComponent implements OnInit {
             this.errorMessage = null;
             this.artistForm.reset();
             setTimeout(() => {
-              this.router.navigateByUrl('/artists');
+              this.router.navigateByUrl('/artists/list');
             }, 2000);
           },
           (error) => {

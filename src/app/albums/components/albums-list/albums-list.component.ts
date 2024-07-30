@@ -3,6 +3,7 @@ import { AlbumService } from '../../services/albums.service';
 import { Album } from '../interfaces/album.interfaces';
 import { Router } from '@angular/router';
 import { catchError, retry } from 'rxjs';
+import { HistoryService } from 'src/app/dashboard/service/history.service';
 
 @Component({
   selector: 'app-albums-list',
@@ -16,7 +17,9 @@ export class AlbumsListComponent implements OnInit {
   public sortColumn: keyof Album = 'title';
   public sortDirection: 'asc' | 'desc' = 'asc';
   public currentPage: number = 1;
-  public itemsPerPage: number = 10;
+  public itemsPerPage: number = 2;
+  public itemsPerPageOptions: number[] = [2, 10, 20, 50];
+  public collectionSize: number = 0;
   public errorMessage: string = '';
   public filters: any = {
     title: '',
@@ -27,9 +30,18 @@ export class AlbumsListComponent implements OnInit {
   };
   public showModal : boolean = false;
 
-  constructor(private albumService: AlbumService, private router: Router) { }
+  constructor(private albumService: AlbumService, private router: Router, private historyService : HistoryService) { }
 
   ngOnInit(): void {
+    this.historyService.getCounts().subscribe(
+      (data) => {
+        this.collectionSize = data.albums;
+        console.log('Albums:', this.collectionSize);
+      },
+      (error) => {
+        console.error('Error fetching history:', error);
+      }
+    );
     this.loadAlbums();
   }
 
@@ -148,6 +160,16 @@ export class AlbumsListComponent implements OnInit {
       this.albumToDelete = null;
       this.closeDeleteModal();
     }
+  }
+
+  onItemsPerPageChange(): void {
+    this.currentPage = 1; // Resetear a la primera página cuando cambie el número de ítems por página
+    this.loadAlbums();
+  }
+
+  onPageChange(page: number): void {
+    this.currentPage = page;
+    this.loadAlbums();
   }
 
 

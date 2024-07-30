@@ -51,7 +51,16 @@
           aria-haspopup="true"
           aria-expanded="false"
         >
-          <img [src]="userImage || 'https://via.placeholder.com/150'" alt="user" class="rounded-circle" width="31" />
+          <img
+            [src]="userImage || 'https://via.placeholder.com/150'"
+            alt="user"
+            style="
+              width: 40px; /* Ajusta este valor según tus necesidades */
+              height: 40px; /* Mantiene el círculo perfecto */
+              object-fit: cover; /* Cubre el contenedor sin distorsionar la imagen */
+              border-radius: 50%; /* Redondea la imagen para que sea circular */
+            "
+          />
           <span class="ms-2">{{ userName || 'Guest' }}</span>
         </a>
         <div class="dropdown-menu-right" ngbDropdownMenu>
@@ -61,7 +70,7 @@
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="javascript:void(0)">Account Setting</a>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" (click)="logout()">Logout</a>
+          <a class="dropdown-item" style="  cursor: pointer;" (click)="logout()">Logout</a>
         </div>
       </li>
       <!-- ============================================================== -->

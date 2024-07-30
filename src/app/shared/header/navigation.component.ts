@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { UserService } from 'src/app/user/service/user.service';
 
@@ -8,7 +8,7 @@ import { UserService } from 'src/app/user/service/user.service';
   imports: [NgbDropdownModule],
   templateUrl: './navigation.component.html',
 })
-export class NavigationComponent implements AfterViewInit, OnInit {
+export class NavigationComponent implements OnInit {
   public showSearch = false;
   public userName: string = '';
   public userImage: string = '';
@@ -25,17 +25,20 @@ export class NavigationComponent implements AfterViewInit, OnInit {
 
       this.userService.getUserDetails(username).subscribe(user => {
         this.userName = user.username;
-        this.userImage = user.image;
+        // Ensure that the image data starts with the correct prefix
+        if (user.image) {
+          this.userImage = `data:image/jpeg;base64,${user.image}`; // Adjust the MIME type if necessary
+        } else {
+          this.userImage = 'https://via.placeholder.com/150'; // Default placeholder
+        }
       }, error => {
         console.error('Error fetching user details:', error);
       });
     }
   }
 
-  ngAfterViewInit() {}
-
   logout() {
     localStorage.removeItem('jwt');
-    window.location.href = '/user'; // Redirect to login page
+    window.location.href = '/auth'; // Redirect to login page
   }
 }

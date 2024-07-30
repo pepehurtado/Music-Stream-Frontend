@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ArtistService } from '../../services/artists.service';
 import { Artist } from '../interfaces/artists.interfaces';
 import { Router } from '@angular/router';
+import { HistoryService } from '../../../dashboard/service/history.service';
 
 @Component({
   selector: 'app-artists-list',
@@ -31,10 +32,21 @@ export class ArtistsListComponent implements OnInit {
   showModal = false;
   showSongsModal = false;
 
-  constructor(private artistService: ArtistService, private router: Router) { }
+  constructor(private artistService: ArtistService, private router: Router, private historyService : HistoryService) { }
 
   ngOnInit(): void {
     this.loadArtists();
+    //recoger el total de artistas que se encuentra en historyService, quedarse con el valor de artistas
+
+    this.historyService.getCounts().subscribe(
+      (data) => {
+        this.collectionSize = data.artists;
+        console.log('Artists:', this.collectionSize);
+      },
+      (error) => {
+        console.error('Error fetching history:', error);
+      }
+    );
   }
 
   onPageChange(page: number): void {
@@ -190,6 +202,7 @@ export class ArtistsListComponent implements OnInit {
     this.selectedArtist = null;
     this.showSongsModal = false;
   }
+
   onItemsPerPageChange(): void {
     this.currentPage = 1; // Resetear a la primera página cuando cambie el número de ítems por página
     this.loadArtists();

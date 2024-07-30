@@ -45,12 +45,16 @@ export const Approutes: Routes = [
         loadChildren: () => import('./component/component.module').then(m => m.ComponentsModule),
         canActivate: [authGuard],
       },
+      {
+        path: 'user',
+        loadChildren: () => import('./user/user.module').then(m => m.UsersModule)
+      },
 
     ]
   },
   {
-    path: 'user',
-    loadChildren: () => import('./user/user.module').then(m => m.UsersModule)
+    path: 'auth',
+    loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)
   },
   {
     path: '**', // Ruta no encontrada

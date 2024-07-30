@@ -23,8 +23,6 @@ import { SpinnerComponent } from './shared/spinner.component';
 import { ArtistsListComponent } from './artists/components/artists-list/artists-list.component';
 import { ArtistsModule } from "./artists/artists.module";
 import { PipesModule } from './pipes/pipes.module';
-import { LoginComponent } from './user/login/login.component';
-import { RegisterComponent } from './user/register/register.component';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 
 @NgModule({

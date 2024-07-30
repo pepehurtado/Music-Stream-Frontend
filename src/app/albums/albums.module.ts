@@ -7,6 +7,7 @@ import { AlbumsFormComponent } from "./components/albums-form/albums-form.compon
 import { Album } from './components/interfaces/album.interfaces';
 import { AlbumsListSongsComponent } from './components/albums-list-songs/albums-list-songs.component';
 import { PipesModule } from "../pipes/pipes.module";
+import { NgbPaginationModule } from "@ng-bootstrap/ng-bootstrap";
 
 
 const routes: Routes = [
@@ -35,6 +36,7 @@ const routes: Routes = [
     CommonModule,
     RouterModule.forChild(routes),
     PipesModule,
+    NgbPaginationModule,
   ],
   declarations: [
     AlbumsListComponent,
