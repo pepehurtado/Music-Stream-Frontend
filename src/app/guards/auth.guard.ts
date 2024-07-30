@@ -12,5 +12,15 @@ export const authGuard: CanActivateFn = (route, state) => {
     window.location.href = '/auth';
     return false;
   }
+  //Comprobar si el token ha expirado
+  const payload = JSON.parse(atob(token.split('.')[1]));
+  const expiration = payload.exp;
+  const now = Date.now() / 1000;
+  if (now > expiration) {
+    //Token ha expirado, redirigir a la página de inicio de sesión
+    localStorage.removeItem('jwt');
+    window.location.href = '/auth';
+    return false;
+  }
   return true;
 };

@@ -1,11 +1,11 @@
 <!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-light bg-light" style="position: relative; z-index: 100; box-shadow: 1px 0px 7px rgba(0, 0, 0, 0.05); background: #f8f9fa; height: 64px;">
   <div class="container-fluid">
     <ul class="navbar-nav float-start me-auto">
       <!-- ============================================================== -->
       <!-- create new -->
       <!-- ============================================================== -->
-      <li class="nav-item" ngbDropdown>
+      <li class="nav-item" ngbDropdown style="position: relative;">
         <a
           ngbDropdownToggle
           class="nav-link waves-effect waves-dark"
@@ -13,23 +13,26 @@
           data-toggle="dropdown"
           aria-haspopup="true"
           aria-expanded="false"
+          style="display: flex; align-items: center; padding: 10px 15px; font-size: 16px; line-height: 1.5;"
         >
           <span class="d-none d-md-block">
             <i class="bi bi-plus-square"></i> Crear nuevo...
           </span>
-          <span class="d-block d-md-none"><i class="bi bi-file-earmark-plus fs-4"></i></span>
+          <span class="d-block d-md-none" style="font-size: 24px;">
+            <i class="bi bi-file-earmark-plus"></i>
+          </span>
         </a>
-        <div class="dropdown-menu-start" ngbDropdownMenu>
-          <a class="dropdown-item" href="/artists/create-artist">
+        <div class="dropdown-menu-start" ngbDropdownMenu style="padding-top: 0px; border: 0px; box-shadow: 1px 1px 15px rgba(0, 0, 0, 0.1);">
+          <a class="dropdown-item" href="/artists/create-artist" style="padding: 10px 15px;">
             <i class="bi bi-person me-2"></i> Artista
           </a>
-          <a class="dropdown-item" href="/songs/create-song">
+          <a class="dropdown-item" href="/songs/create-song" style="padding: 10px 15px;">
             <i class="bi bi-music-note me-2"></i> Canción
           </a>
-          <a class="dropdown-item" href="/albums/create-album">
+          <a class="dropdown-item" href="/albums/create-album" style="padding: 10px 15px;">
             <i class="bi bi-music-note-list me-2"></i> Album
           </a>
-          <a class="dropdown-item" href="/roles/create-role">
+          <a class="dropdown-item" href="/roles/create-role" style="padding: 10px 15px;">
             <i class="bi bi-person-rolodex me-2"></i> Rol
           </a>
         </div>
@@ -42,7 +45,7 @@
       <!-- ============================================================== -->
       <!-- User profile and search -->
       <!-- ============================================================== -->
-      <li class="nav-item" ngbDropdown placement="bottom-end">
+      <li class="nav-item" ngbDropdown placement="bottom-end" style="position: relative;">
         <a
           ngbDropdownToggle
           class="nav-link waves-effect waves-dark pro-pic"
@@ -50,27 +53,23 @@
           data-toggle="dropdown"
           aria-haspopup="true"
           aria-expanded="false"
+          style="display: flex; align-items: center; padding: 10px 15px;"
         >
           <img
             [src]="userImage || 'https://via.placeholder.com/150'"
             alt="user"
-            style="
-              width: 40px; /* Ajusta este valor según tus necesidades */
-              height: 40px; /* Mantiene el círculo perfecto */
-              object-fit: cover; /* Cubre el contenedor sin distorsionar la imagen */
-              border-radius: 50%; /* Redondea la imagen para que sea circular */
-            "
+            style="width: 40px; height: 40px; object-fit: cover; border-radius: 50%;"
           />
-          <span class="ms-2">{{ userName || 'Guest' }}</span>
+          <span class="ms-2" style="line-height: 40px;">{{ userName || 'Guest' }}</span>
         </a>
-        <div class="dropdown-menu-right" ngbDropdownMenu>
-          <a class="dropdown-item" href="javascript:void(0)">My Profile</a>
-          <a class="dropdown-item" href="javascript:void(0)">My Balance</a>
-          <a class="dropdown-item" href="javascript:void(0)">Inbox</a>
+        <div class="dropdown-menu-right" ngbDropdownMenu style="padding: 0.5rem 0; border: 0px; box-shadow: 1px 1px 15px rgba(0, 0, 0, 0.1);">
+          <a class="dropdown-item" href="javascript:void(0)" style="padding: 10px 15px;">My Profile</a>
+          <a class="dropdown-item" href="javascript:void(0)" style="padding: 10px 15px;">My Balance</a>
+          <a class="dropdown-item" href="javascript:void(0)" style="padding: 10px 15px;">Inbox</a>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="javascript:void(0)">Account Setting</a>
+          <a class="dropdown-item" href="javascript:void(0)" style="padding: 10px 15px;">Account Setting</a>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" style="  cursor: pointer;" (click)="logout()">Logout</a>
+          <a class="dropdown-item" style="cursor: pointer; padding: 10px 15px;" (click)="logout()">Logout</a>
         </div>
       </li>
       <!-- ============================================================== -->
