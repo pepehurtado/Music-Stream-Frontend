@@ -1,0 +1,85 @@
+<!-- role-list.component.html -->
+<div class="card">
+  <div class="card-body">
+    <h4 class="card-title">Lista de Roles</h4>
+    <h5 class="card-subtitle text-muted">Listado de todos los roles disponibles</h5>
+
+    <!-- Filtro de roles por nombre -->
+    <div class="mb-3">
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Buscar por nombre"
+        [(ngModel)]="filterText"
+        (input)="applyFilter()"
+      />
+    </div>
+
+    <!-- Tabla de roles -->
+    <div class="table-responsive" *ngIf="filteredRoles.length > 0">
+      <table class="table align-middle text-nowrap">
+        <thead>
+          <tr>
+            <th class="text-dark font-medium fs-4">
+              Nombre
+              <button class="btn btn-link p-0" (click)="toggleSort()">
+                <i class="bi bi-sort-alpha-down" *ngIf="!isSortedAscending"></i>
+                <i class="bi bi-sort-alpha-up" *ngIf="isSortedAscending"></i>
+              </button>
+            </th>
+            <th class="text-dark font-medium fs-4">Permisos</th>
+            <th class="text-dark font-medium fs-4">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let role of filteredRoles">
+            <td>{{ role.name }}</td>
+            <td>
+              <span *ngFor="let permission of role.permissions" class="badge bg-info text-dark me-1">
+                {{ permission.name }} {{ permission.entity }}
+              </span>
+            </td>
+            <td>
+              <button class="btn btn-danger" (click)="openDeleteModal(role)">
+                <i class="bi bi-trash"></i>
+              </button>
+              <a class="btn btn-secondary" [routerLink]="['/roles/edit', role.id]">
+                <i class="bi bi-pencil"></i>
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Indicador de carga -->
+    <div class="text-center" *ngIf="filteredRoles.length === 0 && errorMessage === ''">
+      <p>Cargando...</p>
+    </div>
+
+    <!-- Mensaje de error -->
+    <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
+      {{ errorMessage }}
+    </div>
+
+  </div>
+</div>
+
+      <!-- Modal para eliminar artista -->
+      <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true" [ngClass]="{'show': deleteModal, 'd-block': deleteModal}">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="deleteModalLabel">Eliminar canción</h5>
+              <button type="button" class="btn-close" (click)="closeDeleteModal()"></button>
+            </div>
+            <div class="modal-body">
+              ¿Estás seguro de que deseas eliminar el rol {{ selectedRole?.name }}?
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" (click)="closeDeleteModal()">Cancelar</button>
+              <button type="button" class="btn btn-danger" (click)="confirmDelete()">Eliminar</button>
+            </div>
+          </div>
+        </div>
+      </div>

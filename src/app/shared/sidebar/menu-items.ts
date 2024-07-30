@@ -151,6 +151,14 @@ export const ROUTES: RouteInfo[] = [
     submenu: []
   },
   {
+    path: '/roles',
+    title: 'Artists',
+    icon: 'bi bi-person-rolodex',
+    class: '',
+    extralink: false,
+    submenu: []
+  },
+  {
     path: '/dashboard',
     title: 'Dashboard',
     icon: 'bi bi-speedometer2',
