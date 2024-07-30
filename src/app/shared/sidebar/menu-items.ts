@@ -3,7 +3,7 @@ import { RouteInfo } from './sidebar.metadata';
 export const ROUTES_DEV: RouteInfo[] = [
 
   {
-    path: '/artists',
+    path: '/artists/list',
     title: 'Artists',
     icon: 'bi bi-person-badge',
     class: '',
@@ -119,7 +119,7 @@ export const ROUTES_DEV: RouteInfo[] = [
 export const ROUTES: RouteInfo[] = [
 
   {
-    path: '/artists',
+    path: '/artists/list',
     title: 'Artists',
     icon: 'bi bi-person-badge',
     class: '',

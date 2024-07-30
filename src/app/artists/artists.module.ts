@@ -24,9 +24,9 @@ const routes: Routes = [
     component: ArtistsFormComponent,
   },
   {
-    path: "",
+    path: "list",
     component: ArtistsListComponent,
-  },
+  }
 ];
 
 @NgModule({

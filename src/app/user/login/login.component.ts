@@ -35,8 +35,8 @@ export class LoginComponent {
         },
         //Si la respuesta es incorrecta, se muestra un mensaje de error
         error => {
-          this.errorMessage = 'Invalid username or password';
-          console.error('Error logging in:', error);
+          this.errorMessage = error.error.description;
+          console.error( error);
         }
       );
     }

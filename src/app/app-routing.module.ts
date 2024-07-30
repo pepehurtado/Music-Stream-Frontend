@@ -1,4 +1,3 @@
-// src/app/app-routing.module.ts
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { FullComponent } from './layouts/full/full.component';
@@ -11,10 +10,6 @@ export const Approutes: Routes = [
     canActivate: [authGuard],
     children: [
       { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
-      {
-        path: 'user',
-        loadChildren: () => import('./user/user.module').then(m => m.UsersModule)
-      },
       {
         path: 'dashboard',
         loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule),
@@ -44,12 +39,17 @@ export const Approutes: Routes = [
         path: 'component',
         loadChildren: () => import('./component/component.module').then(m => m.ComponentsModule),
         canActivate: [authGuard],
-      }
+      },
+
     ]
   },
   {
-    path: '**',
-    redirectTo: '/dashboard', // Redirigir a '/dashboard' para rutas no reconocidas
+    path: 'user',
+    loadChildren: () => import('./user/user.module').then(m => m.UsersModule)
+  },
+  {
+    path: '**', // Ruta no encontrada
+    redirectTo: '/dashboard', // Redirige a /dashboard para rutas no encontradas
   }
 ];
 
