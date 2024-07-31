@@ -4,6 +4,8 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { Routes, RouterModule } from "@angular/router";
 import { RegisterComponent } from "./register/register.component";
 import { LoginComponent } from "./login/login.component";
+import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
+import { TokenExpiredModalComponent } from "./token-expired/token-expired.component";
 
 
 const routes: Routes = [
@@ -23,6 +25,7 @@ const routes: Routes = [
     ReactiveFormsModule,
     CommonModule,
     RouterModule.forChild(routes),
+    NgbModule,
   ],
   declarations: [
     RegisterComponent,

@@ -24,12 +24,15 @@ import { ArtistsListComponent } from './artists/components/artists-list/artists-
 import { ArtistsModule } from "./artists/artists.module";
 import { PipesModule } from './pipes/pipes.module';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
+import { TokenExpiredModalComponent } from './auth/token-expired/token-expired.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SpinnerComponent,
     ArtistsListComponent,
+    TokenExpiredModalComponent
+
   ],
   imports: [
     CommonModule,

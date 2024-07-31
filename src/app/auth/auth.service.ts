@@ -1,7 +1,6 @@
-// src/app/services/auth.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { jwtDecode } from 'jwt-decode';
 
 @Injectable({
@@ -10,16 +9,30 @@ import { jwtDecode } from 'jwt-decode';
 export class UserService {
 
   private apiUrl = 'http://localhost:9000/api/users';
+  private tokenExpiredSubject = new Subject<void>();
+  tokenExpired$ = this.tokenExpiredSubject.asObservable();
+  private token: string | null = null;
 
   constructor(private http: HttpClient) {
     this.token = localStorage.getItem('jwt');
   }
 
-  private token: string | null = null;
-
-
   login(username: string, password: string): Observable<any> {
-    return this.http.post(`${this.apiUrl}/login?username=${username}&password=${password}`, {});
+    return new Observable(observer => {
+      this.http.post(`${this.apiUrl}/login?username=${username}&password=${password}`, {})
+        .subscribe((response: any) => {
+          if (response && response.token) {
+            localStorage.setItem('jwt', response.token);
+            this.token = response.token;
+            observer.next(response);
+          } else {
+            observer.error('No token found in response');
+          }
+          observer.complete();
+        }, (error) => {
+          observer.error(error);
+        });
+    });
   }
 
   register(username: string, email: string, password: string, image: string): Observable<any> {
@@ -51,26 +64,51 @@ export class UserService {
     return this.http.put<any>(`${this.apiUrl}/activate/${id}`, {});
   }
 
-    // Nueva función para obtener roles del JWT
-    getRoles(): string[] {
+  getRoles(): string[] {
+    this.token = localStorage.getItem('jwt');
+    if (!this.token) return [];
 
-      if (!this.token) return [];
-
-      try {
-        const decodedToken: any = jwtDecode(this.token);
-        console.log('Decoded token:', decodedToken);
-        // Si el token no tiene un rol, devolver un arreglo vacío, en caso contrario, devolver un arreglo con el rol
-        return decodedToken.roles ? decodedToken.roles : [];
-
-      } catch (error) {
-        console.error('Error decoding token:', error);
-        return [];
-      }
+    try {
+      const decodedToken: any = jwtDecode(this.token);
+      console.log('Decoded token:', decodedToken);
+      return decodedToken.roles ? decodedToken.roles : [];
+    } catch (error) {
+      console.error('Error decoding token:', error);
+      return [];
     }
+  }
 
-    hasRole(role: string): boolean {
-      console.log('Roles:', this.getRoles());
-      return this.getRoles().includes(role);
+  hasRole(role: string): boolean {
+    console.log('Roles:', this.getRoles());
+    return this.getRoles().includes(role);
+  }
+
+  isTokenExpired(): boolean {
+    this.token = localStorage.getItem('jwt');
+    console.log('Tokennnnnnnnnn:', this.token);
+    if (!this.token) return true;
+
+    try {
+      const payload = JSON.parse(atob(this.token.split('.')[1]));
+      const expiration = payload.exp;
+      const now = Date.now() / 1000;
+      console.log('Token expiration:', expiration);
+      console.log('Now:', now);
+      console.log('Token expired:', now > expiration);
+      return now > expiration;
+    } catch (error) {
+      console.error('Error decoding token:', error);
+      return true;
     }
+  }
+
+  handleTokenExpiration() {
+    localStorage.removeItem('jwt');
+    this.tokenExpiredSubject.next();
+  }
+
+  getToken(): string | null {
+    return localStorage.getItem('jwt');
+  }
 
 }
