@@ -1,10 +1,11 @@
+<!-- Detalles del Usuario -->
 <div *ngIf="user" class="user-details card shadow-lg">
   <div class="card-header text-center bg-primary text-white">
     <h2>Detalles de la Cuenta</h2>
   </div>
   <div class="card-body">
     <div class="user-profile text-center mb-4">
-      <img [src]="'data:image/png;base64,' + user.image" alt="Profile Image" class="profile-image"/>
+      <img [src]="'data:image/png;base64,' + user.image" alt="Profile Image" class="profile-image" (click)="openImageModal()"/>
       <h3 class="mt-2">{{ user.username }}</h3>
     </div>
     <div class="user-info">
@@ -45,6 +46,27 @@
     </div>
   </div>
 </div>
+
+<!-- Modal para mostrar la imagen en grande -->
+<div class="modal fade" [ngClass]="{'show': showImageModal}" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel" aria-hidden="true" [ngStyle]="{'display': showImageModal ? 'block' : 'none'}">
+  <div class="modal-dialog modal-dialog-centered modal-xl"> <!-- Cambia a modal-xl si deseas un tamaño más grande -->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="imageModalLabel">Imagen de Perfil</h5>
+        <button type="button" class="btn-close" aria-label="Close" (click)="closeImageModal()"></button>
+      </div>
+      <div class="modal-body text-center">
+        <img [src]="'data:image/png;base64,' + user?.image" alt="Profile Image" class="large-profile-image"/>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeImageModal()">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Mensaje de carga -->
 <div *ngIf="!user" class="text-center">
   <p>Cargando detalles del usuario...</p>
 </div>

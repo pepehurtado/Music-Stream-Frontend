@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { Routes, RouterModule } from "@angular/router";
 import { UserListComponent } from "./user-list/user-list.component";
 import { UserDetailsComponent } from './user-details/user-details.component';
+import { NgbModalModule } from "@ng-bootstrap/ng-bootstrap";
 
 
 const routes: Routes = [
@@ -23,6 +24,7 @@ const routes: Routes = [
     ReactiveFormsModule,
     CommonModule,
     RouterModule.forChild(routes),
+    NgbModalModule
   ],
   declarations: [
     UserListComponent,

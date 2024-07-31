@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { User } from '../interfaces/user.interface';
 import { UserService } from '../service/user.service';
+import { User } from '../interfaces/user.interface';
 
 @Component({
   selector: 'app-user-details',
@@ -9,6 +9,7 @@ import { UserService } from '../service/user.service';
 })
 export class UserDetailsComponent implements OnInit {
   user: User | null = null;
+  showImageModal = false;
 
   constructor(private userService: UserService) {}
 
@@ -25,5 +26,13 @@ export class UserDetailsComponent implements OnInit {
         console.error('Error al obtener los detalles del usuario:', error);
       }
     );
+  }
+
+  openImageModal(): void {
+    this.showImageModal = true;
+  }
+
+  closeImageModal(): void {
+    this.showImageModal = false;
   }
 }
