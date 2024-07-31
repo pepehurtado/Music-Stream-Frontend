@@ -28,11 +28,16 @@ export class UserListComponent implements OnInit {
     role: '',
     status: ''
   };
+  filteredUsers: User[] = [];
 
   public userToActivate: User | null = null;
   public showActivateModal = false;
   showModal = false;
   showDetailsModal = false;
+  filterUsername: string = '';
+  filterEmail: string = '';
+  filterActive: number | null = -1;
+  filterDelete: number | null = -1;
 
   constructor(private userService: UserService, private router: Router) { }
 
@@ -40,11 +45,29 @@ export class UserListComponent implements OnInit {
     this.loadUsers();
   }
 
+  applyFilter(): void {
+    console.log(`Filtering users with filterUsername: "${this.filterUsername}", filterEmail: "${this.filterEmail}", filterActive: ${this.filterActive}`);
+
+    // Ajustar filterActive si es -1
+    const activeFilter = this.filterActive === -1 ? null : this.filterActive;
+    const deleteFilter = this.filterDelete === -1 ? null : this.filterDelete;
+
+    this.filteredUsers = this.userList.filter(user =>
+      user.username.toLowerCase().includes(this.filterUsername.toLowerCase()) &&
+      user.email.toLowerCase().includes(this.filterEmail.toLowerCase()) &&
+      (activeFilter === null || user.active === activeFilter) &&
+      (deleteFilter === null || user.softDelete === deleteFilter)
+
+    );
+  }
+
+
   loadUsers(): void {
     this.userService.getUsers()
       .subscribe(
         (data) => {
           this.userList = data;
+          this.filteredUsers = this.userList;
           console.log('Users:', this.userList);
           this.sortUsers(); // Ordenar después de recibir los datos si es necesario
           if (this.userList.length === 0) {
@@ -127,12 +150,10 @@ export class UserListComponent implements OnInit {
   }
 
   clearFilters(): void {
-    this.filters = {
-      username: '',
-      email: '',
-      role: '',
-      status: ''
-    };
+    this.filterActive = -1;
+    this.filterDelete = -1;
+    this.filterUsername = '';
+    this.filterEmail = '';
     this.errorMessage = '';
     this.applyFilters();
   }

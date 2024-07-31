@@ -3,35 +3,57 @@
     <h4 class="card-title">Lista de usuarios</h4>
     <h5 class="card-subtitle text-muted">Listado de todos los usuarios disponibles</h5>
 
-    <!-- Selector de ítems por página -->
-    <div class="row mb-3">
-      <div class="col">
-        <label for="itemsPerPageSelect" class="form-label">Items por página</label>
-        <select id="itemsPerPageSelect" class="form-select" [(ngModel)]="itemsPerPage" (change)="onItemsPerPageChange()">
-          <option *ngFor="let option of itemsPerPageOptions" [value]="option">{{ option }}</option>
-        </select>
-      </div>
-    </div>
+        <!-- Filtros de búsqueda -->
+        <div class="row mb-3">
+          <div class="col">
+            <input
+            type="text"
+            class="form-control"
+            placeholder="Buscar por nombre"
+            [(ngModel)]="filterUsername"
+            (input)="applyFilter()"
+          />
+          </div>
+          <div class="col">
+            <input
+            type="text"
+            class="form-control"
+            placeholder="Buscar por email"
+            [(ngModel)]="filterEmail"
+            (input)="applyFilter()"
+          />
+          </div>
+          <div class="col">
+            <select
+            class="form-select"
+            [(ngModel)]="filterActive"
+            (change)="applyFilter()"
+            placeholder="Filtrar por activo"
+          >
+            <option [ngValue]="1">Activos</option>
+            <option [ngValue]="0">Inactivos</option>
+            <option [ngValue]="-1">Busca por activos</option>
+          </select>
 
-    <!-- Filtros de búsqueda -->
-    <div class="row mb-3">
-      <div class="col">
-        <input type="text" class="form-control" placeholder="Filtrar por nombre" [(ngModel)]="filters.username">
+        </div>
+        <div class="col">
+          <select
+          class="form-select"
+          [(ngModel)]="filterDelete"
+          (change)="applyFilter()"
+          placeholder="Filtrar por activo"
+        >
+          <option [ngValue]="1">Eliminados</option>
+          <option [ngValue]="0">No eliminados</option>
+          <option [ngValue]="-1">Busca por eliminados</option>
+        </select>
+
       </div>
-      <div class="col">
-        <input type="text" class="form-control" placeholder="Filtrar por correo electrónico" [(ngModel)]="filters.email">
-      </div>
-      <div class="col">
-        <input type="text" class="form-control" placeholder="Filtrar por rol" [(ngModel)]="filters.role">
-      </div>
-      <div class="col">
-        <input type="text" class="form-control" placeholder="Filtrar por estado" [(ngModel)]="filters.status">
-      </div>
+
       <div class="col">
         <button class="btn btn-primary me-2" (click)="applyFilters()">Aplicar</button>
         <button class="btn btn-secondary" (click)="clearFilters()">Limpiar</button>
       </div>
-    </div>
 
     <!-- Indicador de carga -->
     <div class="text-center" *ngIf="userList.length === 0 && errorMessage===''">
@@ -91,7 +113,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let user of userList">
+          <tr *ngFor="let user of filteredUsers">
             <td>
               <div class="d-flex align-items-center">
                 <div class="ms-3">
@@ -134,19 +156,6 @@
           </tr>
         </tbody>
       </table>
-
-      <!-- Navegación de paginación -->
-      <div class="d-flex justify-content-between">
-        <button class="btn btn-primary" (click)="firstPage()" [disabled]="currentPage === 1">
-          <i class="bi bi-arrow-left"></i>
-        </button>
-        <button class="btn btn-primary" (click)="previousPage()" [disabled]="currentPage === 1">Anterior</button>
-        <span>Página {{ currentPage }}</span>
-        <button class="btn btn-primary" (click)="nextPage()" [disabled]="userList.length < itemsPerPage || isFinalPage">Siguiente</button>
-        <button class="btn btn-primary" (click)="lastPage()" [disabled]="userList.length < itemsPerPage">
-          <i class="bi bi-arrow-right"></i>
-        </button>
-      </div>
     </div>
   </div>
 </div>
