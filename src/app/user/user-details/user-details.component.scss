@@ -1,0 +1,77 @@
+.user-details {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  border-radius: 8px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+
+  &:hover {
+    transform: scale(1.02);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  }
+}
+
+.card-header {
+  border-bottom: 1px solid #007bff;
+}
+
+.user-profile {
+  text-align: center;
+}
+
+.profile-image {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #007bff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.user-info {
+  margin-top: 20px;
+}
+
+.info-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+  transition: background-color 0.3s, transform 0.3s;
+
+  &:hover {
+    background-color: #e9ecef;
+    transform: translateX(5px);
+  }
+
+  i {
+    margin-right: 10px;
+    color: #007bff;
+  }
+}
+
+.roles-section {
+  margin-top: 20px;
+}
+
+.list-group-item {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+  margin-bottom: 5px;
+  padding: 10px;
+}
+
+.role-item {
+  font-weight: bold;
+}
+
+.list-group-item i {
+  margin-right: 5px;
+  color: #007bff;
+}

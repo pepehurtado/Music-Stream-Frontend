@@ -1,0 +1,50 @@
+<div *ngIf="user" class="user-details card shadow-lg">
+  <div class="card-header text-center bg-primary text-white">
+    <h2>Detalles de la Cuenta</h2>
+  </div>
+  <div class="card-body">
+    <div class="user-profile text-center mb-4">
+      <img [src]="'data:image/png;base64,' + user.image" alt="Profile Image" class="profile-image"/>
+      <h3 class="mt-2">{{ user.username }}</h3>
+    </div>
+    <div class="user-info">
+      <div class="info-item">
+        <i class="bi bi-person"></i> <strong>ID:</strong> {{ user.id }}
+      </div>
+      <div class="info-item">
+        <i class="bi bi-envelope"></i> <strong>Email:</strong> {{ user.email }}
+      </div>
+      <div class="info-item">
+        <i class="bi bi-lock"></i> <strong>Contraseña:</strong> {{ user.password }}
+      </div>
+      <div class="info-item">
+        <i class="bi bi-check-circle"></i> <strong>Activo:</strong> {{ user.active }}
+      </div>
+      <div class="info-item">
+        <i class="bi bi-trash"></i> <strong>Soft Delete:</strong> {{ user.softDelete }}
+      </div>
+      <div class="info-item">
+        <i class="bi bi-calendar"></i> <strong>Fecha de Creación:</strong> {{ user.createdAt | date:'short' }}
+      </div>
+      <div class="info-item">
+        <i class="bi bi-calendar-event"></i> <strong>Fecha de Actualización:</strong> {{ user.updatedAt | date:'short' }}
+      </div>
+      <div *ngIf="user.roles && user.roles.length > 0" class="roles-section">
+        <h3><i class="bi bi-shield-lock"></i> Roles:</h3>
+        <ul class="list-group">
+          <li *ngFor="let role of user.roles" class="list-group-item role-item">
+            <strong>{{ role.name }}</strong>
+            <ul *ngIf="role.permissions && role.permissions.length > 0" class="list-group">
+              <li *ngFor="let permission of role.permissions" class="list-group-item">
+                <i class="bi bi-key"></i> {{ permission.name }} ({{ permission.entity }})
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="!user" class="text-center">
+  <p>Cargando detalles del usuario...</p>
+</div>

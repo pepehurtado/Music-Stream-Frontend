@@ -73,4 +73,14 @@ export class UserService {
       return this.getRoles().includes(role);
     }
 
+    getPersonalUserDetails(): Observable<any> {
+      this.token = localStorage.getItem('jwt');
+      if (!this.token) return new Observable();
+      //Extraer el nombre de usuario del token JWT
+      const decodedToken: any = jwtDecode(this.token);
+      const username = decodedToken.sub;
+      console.log('Username:', username);
+      return this.http.get<any>(`${this.apiUrl}/${username}`);
+    }
+
 }

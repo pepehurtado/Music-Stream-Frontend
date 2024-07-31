@@ -198,6 +198,58 @@
         <button type="button" class="btn-close" aria-label="Close" (click)="closeDetailsModal()"></button>
       </div>
       <div class="modal-body">
+        <div class="user-details">
+          <div class="user-profile text-center mb-4">
+            <img [src]="'data:image/png;base64,' + selectedUser?.image" alt="Profile Image" class="profile-image"/>
+            <h3 class="mt-2">{{ selectedUser?.username }}</h3>
+          </div>
+          <div class="user-info">
+            <div class="info-item">
+              <i class="bi bi-person"></i> <strong>ID:</strong> {{ selectedUser?.id }}
+            </div>
+            <div class="info-item">
+              <i class="bi bi-envelope"></i> <strong>Email:</strong> {{ selectedUser?.email }}
+            </div>
+            <div class="info-item">
+              <i class="bi bi-check-circle"></i> <strong>Activo:</strong>
+              <ng-container *ngIf="selectedUser?.active === 1">
+                <i class="bi bi-check-lg text-success" title="Activo"></i>
+              </ng-container>
+              <ng-container *ngIf="selectedUser?.active === 0">
+                <i class="bi bi-x-lg text-danger" title="Desactivado"></i>
+              </ng-container>
+            </div>
+            <div class="info-item">
+              <i class="bi bi-trash"></i> <strong>Soft Delete:</strong>
+              <ng-container *ngIf="selectedUser?.softDelete === 1">
+                <i class="bi bi-check-lg text-success" title="Activo"></i>
+              </ng-container>
+              <ng-container *ngIf="selectedUser?.softDelete === 0">
+                <i class="bi bi-x-lg text-danger" title="Eliminado"></i>
+              </ng-container>
+
+            </div>
+            <div class="info-item">
+              <i class="bi bi-calendar"></i> <strong>Fecha de Creación:</strong> {{ selectedUser?.createdAt | date: 'dd/MM/yyyy' }}
+            </div>
+            <div class="info-item">
+              <i class="bi bi-calendar-event"></i> <strong>Fecha de Actualización:</strong> {{ selectedUser?.updatedAt | date: 'dd/MM/yyyy' }}
+            </div>
+            <div *ngIf="selectedUser?.roles && selectedUser?.roles.length > 0" class="roles-section">
+              <h5><i class="bi bi-shield-lock"></i> Roles:</h5>
+              <ul class="list-group">
+                <li *ngFor="let role of selectedUser?.roles" class="list-group-item role-item">
+                  <strong>{{ role.name }}</strong>
+                  <ul *ngIf="role.permissions && role.permissions.length > 0" class="list-group">
+                    <li *ngFor="let permission of role.permissions" class="list-group-item">
+                      <i class="bi bi-key"></i> {{ permission.name }} ({{ permission.entity }})
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" (click)="closeDetailsModal()">Cerrar</button>
@@ -205,3 +257,4 @@
     </div>
   </div>
 </div>
+
