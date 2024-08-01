@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { RoleService } from '../../services/roles.service';
-import { Role } from '../../interfaces/role.interfaces';
+import { Role, Permission } from '../../interfaces/role.interfaces';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap'; // Importa el servicio del modal si usas ng-bootstrap
 import { Router } from '@angular/router';
+import { PermissionService } from '../../services/permission.service';
 
 @Component({
   selector: 'app-role-list',
@@ -12,20 +13,29 @@ import { Router } from '@angular/router';
 export class RolesListComponent implements OnInit {
   roles: Role[] = [];
   filteredRoles: Role[] = [];
+  allPermissions: Permission[] = []; // Permisos disponibles para seleccionar
   filterText: string = '';
+  selectedPermissionIds: number[] = []; // IDs de permisos seleccionados en el checkbox
   isSortedAscending: boolean = true;
   errorMessage: string = '';
   selectedRole: Role | null = null;
   deleteModal: boolean = false;
+  isDropdownOpen: boolean = false;
 
   constructor(
     private roleService: RoleService,
     private modalService: NgbModal, // Usa NgbModal si usas ng-bootstrap
-    private router: Router
+    private router: Router,
+    private permissionService: PermissionService
   ) {}
 
   ngOnInit(): void {
     this.loadRoles();
+    this.loadPermissions(); // Cargar permisos disponibles
+  }
+
+  toggleDropdown(): void {
+    this.isDropdownOpen = !this.isDropdownOpen;
   }
 
   loadRoles(): void {
@@ -40,10 +50,37 @@ export class RolesListComponent implements OnInit {
     );
   }
 
+  loadPermissions(): void {
+    this.permissionService.getPermissions().subscribe(
+      (permissions: Permission[]) => {
+        this.allPermissions = permissions;
+      },
+      (error) => {
+        this.errorMessage = 'Error loading permissions: ' + error.message;
+      }
+    );
+  }
+
   applyFilter(): void {
     this.filteredRoles = this.roles.filter(role =>
-      role.name.toLowerCase().includes(this.filterText.toLowerCase())
+      role.name.toLowerCase().includes(this.filterText.toLowerCase()) &&
+      (this.selectedPermissionIds.length === 0 ||
+        this.selectedPermissionIds.every(permissionId =>
+          role.permissions.some(permission => permission.id === permissionId)
+        )
+      )
     );
+    this.toggleSort(); // Para asegurar que el sorting se aplique después del filtrado
+  }
+
+  onPermissionChange(event: any): void {
+    const permissionId = Number(event.target.value);
+    if (event.target.checked) {
+      this.selectedPermissionIds.push(permissionId);
+    } else {
+      this.selectedPermissionIds = this.selectedPermissionIds.filter(id => id !== permissionId);
+    }
+    this.applyFilter(); // Aplicar filtro después de cambiar la selección
   }
 
   toggleSort(): void {
@@ -52,6 +89,7 @@ export class RolesListComponent implements OnInit {
       this.isSortedAscending ? a.name.localeCompare(b.name) : b.name.localeCompare(a.name)
     );
   }
+
   openDeleteModal(role: any) {
     this.selectedRole = role;
     this.deleteModal = true;
@@ -63,18 +101,16 @@ export class RolesListComponent implements OnInit {
   }
 
   confirmDelete() {
-    // Lógica para eliminar al artista
     if (this.selectedRole) {
-      // Elimina al artista de la lista (o realiza una llamada a un servicio para eliminarlo)
       this.roleService.deleteRole(this.selectedRole.id).subscribe(
         (response) => {
-          console.log('Song deleted successfully:', response);
+          console.log('Role deleted successfully:', response);
           this.selectedRole = null;
           this.closeDeleteModal();
           this.loadRoles();
         },
         (error) => {
-          console.error('Error deleting artist:', error);
+          console.error('Error deleting role:', error);
           this.selectedRole = null;
           this.closeDeleteModal();
         }
@@ -83,5 +119,10 @@ export class RolesListComponent implements OnInit {
       this.closeDeleteModal();
     }
   }
-}
 
+  clearFilters(): void {
+    this.filterText = '';
+    this.selectedPermissionIds = [];
+    this.applyFilter();
+  }
+}
