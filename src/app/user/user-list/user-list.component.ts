@@ -29,6 +29,7 @@ export class UserListComponent implements OnInit {
     status: ''
   };
   filteredUsers: User[] = [];
+  public whatis = '';
 
   public userToActivate: User | null = null;
   public showActivateModal = false;
@@ -168,9 +169,24 @@ export class UserListComponent implements OnInit {
     this.userToDelete = null;
   }
 
-  confirmDelete() {
+  confirmDelete(type : string) {
     // Lógica para eliminar al usuario
     if (this.userToDelete) {
+      if(type === 'delete'){
+        this.userService.deleteUser(this.userToDelete.id).subscribe(
+          (response) => {
+            console.log('Usuario eliminado con éxito:', response);
+            this.userToDelete = null;
+            this.closeDeleteModal();
+            this.loadUsers();
+          },
+          (error) => {
+            console.error('Error al eliminar el usuario:', error);
+            this.userToDelete = null;
+            this.closeDeleteModal();
+          }
+        );
+      }
       this.userService.softDeleteUser(this.userToDelete.id).subscribe(
         (response) => {
           console.log('Usuario eliminado con éxito:', response);
@@ -209,6 +225,13 @@ export class UserListComponent implements OnInit {
   openActivateModal(user: User): void {
     this.userToActivate = user;
     this.showActivateModal = true;
+    this.whatis = 'activar';
+  }
+
+  openDesactivateModal(user: User): void {
+    this.userToActivate = user;
+    this.showActivateModal = true;
+    this.whatis = 'desactivar';
   }
 
   closeActivateModal(): void {
@@ -220,13 +243,11 @@ export class UserListComponent implements OnInit {
     if (this.userToActivate) {
       this.userService.activateUser(this.userToActivate.id).subscribe(
         (response) => {
-          console.log('Usuario activado con éxito:', response);
           this.closeActivateModal();
           this.loadUsers();
           // Actualiza la lista de usuarios o realiza alguna otra acción necesaria
         },
         (error) => {
-          console.error('Error al activar el usuario:', error);
           this.closeActivateModal();
         }
       );

@@ -140,11 +140,14 @@
             </td>
 
             <td>
-              <button  *ngIf="canActivate('ROLE_ADMIN') && user.softDelete===0" class="btn btn-danger me-2" (click)="openDeleteModal(user)">
+              <button  *ngIf="canActivate('ROLE_ADMIN')" class="btn btn-danger me-2" (click)="openDeleteModal(user)">
                 <i class="bi bi-trash"></i>
               </button>
               <button *ngIf="user.active===0" class="btn btn-success me-2" (click)="openActivateModal(user)">
                 <i class="bi bi-check-lg"></i> Activar
+              </button>
+              <button *ngIf="user.active===1" class="btn btn-success me-2" (click)="openDesactivateModal(user)">
+                <i class="bi bi-check-lg"></i> Desactivar
               </button>
               <a class="btn btn-primary me-2" (click)="viewUserDetails(user)">
                 <i class="bi bi-eye"></i>
@@ -173,7 +176,9 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" (click)="closeDeleteModal()">Cancelar</button>
-        <button type="button" class="btn btn-danger" (click)="confirmDelete()">Eliminar</button>
+        <button type="button" class="btn btn-danger" (click)="confirmDelete('delete')">Eliminar permanentemente</button>
+        <button type="button" class="btn btn-warning" (click)="confirmDelete('soft')">Deshabilitar</button>
+        <
       </div>
     </div>
   </div>
@@ -188,7 +193,7 @@
         <button type="button" class="btn-close" (click)="closeActivateModal()"></button>
       </div>
       <div class="modal-body">
-        ¿Estás seguro de que deseas activar al usuario {{ userToActivate?.username }}?
+        ¿Estás seguro de que deseas {{whatis}} al usuario {{ userToActivate?.username }}?
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" (click)="closeActivateModal()">Cancelar</button>

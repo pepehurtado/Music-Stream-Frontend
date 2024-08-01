@@ -38,10 +38,11 @@ export class FeedsComponent implements OnInit {
         });
 
         if (entitiesLastMonth.length > 0) {
+
           const newFeed: Feed = {
             class: 'bg-primary',
             icon: typeIcons[type],
-            task: `Se han creado ${entitiesLastMonth.length} ${type.toLowerCase()}s en el último mes.`,
+            task: `Se han creado ${entitiesLastMonth.length} ${type === 'Song' ? 'canciones' : type === 'Album' ? 'álbumes' : type === 'Genre' ? 'géneros' : 'artistas'} en el último mes.`,
             time: ''
           };
           this.feeds.unshift(newFeed); // Añadir el nuevo feed al principio de la lista

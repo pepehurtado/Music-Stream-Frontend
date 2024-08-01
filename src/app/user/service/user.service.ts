@@ -51,6 +51,11 @@ export class UserService {
     return this.http.put<any>(`${this.apiUrl}/activate/${id}`, {});
   }
 
+  desactivateUser(id: number): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/desactivate/${id}`, {});
+  }
+
+
     // Nueva función para obtener roles del JWT
     getRoles(): string[] {
 
@@ -58,8 +63,6 @@ export class UserService {
 
       try {
         const decodedToken: any = jwtDecode(this.token);
-        console.log('Decoded token:', decodedToken);
-        // Si el token no tiene un rol, devolver un arreglo vacío, en caso contrario, devolver un arreglo con el rol
         return decodedToken.roles ? decodedToken.roles : [];
 
       } catch (error) {
@@ -69,7 +72,6 @@ export class UserService {
     }
 
     hasRole(role: string): boolean {
-      console.log('Roles:', this.getRoles());
       return this.getRoles().includes(role);
     }
 
@@ -82,5 +84,4 @@ export class UserService {
       console.log('Username:', username);
       return this.http.get<any>(`${this.apiUrl}/${username}`);
     }
-
 }
