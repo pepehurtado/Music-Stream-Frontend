@@ -21,16 +21,34 @@
         <input type="text" id="name" class="form-control" formControlName="name">
       </div>
 
-      <div class="mb-3">
-        <label class="form-label">Permisos</label>
-        <div *ngFor="let permission of permissions">
-          <input
-            type="checkbox"
-            [id]="'permission-' + permission.id"
-            [checked]="selectedPermissions.includes(permission.id)"
-            (change)="onPermissionChange(permission.id, $event)"
-          />
-          <label [for]="'permission-' + permission.id">{{ permission.name }} ({{ permission.entity }})</label>
+      <div class="row board__lists">
+        <div class="col-6"
+          cdkDropList
+          id="permissions"
+          [cdkDropListData]="permissions"
+          [cdkDropListConnectedTo]="['selectedPermissionsFull']"
+          (cdkDropListDropped)="drop($event)">
+          <h3 class="text-center">Permisos totales</h3>
+          <hr>
+          <div *ngFor="let permission of permissions" cdkDrag>
+            <div class="text-center">
+            {{permission.name}} {{permission.entity}}
+          </div>
+          </div>
+        </div>
+        <div class="col-6"
+          cdkDropList
+          id="selectedPermissionsFull"
+          [cdkDropListData]="selectedPermissionsFull"
+          [cdkDropListConnectedTo]="['permissions']"
+          (cdkDropListDropped)="drop($event)">
+          <h3 class="text-center">Permisos seleccionados</h3>
+          <hr>
+          <div *ngFor="let permission of selectedPermissionsFull" cdkDrag>
+            <div class="text-center">
+            {{permission.name}} {{permission.entity}}
+          </div>
+          </div>
         </div>
       </div>
       <button type="submit" class="btn btn-primary">Enviar</button>

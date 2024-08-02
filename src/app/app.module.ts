@@ -25,6 +25,7 @@ import { ArtistsModule } from "./artists/artists.module";
 import { PipesModule } from './pipes/pipes.module';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { TokenExpiredModalComponent } from './auth/token-expired/token-expired.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import { TokenExpiredModalComponent } from './auth/token-expired/token-expired.c
     SidebarComponent,
     ArtistsModule,
     PipesModule,
+    DragDropModule
 ],
   providers: [
     {

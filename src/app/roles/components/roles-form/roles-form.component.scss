@@ -1,0 +1,106 @@
+:host {
+  --kanban-list-separator-color: #e0e0e0;
+  --kanban-list-add-text-color: #606060;
+
+  --kanban-task-bg-color: #fff;
+  --kanban-task-text-color: #333;
+
+  --kanban-preview-bg-color: #80f5ce;
+
+  display: flex;
+  flex-direction: column;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.board__lists {
+  display: flex;
+  flex-direction: row; /* Alinea las listas en una fila */
+  align-items: flex-start;
+  justify-content: space-around; /* Espacio entre listas */
+  overflow-x: auto;
+  padding: 10px;
+  gap: 10px; /* Espaciado entre listas */
+}
+
+.cdk-drag-preview {
+  background-color: var(--kanban-preview-bg-color);
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.cdk-drag-placeholder {
+  opacity: 0.5;
+}
+
+.cdk-drop-list-dragging .cdk-drag {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.cdk-drag-animating {
+  transition: transform 300ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+@media only screen and (max-width: 1050px) {
+  .board__lists {
+    flex-direction: column; /* Apilar verticalmente en pantallas pequeñas */
+    align-items: stretch;
+  }
+}
+
+/* Estilos para el contenedor de las listas */
+[cdkDropList] {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  min-height: 300px;
+  background: #f9f9f9;
+  padding: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease;
+  width: 100%; /* Permite que las listas se ajusten al contenedor */
+  max-width: 400px; /* Ancho máximo para cada lista */
+}
+
+[cdkDropList]:hover {
+  background-color: #eaeaea;
+}
+
+/* Estilos para los elementos arrastrables */
+[cdkDrag] {
+  padding: 10px;
+  border: 1px solid #ddd;
+  background: #fff;
+  margin: 4px;
+  border-radius: 8px;
+  cursor: move;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease;
+}
+
+[cdkDrag]:hover {
+  background-color: #f5f5f5;
+}
+
+.card {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 20px;
+}
+
+.card-body {
+  padding: 20px;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  border: none;
+  border-radius: 4px;
+  color: #fff;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+}

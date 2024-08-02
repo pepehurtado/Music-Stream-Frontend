@@ -25,25 +25,25 @@ export class TopCardsComponent implements OnInit {
           bgcolor: 'info',
           icon: 'bi bi-person-badge',
           title: data.artists.toString(),
-          subtitle: 'Artists'
+          subtitle: 'Artistas'
         },
         {
           bgcolor: 'success',
           icon: 'bi bi-music-note-beamed',
           title: data.songs.toString(),
-          subtitle: 'Songs'
+          subtitle: 'Canciones'
         },
         {
           bgcolor: 'warning',
           icon: 'bi bi-music-note-list',
           title: data.albums.toString(),
-          subtitle: 'Albums'
+          subtitle: 'Álbumes'
         },
         {
           bgcolor: 'danger',
           icon: 'bi bi-vinyl',
           title: data.genres.toString(),
-          subtitle: 'Genres'
+          subtitle: 'Géneros'
         }
       ];
     });

@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { Routes, RouterModule } from "@angular/router";
 import { RolesFormComponent } from "./components/roles-form/roles-form.component";
 import { RolesListComponent } from "./components/roles-list/roles-list.component";
+import { DragDropModule } from "@angular/cdk/drag-drop";
 
 
 const routes: Routes = [
@@ -27,6 +28,7 @@ const routes: Routes = [
     ReactiveFormsModule,
     CommonModule,
     RouterModule.forChild(routes),
+    DragDropModule
   ],
   declarations: [
     RolesFormComponent,

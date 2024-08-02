@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap, tap } from 'rxjs';
 import { RoleService } from '../../services/roles.service';
 import { Permission, Role } from '../../interfaces/role.interfaces';
+import { CdkDragDrop, transferArrayItem } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-role-form',
@@ -26,7 +27,8 @@ export class RolesFormComponent implements OnInit {
     { id: 9, name: 'write', entity: 'user' },
     { id: 10, name: 'read', entity: 'user' }
   ];
-  selectedPermissions: number[] = []; // Array of permission IDs
+  selectedPermissionsFull: Permission[] = [];
+  selectedPermissions: number[] = [];
   isEditMode = false;
   roleId: string | null = null;
 
@@ -40,6 +42,35 @@ export class RolesFormComponent implements OnInit {
       name: ['', Validators.required],
       permissions: [[], Validators.required],
     });
+  }
+
+  drop(event: CdkDragDrop<Permission[]>): void {
+    console.log('Datos anteriores:', event.previousContainer.data);
+    console.log('Índice anterior:', event.previousIndex);
+    console.log('Datos actuales:', event.container.data);
+    console.log('Índice actual:', event.currentIndex);
+
+    if (event.previousContainer === event.container) {
+      console.log('No se movió el elemento');
+      return;
+    } else {
+      // Ver el dato que se está moviendo
+      console.log('Dato que se está moviendo:', event.previousContainer.data[event.previousIndex]);
+      transferArrayItem(
+        event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex
+      );
+
+      // Verifica que los datos se han transferido correctamente
+      console.log('Datos después de la transferencia:');
+      console.log('Permisoss:', this.permissions);
+      console.log('Permisos seleccionados:', this.selectedPermissionsFull);
+
+      // Actualiza permisos seleccionados
+      //this.updateSelectedPermissions();
+    }
   }
 
   ngOnInit(): void {
@@ -59,9 +90,10 @@ export class RolesFormComponent implements OnInit {
         if (role) {
           this.roleForm.patchValue({
             name: role.name,
-            permissions: role.permissions.map(permission => permission.id) // Initialize permissions
+            permissions: role.permissions.map(permission => permission.id)
           });
           this.selectedPermissions = role.permissions.map(permission => permission.id);
+          this.selectedPermissionsFull = role.permissions;
         }
       },
       (error) => {
@@ -78,6 +110,7 @@ export class RolesFormComponent implements OnInit {
           permissions: role.permissions.map(permission => permission.id)
         });
         this.selectedPermissions = role.permissions.map(permission => permission.id);
+        this.selectedPermissionsFull = role.permissions;
       })
     );
   }
@@ -88,18 +121,34 @@ export class RolesFormComponent implements OnInit {
     } else {
       this.selectedPermissions = this.selectedPermissions.filter(id => id !== permissionId);
     }
+    this.updateSelectedPermissions();
+  }
+
+  updateSelectedPermissions(): void {
+    this.selectedPermissionsFull = this.selectedPermissions.map(id =>
+      this.permissions.find(permission => permission.id === id)!
+    );
+
+    // Actualiza el formulario con los IDs de permisos seleccionados
     this.roleForm.patchValue({ permissions: this.selectedPermissions });
+
+    console.log('Permisos seleccionados actualizados:', this.selectedPermissions);
   }
 
   submitForm(): void {
+    const formData = this.roleForm.value;
+    console.log('Permisos seleccionados completos:', this.selectedPermissionsFull);
+    const formattedPermissions = this.selectedPermissionsFull.map(permission => {
+      return {
+        id: permission.id,
+        name: permission.name,
+        entity: permission.entity
+      };
+    });
+    console.log('Permisos formateados:', formattedPermissions);
+    formData.permissions = formattedPermissions;
+    this.roleForm.patchValue({ permissions: formattedPermissions });
     if (this.roleForm.valid) {
-      const formData = this.roleForm.value;
-
-      // Convertir los IDs de permisos en objetos con el formato { id: number }
-      const formattedPermissions = this.selectedPermissions.map(id => ({ id }));
-
-      // Añadir los permisos formateados al objeto formData
-      formData.permissions = formattedPermissions;
 
       if (this.isEditMode && this.roleId) {
         this.roleService.updateRole(this.roleId, formData).subscribe(
