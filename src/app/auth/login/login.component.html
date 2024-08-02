@@ -2,31 +2,31 @@
 <div class="container d-flex justify-content-center align-items-center min-vh-100">
   <div class="login-card p-4 shadow-lg rounded">
     <h2 class="text-center mb-4">
-      <i class="bi bi-lock-fill"></i> Inicio de sesión
+      <i class="bi bi-lock-fill"></i> {{'INICIO_DE_SESION' | translate }}
     </h2>
     <form [formGroup]="loginForm" (ngSubmit)="submitForm()">
       <div class="mb-3">
         <label for="username" class="form-label">
-          <i class="bi bi-person"></i> Usuario
+          <i class="bi bi-person"></i> {{'USUARIO' | translate}}
         </label>
-        <input id="username" formControlName="username" type="text" class="form-control" placeholder="Introduce el usuario">
+        <input id="username" formControlName="username" type="text" class="form-control" placeholder="{{'INTRODUCE_EL_USUARIO' | translate}}">
       </div>
       <div class="mb-3">
         <label for="password" class="form-label">
-          <i class="bi bi-key"></i> Contraseña
+          <i class="bi bi-key"></i> {{'CONTRASEÑA' | translate }}
         </label>
-        <input id="password" formControlName="password" type="password" class="form-control" placeholder="Introduce su contraseña">
+        <input id="password" formControlName="password" type="password" class="form-control" placeholder="{{'INTRODUCE_SU_CONTRASEÑA' | translate}}">
       </div>
       <button type="submit" class="btn btn-primary w-100 mb-3">
-        <i class="bi bi-box-arrow-in-right"></i> Entrar
+        <i class="bi bi-box-arrow-in-right"></i> {{'ENTRAR' | translate}}
       </button>
       <div *ngIf="errorMessage" class="mt-3 alert alert-danger">
         {{ errorMessage }}
       </div>
       <div class="text-center mt-3">
-        <p>¿No tienes cuenta todavia?</p>
+        <p>{{'NO_TIENES_CUENTA_TODAVIA' | translate}}</p>
         <a routerLink="/auth/register" class="btn btn-secondary w-100">
-          <i class="bi bi-person-plus"></i> Registrarse
+          <i class="bi bi-person-plus"></i> {{'REGISTRARSE' | translate}}
         </a>
       </div>
     </form>

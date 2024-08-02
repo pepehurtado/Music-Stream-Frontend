@@ -1,43 +1,43 @@
 <div class="container d-flex justify-content-center align-items-center min-vh-100">
   <div class="register-card p-4 shadow-lg rounded">
     <h2 class="text-center mb-4">
-      <i class="bi bi-person-plus"></i> Registro
+      <i class="bi bi-person-plus"></i> {{'REGISTRO' | translate}}
     </h2>
     <form [formGroup]="registerForm" (ngSubmit)="submitForm()">
       <div class="mb-3">
         <label for="username" class="form-label">
-          <i class="bi bi-person"></i> Usuario
+          <i class="bi bi-person"></i> {{'USUARIO' | translate}}
         </label>
-        <input id="username" formControlName="username" type="text" class="form-control" placeholder="Introduce su usuario">
+        <input id="username" formControlName="username" type="text" class="form-control" placeholder="{{'INTRODUCE_EL_USUARIO' | translate}}">
       </div>
       <div class="mb-3">
         <label for="email" class="form-label">
-          <i class="bi bi-envelope"></i> Email
+          <i class="bi bi-envelope"></i> {{'EMAIL' | translate}}
         </label>
-        <input id="email" formControlName="email" type="email" class="form-control" placeholder="Introduce su email">
+        <input id="email" formControlName="email" type="email" class="form-control" placeholder="{{'INTRODUCE_SU_EMAIL' | translate}}">
       </div>
       <div class="mb-3">
         <label for="password" class="form-label">
-          <i class="bi bi-key"></i> Contraseña
+          <i class="bi bi-key"></i> {{'CONTRASEÑA' | translate}}
         </label>
-        <input id="password" formControlName="password" type="password" class="form-control" placeholder="Escribe tu contraseña">
+        <input id="password" formControlName="password" type="password" class="form-control" placeholder="{{'INTRODUCE_SU_CONTRASEÑA' | translate}}">
       </div>
       <div class="mb-3">
         <label for="image" class="form-label">
-          <i class="bi bi-image"></i> Foto de perfil
+          <i class="bi bi-image"></i> {{'FOTO_DE_PERFIL' | translate}}
         </label>
         <input id="image" type="file" (change)="onFileChange($event)" class="form-control">
       </div>
       <button type="submit" class="btn btn-primary w-100 mb-3">
-        <i class="bi bi-person-plus"></i> Registrarse
+        <i class="bi bi-person-plus"></i> {{'REGISTRARSE' | translate}}
       </button>
       <div *ngIf="errorMessage" class="mt-3 alert alert-danger">
         {{ errorMessage }}
       </div>
       <div class="text-center mt-3">
-        <p>¿Ya tienes cuenta?</p>
+        <p>{{'YA_TIENES_CUENTA' | translate}}</p>
         <a routerLink="/auth" class="btn btn-secondary w-100">
-          <i class="bi bi-box-arrow-in-right"></i> Entrar
+          <i class="bi bi-box-arrow-in-right"></i> {{'ENTRAR' | translate}}
         </a>
       </div>
     </form>

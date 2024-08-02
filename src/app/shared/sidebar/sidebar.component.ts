@@ -5,13 +5,14 @@ import { RouteInfo } from './sidebar.metadata';
 import { Router, ActivatedRoute, RouterModule } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CommonModule, NgIf } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
 
 //declare var $: any;
 
 @Component({
   selector: 'app-sidebar',
   standalone: true,
-  imports:[RouterModule, CommonModule, NgIf],
+  imports:[RouterModule, CommonModule, NgIf, TranslateModule],
   templateUrl: './sidebar.component.html'
 })
 export class SidebarComponent implements OnInit {

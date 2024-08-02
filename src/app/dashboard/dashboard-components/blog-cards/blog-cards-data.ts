@@ -9,28 +9,28 @@ export interface blogcard {
 export const blogcards: blogcard[] = [
 
     {
-        title: 'Crea un nuevo artista',
+        title: 'CREA_UN_NUEVO_ARTISTA',
         subtitle: '',
         subtext: 'This is a wider card with supporting text below as a natural lead-in to additional content.',
         image: 'assets/images/bg/create-artist.jpg',
         url : 'artists/create-artist'
     },
     {
-        title: 'Crea una nueva canción',
+        title: 'CREA_UNA_NUEVA_CANCION',
         subtitle: '',
         subtext: 'This is a wider card with supporting text below as a natural lead-in to additional content.',
         image: 'assets/images/bg/create-song.jpg',
         url : 'songs/create-song'
     },
     {
-        title: 'Crea un nuevo álbum',
+        title: 'CREA_UN_NUEVO_ALBUM',
         subtitle: '',
         subtext: 'This is a wider card with supporting text below as a natural lead-in to additional content.',
         image: 'assets/images/bg/create-album.jpg',
         url : 'albums/create-album'
     },
     {
-        title: 'Crea un nuevo rol',
+        title: 'CREA_UN_NUEVO_ROL',
         subtitle: '',
         subtext: 'This is a wider card with supporting text below as a natural lead-in to additional content.',
         image: 'assets/images/bg/create-role.jpg',

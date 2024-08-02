@@ -120,7 +120,7 @@ export const ROUTES: RouteInfo[] = [
 
   {
     path: '/dashboard',
-    title: 'Estadísticas',
+    title: 'ESTADISTICAS',
     icon: 'bi bi-speedometer2',
     class: '',
     extralink: false,
@@ -128,7 +128,7 @@ export const ROUTES: RouteInfo[] = [
   },
   {
     path: '/artists/list',
-    title: 'Artistas',
+    title: 'ARTISTAS',
     icon: 'bi bi-person-badge',
     class: '',
     extralink: false,
@@ -136,7 +136,7 @@ export const ROUTES: RouteInfo[] = [
   },
   {
     path: '/songs',
-    title: 'Canciones',
+    title: 'CANCIONES',
     icon: 'bi bi-music-note-beamed',
     class: '',
     extralink: false,
@@ -144,7 +144,7 @@ export const ROUTES: RouteInfo[] = [
   },
   {
     path: '/albums',
-    title: 'Albumes',
+    title: 'ALBUMES',
     icon: 'bi bi-music-note-list',
     class: '',
     extralink: false,
@@ -152,7 +152,7 @@ export const ROUTES: RouteInfo[] = [
   },
   {
     path: '/user',
-    title: 'Usuarios',
+    title: 'USUARIOS',
     icon: 'bi bi-person',
     class: '',
     extralink: false,
@@ -160,7 +160,7 @@ export const ROUTES: RouteInfo[] = [
   },
   {
     path: '/roles',
-    title: 'Roles',
+    title: 'ROLES',
     icon: 'bi bi-person-rolodex',
     class: '',
     extralink: false,
@@ -168,7 +168,7 @@ export const ROUTES: RouteInfo[] = [
   },
   {
     path: '/about',
-    title: 'About',
+    title: 'ABOUT',
     icon: 'bi bi-people',
     class: '',
     extralink: false,

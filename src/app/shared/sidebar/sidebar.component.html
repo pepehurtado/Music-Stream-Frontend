@@ -8,7 +8,7 @@
                 [ngClass]="[sidebarnavItem.class]" *ngIf="!sidebarnavItem.extralink;" (click)="addExpandClass(sidebarnavItem.title)"
                 [routerLinkActive]="sidebarnavItem.submenu.length != 0 ? '' : 'active'">
                 <i [ngClass]="[sidebarnavItem.icon]"></i>
-                <span class="hide-menu">{{sidebarnavItem.title}}</span>
+                <span class="hide-menu">{{sidebarnavItem.title | translate}}</span>
             </a>
         </li>
         <li class="text-center p-3 upgrade-btn">

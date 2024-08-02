@@ -6,6 +6,7 @@ import { RegisterComponent } from "./register/register.component";
 import { LoginComponent } from "./login/login.component";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { TokenExpiredModalComponent } from "./token-expired/token-expired.component";
+import { TranslateModule } from "@ngx-translate/core";
 
 
 const routes: Routes = [
@@ -26,6 +27,7 @@ const routes: Routes = [
     CommonModule,
     RouterModule.forChild(routes),
     NgbModule,
+    TranslateModule
   ],
   declarations: [
     RegisterComponent,

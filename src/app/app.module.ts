@@ -26,6 +26,13 @@ import { PipesModule } from './pipes/pipes.module';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { TokenExpiredModalComponent } from './auth/token-expired/token-expired.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+
+// Función para crear el cargador de traducción
+export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
+  return new TranslateHttpLoader(http);
+}
 
 @NgModule({
   declarations: [
@@ -49,7 +56,14 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     SidebarComponent,
     ArtistsModule,
     PipesModule,
-    DragDropModule
+    DragDropModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      }
+    })
 ],
   providers: [
     {

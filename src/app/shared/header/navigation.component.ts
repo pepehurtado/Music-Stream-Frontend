@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
+import { TranslateModule } from '@ngx-translate/core';
 import { UserService } from 'src/app/user/service/user.service';
 
 @Component({
   selector: 'app-navigation',
   standalone: true,
-  imports: [NgbDropdownModule],
+  imports: [NgbDropdownModule, TranslateModule],
   templateUrl: './navigation.component.html',
 })
 export class NavigationComponent implements OnInit {

@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ApexAxisChartSeries, ApexChart, ChartComponent, ApexDataLabels, ApexYAxis, ApexLegend, ApexXAxis, ApexTooltip, ApexTheme, ApexGrid } from 'ng-apexcharts';
 import { HistoryService } from '../../service/history.service';
+import { TranslateService } from '@ngx-translate/core';  // Asegúrate de tener esto importado
 
 export type salesChartOptions = {
   series: ApexAxisChartSeries | any;
@@ -26,7 +27,7 @@ export class SalesSummaryComponent implements OnInit {
   @ViewChild("chart") chart: ChartComponent = Object.create(null);
   public salesChartOptions: Partial<salesChartOptions>;
 
-  constructor(private historyService: HistoryService) {
+  constructor(private historyService: HistoryService, private translateService: TranslateService) {
     this.salesChartOptions = {
       series: [],
       chart: {
@@ -48,20 +49,7 @@ export class SalesSummaryComponent implements OnInit {
         strokeDashArray: 3,
       },
       xaxis: {
-        categories: [
-          "Enero",
-          "Febrero",
-          "Marzo",
-          "Abril",
-          "Mayo",
-          "Junio",
-          "Julio",
-          "Agosto",
-          "Septembre",
-          "Octubre",
-          "Noviembre",
-          "Diciembre",
-        ],
+        categories: [],  // Inicialmente vacío
       },
       tooltip: {
         theme: 'dark'
@@ -74,6 +62,16 @@ export class SalesSummaryComponent implements OnInit {
   }
 
   loadData(): void {
+    // Traducir los nombres de los meses
+    const months = [
+      'ENERO', 'FEBRERO', 'MARZO', 'ABRIL', 'MAYO', 'JUNIO',
+      'JULIO', 'AGOSTO', 'SEPTIEMBRE', 'OCTUBRE', 'NOVIEMBRE', 'DICIEMBRE'
+    ];
+
+    this.translateService.get(months).subscribe(translations => {
+      this.salesChartOptions.xaxis.categories = months.map(month => translations[month]);
+    });
+
     //Poner el ultimo dia del año actual, 31-12-AñoActual
     const today = new Date().getFullYear() + '-12-31';
     this.historyService.getAllEntitiesByDate(today).subscribe(data => {
