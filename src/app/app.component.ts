@@ -10,7 +10,7 @@ export class AppComponent {
   title = 'app';
   constructor(private translate: TranslateService) {
     // Establecer el idioma predeterminado
-    translate.setDefaultLang('es');
+    translate.setDefaultLang('en');
 
     // Cambiar el idioma actual a español
     translate.use('en');

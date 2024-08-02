@@ -9,6 +9,7 @@ import { ArtistListSongsComponent } from "./components/artists-list-songs/artist
 import { BrowserModule } from "@angular/platform-browser";
 import { PipesModule } from "../pipes/pipes.module";
 import { NgbPaginationModule } from "@ng-bootstrap/ng-bootstrap";
+import { TranslateModule } from "@ngx-translate/core";
 
 const routes: Routes = [
   {
@@ -38,6 +39,7 @@ const routes: Routes = [
     FormsModule,
     PipesModule,
     NgbPaginationModule,
+    TranslateModule
   ],
   declarations: [
 

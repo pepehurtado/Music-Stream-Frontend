@@ -1,11 +1,11 @@
 <div class="card">
   <div class="card-body">
-    <h4 class="card-title">Lista de artistas</h4>
-    <h5 class="card-subtitle text-muted">Listado de todos los artistas disponibles</h5>
+    <h4 class="card-title">{{ 'LISTA_DE_ARTISTAS' | translate }}</h4>
+    <h5 class="card-subtitle text-muted">{{ 'LISTADO_ARTISTAS' | translate }}</h5>
 
     <div class="row mb-3">
       <div class="col">
-        <label for="itemsPerPageSelect" class="form-label">Items por página</label>
+        <label for="itemsPerPageSelect" class="form-label">{{ 'ITEMS_POR_PAGINA' | translate }}</label>
         <select id="itemsPerPageSelect" class="form-select" [(ngModel)]="itemsPerPage" (change)="onItemsPerPageChange()">
           <option *ngFor="let option of itemsPerPageOptions" [value]="option">{{ option }}</option>
         </select>
@@ -15,20 +15,20 @@
     <!-- Filtros de búsqueda -->
     <div class="row mb-3">
       <div class="col">
-        <input type="text" class="form-control" placeholder="Filter by name" [(ngModel)]="filters.name">
+        <input type="text" class="form-control" [attr.placeholder]="placeholderName" [(ngModel)]="filters.name">
       </div>
       <div class="col">
-        <input type="text" class="form-control" placeholder="Filter by age" [(ngModel)]="filters.age">
+        <input type="text" class="form-control" [attr.placeholder]="placeholderAge" [(ngModel)]="filters.age">
       </div>
       <div class="col">
-        <input type="text" class="form-control" placeholder="Filter by country" [(ngModel)]="filters.country">
+        <input type="text" class="form-control" [attr.placeholder]="placeholderCountry" [(ngModel)]="filters.country">
       </div>
       <div class="col">
-        <input type="text" class="form-control" placeholder="Filter by date of birth" [(ngModel)]="filters.dateOfBirth">
+        <input type="text" class="form-control" [attr.placeholder]="placeholderDateOfBirth" [(ngModel)]="filters.dateOfBirth">
       </div>
       <div class="col">
-        <button class="btn btn-primary me-2" (click)="applyFilters()">Aplicar</button>
-        <button class="btn btn-secondary" (click)="clearFilters()">Limpiar</button>
+        <button class="btn btn-primary me-2" (click)="applyFilters()">{{ 'APLICAR' | translate }}</button>
+        <button class="btn btn-secondary" (click)="clearFilters()">{{ 'LIMPIAR' | translate }}</button>
       </div>
     </div>
 
@@ -50,7 +50,7 @@
           </g>
         </g>
       </svg>
-      <p>Cargando...</p>
+      <p>{{ 'CARGANDO' | translate }}</p>
     </div>
 
     <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
@@ -63,30 +63,30 @@
         <thead>
           <tr>
             <th class="text-dark font-medium fs-4" (click)="setSortColumn('name')">
-              Nombre
+              {{ 'NOMBRE' | translate }}
               <span *ngIf="sortColumn === 'name'">
                 <i [ngClass]="sortDirection === 'asc' ? 'bi bi-arrow-up' : 'bi bi-arrow-down'"></i>
               </span>
             </th>
             <th class="text-dark font-medium fs-4" (click)="setSortColumn('age')">
-              Edad
+              {{ 'EDAD' | translate }}
               <span *ngIf="sortColumn === 'age'">
                 <i [ngClass]="sortDirection === 'asc' ? 'bi bi-arrow-up' : 'bi bi-arrow-down'"></i>
               </span>
             </th>
             <th class="text-dark font-medium fs-4" (click)="setSortColumn('country')">
-              País
+              {{ 'PAIS' | translate }}
               <span *ngIf="sortColumn === 'country'">
                 <i [ngClass]="sortDirection === 'asc' ? 'bi bi-arrow-up' : 'bi bi-arrow-down'"></i>
               </span>
             </th>
             <th class="text-dark font-medium fs-4" (click)="setSortColumn('dateOfBirth')">
-              Fecha de nacimiento
+              {{ 'FECHA_DE_NACIMIENTO' | translate }}
               <span *ngIf="sortColumn === 'dateOfBirth'">
                 <i [ngClass]="sortDirection === 'asc' ? 'bi bi-arrow-up' : 'bi bi-arrow-down'"></i>
               </span>
             </th>
-            <th class="text-dark font-medium fs-4">Acciones</th>
+            <th class="text-dark font-medium fs-4">{{ 'ACCIONES' | translate }}</th>
           </tr>
         </thead>
         <tbody>
@@ -121,17 +121,18 @@
       </table>
 
       <!-- Navegación de paginación -->
-       <div class="d-flex justify-content-center">
-      <ngb-pagination
-      [collectionSize]="collectionSize"
-      [(page)]="currentPage"
-      [pageSize]="itemsPerPage"
-      [maxSize]="5"
-      [rotate]="true"
-      [ellipses]="false"
-      [boundaryLinks]="true"
-      (pageChange)="onPageChange($event)"
-    ></ngb-pagination>
+      <div class="d-flex justify-content-center">
+        <ngb-pagination
+          [collectionSize]="collectionSize"
+          [(page)]="currentPage"
+          [pageSize]="itemsPerPage"
+          [maxSize]="5"
+          [rotate]="true"
+          [ellipses]="false"
+          [boundaryLinks]="true"
+          (pageChange)="onPageChange($event)"
+        ></ngb-pagination>
+      </div>
     </div>
   </div>
 </div>
@@ -141,15 +142,15 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="deleteModalLabel">Eliminar Artista</h5>
+        <h5 class="modal-title" id="deleteModalLabel">{{ 'ELIMINAR_ARTISTA' | translate }}</h5>
         <button type="button" class="btn-close" (click)="closeDeleteModal()"></button>
       </div>
       <div class="modal-body">
-        ¿Estás seguro de que deseas eliminar al artista {{ artistToDelete?.name }}?
+        {{ 'ESTAS_SEGURO_ELIMINAR' | translate }} {{ artistToDelete?.name }}?
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" (click)="closeDeleteModal()">Cancelar</button>
-        <button type="button" class="btn btn-danger" (click)="confirmDelete()">Eliminar</button>
+        <button type="button" class="btn btn-secondary" (click)="closeDeleteModal()">{{ 'CANCELAR' | translate }}</button>
+        <button type="button" class="btn btn-danger" (click)="confirmDelete()">{{ 'ELIMINAR' | translate }}</button>
       </div>
     </div>
   </div>
@@ -160,14 +161,14 @@
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="songsModalLabel">Canciones de {{ selectedArtist?.name }}</h5>
+        <h4 class="modal-title" id="songsModalLabel">{{ 'CANCIONES_DE' | translate }} {{ selectedArtist?.name }}</h4>
         <button type="button" class="btn-close" aria-label="Close" (click)="closeSongsModal()"></button>
       </div>
       <div class="modal-body">
         <app-artists-list-songs [songsList]="selectedArtist?.singleSongList" [artist]="selectedArtist?.name"></app-artists-list-songs>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" (click)="closeSongsModal()">Cerrar</button>
+        <button type="button" class="btn btn-secondary" (click)="closeSongsModal()">{{ 'CERRAR' | translate }}</button>
       </div>
     </div>
   </div>

@@ -1,9 +1,11 @@
 <div class="card">
   <div class="card-body">
-    <h4 class="card-title"> <button class="btn btn-primary" routerLink="/artists">
-      <i class="bi bi-arrow-left"></i>
-    </button>
-    {{ isEditMode ? 'Editar artista' : 'Crear nuevo artista' }}</h4>
+    <h4 class="card-title">
+      <button class="btn btn-primary" routerLink="/artists/list">
+        <i class="bi bi-arrow-left"></i>
+      </button>
+      {{ isEditMode ? ('EDITAR' | translate)  + ' ' + ('ARTISTA_L' | translate): (( 'CREAR_NUEVO' | translate) + ' ' + ('ARTISTA_L' | translate)) }}
+    </h4>
 
     <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
       {{ errorMessage }}
@@ -15,22 +17,24 @@
 
     <form [formGroup]="artistForm" (ngSubmit)="submitForm()">
       <div class="mb-3">
-        <label for="name" class="form-label">Nombre</label>
+        <label for="name" class="form-label">{{ 'NOMBRE' | translate }}</label>
         <input type="text" id="name" class="form-control" formControlName="name">
       </div>
       <div class="mb-3">
-        <label for="age" class="form-label">Edad</label>
+        <label for="age" class="form-label">{{ 'EDAD' | translate }}</label>
         <input type="number" id="age" class="form-control" formControlName="age">
       </div>
       <div class="mb-3">
-        <label for="country" class="form-label">País</label>
+        <label for="country" class="form-label">{{ 'PAIS' | translate }}</label>
         <input type="text" id="country" class="form-control" formControlName="country">
       </div>
       <div class="mb-3">
-        <label for="dateOfBirth" class="form-label">Fecha de nacimiento</label>
+        <label for="dateOfBirth" class="form-label">{{ 'FECHA_DE_NACIMIENTO' | translate }}</label>
         <input type="date" id="dateOfBirth" class="form-control" formControlName="dateOfBirth">
       </div>
-      <button type="submit" class="btn btn-primary">{{ isEditMode ? 'Guardar cambios' : 'Crear' }}</button>
+      <button type="submit" class="btn btn-primary">
+        {{ isEditMode ? ('GUARDAR_CAMBIOS' | translate) : ('CREAR' | translate) }}
+      </button>
     </form>
   </div>
 </div>

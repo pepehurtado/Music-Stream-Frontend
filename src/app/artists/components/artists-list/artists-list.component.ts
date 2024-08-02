@@ -3,6 +3,7 @@ import { ArtistService } from '../../services/artists.service';
 import { Artist } from '../interfaces/artists.interfaces';
 import { Router } from '@angular/router';
 import { HistoryService } from '../../../dashboard/service/history.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-artists-list',
@@ -28,13 +29,27 @@ export class ArtistsListComponent implements OnInit {
     country: '',
     dateOfBirth: ''
   };
+  placeholderName: string = '';
+  placeholderAge: string = '';
+  placeholderCountry: string  = '';
+  placeholderDateOfBirth: string  = '';
 
   showModal = false;
   showSongsModal = false;
 
-  constructor(private artistService: ArtistService, private router: Router, private historyService : HistoryService) { }
+  constructor(private artistService: ArtistService, private router: Router,
+    private historyService : HistoryService,
+    private translate: TranslateService) { }
 
   ngOnInit(): void {
+    this.translate.get(['FILTRAR_POR', 'NOMBRE', 'EDAD', 'PAIS', 'FECHA_DE_NACIMIENTO', 'APLICAR', 'LIMPIAR', 'CARGANDO', 'ACCIONES'])
+      .subscribe(translations => {
+        this.placeholderName = `${translations['FILTRAR_POR']} ${translations['NOMBRE']}`;
+        this.placeholderAge = `${translations['FILTRAR_POR']} ${translations['EDAD']}`;
+        this.placeholderCountry = `${translations['FILTRAR_POR']} ${translations['PAIS']}`;
+        this.placeholderDateOfBirth = `${translations['FILTRAR_POR']} ${translations['FECHA_DE_NACIMIENTO']}`;
+      });
+
     this.loadArtists();
     //recoger el total de artistas que se encuentra en historyService, quedarse con el valor de artistas
 
