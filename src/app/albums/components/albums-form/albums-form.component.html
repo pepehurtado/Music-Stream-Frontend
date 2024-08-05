@@ -3,8 +3,7 @@
     <h4 class="card-title"> <button class="btn btn-primary" routerLink="/albums">
       <i class="bi bi-arrow-left"></i>
     </button>
-    {{ isEditMode ? 'Editar album' : 'Crear nuevo album' }}</h4>
-
+    {{ isEditMode ? ('EDITAR' | translate)  + ' ' + ('ARTISTA_L' | translate): (( 'CREAR_NUEVO' | translate) + ' ' + ('ALBUM_L' | translate)) }}</h4>
     <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
       {{ errorMessage }}
     </div>
@@ -15,23 +14,23 @@
 
     <form [formGroup]="albumForm" (ngSubmit)="submitForm()">
       <div class="mb-3">
-        <label for="title" class="form-label">Título</label>
+        <label for="title" class="form-label">{{'TITULO' | translate}}</label>
         <input type="text" id="title" class="form-control" formControlName="title">
       </div>
       <div class="mb-3">
-        <label for="description" class="form-label">Descripción</label>
+        <label for="description" class="form-label">{{'DESCRIPCION' | translate}}</label>
         <input type="text" id="description" class="form-control" formControlName="description">
       </div>
       <div class="mb-3">
-        <label for="url" class="form-label">URL</label>
+        <label for="url" class="form-label">{{'URL' | translate}}</label>
         <input type="text" id="url" class="form-control" formControlName="url">
       </div>
       <div class="mb-3">
-        <label for="year" class="form-label">Año</label>
+        <label for="year" class="form-label">{{'AÑO' | translate}}</label>
         <input type="text" id="year" class="form-control" formControlName="year">
       </div>
       <div class="mb-3">
-        <label for="artist" class="form-label">Artista</label>
+        <label for="artist" class="form-label">{{'ARTISTA'}}</label>
         <input type="text" id="artist" class="form-control" formControlName="artist" [value]="artistInput" (input)="searchArtists($event)">
         <ul class="list-group">
           <li class="list-group-item" *ngFor="let artist of filteredArtists" (click)="addArtist(artist)">

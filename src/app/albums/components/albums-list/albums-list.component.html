@@ -1,11 +1,11 @@
 <div class="card">
   <div class="card-body">
-    <h4 class="card-title">Lista de albumes</h4>
-    <h5 class="card-subtitle text-muted">Listado de todos albumes disponibles</h5>
+    <h4 class="card-title">{{'LISTA_ALBUMES' | translate}}</h4>
+    <h5 class="card-subtitle text-muted">{{'LISTADO_ALBUMES' | translate}}</h5>
 
     <div class="row mb-3">
       <div class="col">
-        <label for="itemsPerPageSelect" class="form-label">Items por página</label>
+        <label for="itemsPerPageSelect" class="form-label">{{'ITEMS_POR_PAGINA' | translate}}</label>
         <select id="itemsPerPageSelect" class="form-select" [(ngModel)]="itemsPerPage" (change)="onItemsPerPageChange()">
           <option *ngFor="let option of itemsPerPageOptions" [value]="option">{{ option }}</option>
         </select>
@@ -15,25 +15,26 @@
 
     <div class="row mb-3">
       <div class="col">
-        <input type="text" class="form-control" placeholder="Filter by title" [(ngModel)]="filters.title">
+        <input type="text" class="form-control" [attr.placeholder]="placeholderTitle" [(ngModel)]="filters.title">
       </div>
       <div class="col">
-        <input type="text" class="form-control" placeholder="Filter by description" [(ngModel)]="filters.description">
+        <input type="text" class="form-control" [attr.placeholder]="placeholderDescription" [(ngModel)]="filters.description">
       </div>
       <div class="col">
-        <input type="text" class="form-control" placeholder="Filter by year" [(ngModel)]="filters.year">
+        <input type="text" class="form-control" [attr.placeholder]="placeholderYear" [(ngModel)]="filters.year">
       </div>
       <div class="col">
-        <input type="text" class="form-control" placeholder="Filter by url" [(ngModel)]="filters.url">
+        <input type="text" class="form-control" [attr.placeholder]="placeholderUrl" [(ngModel)]="filters.url">
       </div>
       <div class="col">
-        <input type="text" class="form-control" placeholder="Filter by artist id" [(ngModel)]="filters.artist_id">
+        <input type="text" class="form-control" [attr.placeholder]="placeholderArtistId" [(ngModel)]="filters.artist_id">
       </div>
       <div class="col">
-        <button class="btn btn-primary me-2" (click)="applyFilters()">Aplicar</button>
-        <button class="btn btn-secondary" (click)="clearFilters()">Limpiar</button>
+        <button class="btn btn-primary me-2" (click)="applyFilters()">{{'APLICAR' | translate}}</button>
+        <button class="btn btn-secondary" (click)="clearFilters()">{{'LIMPIAR' | translate}}</button>
       </div>
     </div>
+
 
         <!-- Indicador de carga -->
         <div class="text-center" *ngIf="albumsList.length === 0 && errorMessage===''">
@@ -67,37 +68,37 @@
         <thead>
           <tr>
             <th class="text-dark font-medium fs-4" (click)="setSortColumn('title')">
-              Título
+              {{'TITULO' | translate}}
               <span *ngIf="sortColumn === 'title'">
                 <i [ngClass]="sortDirection === 'asc' ? 'bi bi-arrow-up' : 'bi bi-arrow-down'"></i>
               </span>
             </th>
             <th class="text-dark font-medium fs-4" (click)="setSortColumn('description')">
-              Descripción
+              {{'DESCRIPCION' | translate}}
               <span *ngIf="sortColumn === 'description'">
                 <i [ngClass]="sortDirection === 'asc' ? 'bi bi-arrow-up' : 'bi bi-arrow-down'"></i>
               </span>
             </th>
             <th class="text-dark font-medium fs-4" (click)="setSortColumn('year')">
-              Año
+              {{'AÑO' | translate}}
               <span *ngIf="sortColumn === 'year'">
                 <i [ngClass]="sortDirection === 'asc' ? 'bi bi-arrow-up' : 'bi bi-arrow-down'"></i>
               </span>
             </th>
 
             <th class="text-dark font-medium fs-4" (click)="setSortColumn('url')">
-              URL
+              {{'URL' | translate}}
               <span *ngIf="sortColumn === 'url'">
                 <i [ngClass]="sortDirection === 'asc' ? 'bi bi-arrow-up' : 'bi bi-arrow-down'"></i>
               </span>
             </th>
             <th class="text-dark font-medium fs-4" (click)="setSortColumn('numberOfSongs')">
-              Número de canciones
+              {{'NUMERO_CANCIONES' | translate}}
               <span *ngIf="sortColumn === 'numberOfSongs'">
                 <i [ngClass]="sortDirection === 'asc' ? 'bi bi-arrow-up' : 'bi bi-arrow-down'"></i>
               </span>
             </th>
-            <th class="text-dark font-medium fs-4">Acciones</th>
+            <th class="text-dark font-medium fs-4">{{'ACCIONES' | translate}}</th>
           </tr>
         </thead>
 
@@ -154,15 +155,15 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="deleteModalLabel">Eliminar albúm</h5>
+        <h5 class="modal-title" id="deleteModalLabel">{{'ELIMINAR_ALBUM' | translate}}</h5>
         <button type="button" class="btn-close" (click)="closeDeleteModal()"></button>
       </div>
       <div class="modal-body">
-        ¿Estás seguro de que deseas eliminar al album {{ albumToDelete?.title }}?
+        {{'ESTAS_SEGURO_ELIMINAR' | translate}} {{ albumToDelete?.title }}?
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" (click)="closeDeleteModal()">Cancelar</button>
-        <button type="button" class="btn btn-danger" (click)="confirmDelete()">Eliminar</button>
+        <button type="button" class="btn btn-secondary" (click)="closeDeleteModal()">{{'CANCELAR' | translate}}</button>
+        <button type="button" class="btn btn-danger" (click)="confirmDelete()">{{'ELIMINAR' | translate}}</button>
       </div>
     </div>
   </div>

@@ -8,6 +8,7 @@ import { Album } from './components/interfaces/album.interfaces';
 import { AlbumsListSongsComponent } from './components/albums-list-songs/albums-list-songs.component';
 import { PipesModule } from "../pipes/pipes.module";
 import { NgbPaginationModule } from "@ng-bootstrap/ng-bootstrap";
+import { TranslateModule } from "@ngx-translate/core";
 
 
 const routes: Routes = [
@@ -37,6 +38,7 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     PipesModule,
     NgbPaginationModule,
+    TranslateModule
   ],
   declarations: [
     AlbumsListComponent,

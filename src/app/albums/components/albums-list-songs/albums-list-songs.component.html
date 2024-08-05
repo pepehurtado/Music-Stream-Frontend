@@ -4,7 +4,7 @@
 
     <div class="card">
       <div class="card-body">
-        <h4 class="card-title">Canciones del album {{album}}</h4>
+        <h4 class="card-title">{{'CANCIONES_DEL_ALBUM' | translate}} {{album}}</h4>
         <div class="table-responsive">
           <div *ngIf="songs.length === 0" class="text-center">
             <!-- SVG de carga azul -->
@@ -29,9 +29,9 @@
           <table class="table align-middle text-nowrap" *ngIf="songs.length!=0">
             <thead>
               <tr>
-                <th>Título</th>
-                <th>Duración</th>
-                <th>URL</th>
+                <th>{{'TITULO' | translate}}</th>
+                <th>{{'DURACION' | translate}}</th>
+                <th>{{'URL' | translate}}</th>
               </tr>
             </thead>
             <tbody>

@@ -4,6 +4,7 @@ import { Album } from '../interfaces/album.interfaces';
 import { Router } from '@angular/router';
 import { catchError, retry } from 'rxjs';
 import { HistoryService } from 'src/app/dashboard/service/history.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-albums-list',
@@ -29,10 +30,35 @@ export class AlbumsListComponent implements OnInit {
     artist_id: ''
   };
   public showModal : boolean = false;
+  public placeholderName: string = "";
+  public placeholderAge: string = "";
+  public placeholderCountry: string   = "";
+  public placeholderDateOfBirth: string = "";
+  public placeholderTitle: string   = "";
+  public placeholderDescription: string = "";
+  public placeholderYear: string = "";
+  public placeholderUrl: string  = "";
+  public placeholderArtistId: string = "";
 
-  constructor(private albumService: AlbumService, private router: Router, private historyService : HistoryService) { }
+
+  constructor(private albumService: AlbumService,
+    private router: Router,
+    private historyService : HistoryService,
+    private translate : TranslateService) { }
 
   ngOnInit(): void {
+    this.translate.get(['FILTRAR_POR', 'NOMBRE', 'EDAD', 'PAIS', 'FECHA_DE_NACIMIENTO', 'TITULO', 'DESCRIPCION', 'AÑO', 'URL', 'ARTISTA_ID'])
+    .subscribe(translations => {
+      this.placeholderName = `${translations['FILTRAR_POR']} ${translations['NOMBRE']}`;
+      this.placeholderAge = `${translations['FILTRAR_POR']} ${translations['EDAD']}`;
+      this.placeholderCountry = `${translations['FILTRAR_POR']} ${translations['PAIS']}`;
+      this.placeholderDateOfBirth = `${translations['FILTRAR_POR']} ${translations['FECHA_DE_NACIMIENTO']}`;
+      this.placeholderTitle = `${translations['FILTRAR_POR']} ${translations['TITULO']}`;
+      this.placeholderDescription = `${translations['FILTRAR_POR']} ${translations['DESCRIPCION']}`;
+      this.placeholderYear = `${translations['FILTRAR_POR']} ${translations['AÑO']}`;
+      this.placeholderUrl = `${translations['FILTRAR_POR']} ${translations['URL']}`;
+      this.placeholderArtistId = `${translations['FILTRAR_POR']} ${translations['ARTISTA_ID']}`;
+    });
     this.historyService.getCounts().subscribe(
       (data) => {
         this.collectionSize = data.albums;

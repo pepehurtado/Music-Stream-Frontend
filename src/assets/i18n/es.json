@@ -75,5 +75,15 @@
   "CREAR_NUEVA_CANCION" : "Crear nueva canción",
   "ALBUM_SELECCIONADO" : "Álbum seleccionado",
   "ARTISTA_SELECCIONADOS" : "Artista seleccionado",
-  "ARTISTA/S" : "Artista/s"
+  "ARTISTA/S" : "Artista/s",
+  "CANCIONES_DEL_ALBUM" : "Canciones del álbum ",
+  "AÑO" : "Año",
+  "ARTISTA_ID" : "ID del artista",
+  "NUMERO_CANCIONES" : "Número de canciones",
+  "LISTA_CANCIONES" : "Lista de canciones",
+  "LISTADO_CANCIONES" : "Listado de todas las canciones disponibles",
+  "DESCRIPCION" : "Descripción",
+  "ELIMINAR_ALBUM" : "Eliminar álbum",
+  "ALBUM_L" : "álbum",
+  "ARTISTAS_SELECCIONADOS" : "Artistas seleccionados"
 }
