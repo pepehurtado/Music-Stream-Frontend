@@ -71,5 +71,9 @@
   "ARTISTA_L" : "artista",
   "EDITAR" : "Editar",
   "CREAR" : "Crear",
-  "GUARDAR_CAMBIOS" : "Guardar cambios"
+  "GUARDAR_CAMBIOS" : "Guardar cambios",
+  "CREAR_NUEVA_CANCION" : "Crear nueva canción",
+  "ALBUM_SELECCIONADO" : "Álbum seleccionado",
+  "ARTISTA_SELECCIONADOS" : "Artista seleccionado",
+  "ARTISTA/S" : "Artista/s"
 }

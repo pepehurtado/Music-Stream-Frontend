@@ -5,6 +5,7 @@ import { Song } from '../interfaces/song.interfaces';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { catchError, retry } from 'rxjs';
 import { HistoryService } from 'src/app/dashboard/service/history.service';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-songs-list',
@@ -32,11 +33,28 @@ export class SongsListComponent implements OnInit {
   public selectedSong: Song | null = null;
   public safeUrl: SafeResourceUrl | null = null;
   showModal = false;
+  placeholderTitle: string = '';
+  placeholderTime: string = '';
+  placeholderUrl: string = '';
+  placeholderAlbum: string  = '';
 
 
-  constructor(private songService: SongService, private albumService: AlbumService, private sanitizer: DomSanitizer, private historyService : HistoryService) { }
+
+  constructor(private songService: SongService, private albumService: AlbumService, private sanitizer: DomSanitizer, private historyService : HistoryService, private translate : TranslateService) { }
 
   ngOnInit(): void {
+    this.translate.get([
+      'FILTRAR_POR',
+      'TITULO',
+      'DURACION',
+      'URL',
+      'ALBUM'
+    ]).subscribe(translations => {
+      this.placeholderTitle = `${translations['FILTRAR_POR']} ${translations['TITULO']}`;
+      this.placeholderTime = `${translations['FILTRAR_POR']} ${translations['DURACION']}`;
+      this.placeholderUrl = `${translations['FILTRAR_POR']} ${translations['URL']}`;
+      this.placeholderAlbum = `${translations['FILTRAR_POR']} ${translations['ALBUM']}`;
+    });
     this.loadSongs();
     this.historyService.getCounts().subscribe(
       (data) => {

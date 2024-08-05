@@ -5,6 +5,7 @@ import { Routes, RouterModule } from "@angular/router";
 import { SongsListComponent } from "./components/songs-list/songs-list.component";
 import { SongsFormComponent } from "./components/songs-form/songs-form.component";
 import { NgbPaginationModule } from "@ng-bootstrap/ng-bootstrap";
+import { TranslateModule } from "@ngx-translate/core";
 
 
 const routes: Routes = [
@@ -31,6 +32,7 @@ const routes: Routes = [
     CommonModule,
     RouterModule.forChild(routes),
     NgbPaginationModule,
+    TranslateModule
   ],
   declarations: [
     SongsListComponent,

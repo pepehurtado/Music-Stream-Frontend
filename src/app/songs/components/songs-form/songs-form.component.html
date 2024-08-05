@@ -4,7 +4,7 @@
       <button class="btn btn-primary" routerLink="/songs">
         <i class="bi bi-arrow-left"></i>
       </button>
-      {{ isEditMode ? 'Editar canción' : 'Crear nueva canción' }}
+      {{ isEditMode ? ('EDITAR_CANCION' | translate) : ('CREAR_NUEVA_CANCION' | translate) }}
     </h4>
 
     <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
@@ -17,19 +17,19 @@
 
     <form [formGroup]="songForm" (ngSubmit)="submitForm()">
       <div class="mb-3">
-        <label for="title" class="form-label">Título</label>
+        <label for="title" class="form-label">{{ 'TITULO' | translate }}</label>
         <input type="text" id="title" class="form-control" formControlName="title">
       </div>
       <div class="mb-3">
-        <label for="time" class="form-label">Duración</label>
+        <label for="time" class="form-label">{{ 'DURACION' | translate }}</label>
         <input type="number" id="time" class="form-control" formControlName="time">
       </div>
       <div class="mb-3">
-        <label for="url" class="form-label">URL</label>
+        <label for="url" class="form-label">{{ 'URL' | translate }}</label>
         <input type="text" id="url" class="form-control" formControlName="url">
       </div>
       <div class="mb-3">
-        <label for="artistSearch" class="form-label">Artista/s</label>
+        <label for="artistSearch" class="form-label">{{ 'ARTISTA/S' | translate }}</label>
         <input type="text" id="artistSearch" class="form-control" formControlName="artistSearch" (input)="searchArtists($event)">
         <ul class="list-group">
           <li class="list-group-item" *ngFor="let artist of filteredArtists" (click)="addArtist(artist)">
@@ -38,7 +38,7 @@
         </ul>
       </div>
       <div class="mb-3">
-        <label for="album" class="form-label">Album</label>
+        <label for="album" class="form-label">{{ 'ALBUM' | translate }}</label>
         <input type="text" id="album" class="form-control" formControlName="album" [value]="albumInput" (input)="searchAlbum($event)">
         <ul class="list-group">
           <li class="list-group-item" *ngFor="let album of filteredAlbums" (click)="addAlbum(album)">
@@ -48,10 +48,9 @@
       </div>
 
       <div class="mb-3">
-        <label>Album seleccionado:</label>
+        <label>{{ 'ALBUM_SELECCIONADO' | translate }}:</label>
         <ul class="list-group">
-          <li class="list-group
-          -item" *ngIf="selectedAlbum">
+          <li class="list-group-item" *ngIf="selectedAlbum">
             {{ selectedAlbum.title }}
             <button type="button" class="btn-close" aria-label="Close" (click)="removeAlbum()"></button>
           </li>
@@ -59,7 +58,7 @@
       </div>
 
       <div class="mb-3">
-        <label>Artistas seleccionados:</label>
+        <label>{{ 'ARTISTAS_SELECCIONADOS' | translate }}:</label>
         <ul class="list-group">
           <li class="list-group-item" *ngFor="let selectedArtist of selectedArtists">
             {{ selectedArtist.name }}
@@ -67,7 +66,7 @@
           </li>
         </ul>
       </div>
-      <button type="submit" class="btn btn-primary">{{ isEditMode ? 'Guardar cambios' : 'Crear' }}</button>
+      <button type="submit" class="btn btn-primary">{{ isEditMode ? ('GUARDAR_CAMBIOS' | translate) : ('CREAR' | translate) }}</button>
     </form>
   </div>
 </div>

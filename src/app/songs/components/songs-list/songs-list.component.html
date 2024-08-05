@@ -1,37 +1,37 @@
 <div class="card">
   <div class="card-body">
-    <h4 class="card-title">Lista de canciones</h4>
-    <h5 class="card-subtitle text-muted">Listado de todas las canciones disponibles</h5>
+    <h4 class="card-title">{{ 'LISTA_DE_CANCIONES' | translate }}</h4>
+    <h5 class="card-subtitle text-muted">{{ 'LISTADO_CANCIONES' | translate }}</h5>
 
     <div class="row mb-3">
       <div class="col">
-        <label for="itemsPerPageSelect" class="form-label">Items por página</label>
+        <label for="itemsPerPageSelect" class="form-label">{{ 'ITEMS_POR_PAGINA' | translate }}</label>
         <select id="itemsPerPageSelect" class="form-select" [(ngModel)]="itemsPerPage" (change)="onItemsPerPageChange()">
           <option *ngFor="let option of itemsPerPageOptions" [value]="option">{{ option }}</option>
         </select>
       </div>
     </div>
 
-
     <div class="row mb-3">
       <!-- Filtros de búsqueda -->
       <div class="col">
-        <input type="text" class="form-control" placeholder="Filter by title" [(ngModel)]="filters.title">
+        <input type="text" class="form-control" [placeholder]="placeholderTitle" [(ngModel)]="filters.title">
       </div>
       <div class="col">
-        <input type="text" class="form-control" placeholder="Filter by time" [(ngModel)]="filters.time">
+        <input type="text" class="form-control" [placeholder]="placeholderTime" [(ngModel)]="filters.time">
       </div>
       <div class="col">
-        <input type="text" class="form-control" placeholder="Filter by url" [(ngModel)]="filters.url">
+        <input type="text" class="form-control" [placeholder]="placeholderUrl" [(ngModel)]="filters.url">
       </div>
       <div class="col">
-        <input type="text" class="form-control" placeholder="Filter by album id" [(ngModel)]="filters.album">
+        <input type="text" class="form-control" [placeholder]="placeholderAlbum" [(ngModel)]="filters.album">
       </div>
       <div class="col">
-        <button class="btn btn-primary me-2" (click)="applyFilters()">Aplicar</button>
-        <button class="btn btn-secondary" (click)="clearFilters()">Limpiar</button>
+        <button class="btn btn-primary me-2" (click)="applyFilters()">{{ 'APLICAR' | translate }}</button>
+        <button class="btn btn-secondary" (click)="clearFilters()">{{ 'LIMPIAR' | translate }}</button>
       </div>
     </div>
+
 
     <!-- Indicador de carga -->
     <div class="text-center" *ngIf="songsList.length === 0 && errorMessage === ''">
@@ -46,7 +46,7 @@
           </g>
         </g>
       </svg>
-      <p>Loading...</p>
+      <p>{{ 'CARGANDO' | translate }}</p>
     </div>
 
     <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
@@ -57,14 +57,14 @@
     <div class="table-responsive" *ngIf="songsList.length !== 0">
       <!-- Mostrar tarjeta con iframe seleccionado o mensaje si no hay ninguna canción seleccionada -->
       <div class="card-body text-center">
-        <h4 class="card-title">Canción seleccionada</h4>
+        <h4 class="card-title">{{ 'CANCION_SELECCIONADA' | translate }}</h4>
         <div *ngIf="selectedSong && safeUrl; else noSongSelected">
           <div class="embed-responsive embed-responsive-16by9">
             <iframe style="border-radius:12px" [src]="safeUrl" width="35%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
           </div>
         </div>
         <ng-template #noSongSelected>
-          <p>No hay ninguna canción seleccionada.</p>
+          <p>{{ 'NO_HAY_NINGUNA_CANCION_SELECCIONADA' | translate }}</p>
         </ng-template>
       </div>
 
@@ -72,31 +72,31 @@
         <thead>
           <tr>
             <th class="text-dark font-medium fs-4" (click)="setSortColumn('title')">
-              Título
+              {{ 'TITULO' | translate }}
               <span *ngIf="sortColumn === 'title'">
                 <i [ngClass]="sortDirection === 'asc' ? 'bi bi-arrow-up' : 'bi bi-arrow-down'"></i>
               </span>
             </th>
             <th class="text-dark font-medium fs-4" (click)="setSortColumn('time')">
-              Duración
+              {{ 'DURACION' | translate }}
               <span *ngIf="sortColumn === 'time'">
                 <i [ngClass]="sortDirection === 'asc' ? 'bi bi-arrow-up' : 'bi bi-arrow-down'"></i>
               </span>
             </th>
             <th class="text-dark font-medium fs-4" (click)="setSortColumn('url')">
-              URL
+              {{ 'URL' | translate }}
               <span *ngIf="sortColumn === 'url'">
                 <i [ngClass]="sortDirection === 'asc' ? 'bi bi-arrow-up' : 'bi bi-arrow-down'"></i>
               </span>
             </th>
             <th class="text-dark font-medium fs-4" (click)="setSortColumn('album')">
-              Album
+              {{ 'ALBUM' | translate }}
               <span *ngIf="sortColumn === 'album'">
                 <i [ngClass]="sortDirection === 'asc' ? 'bi bi-arrow-up' : 'bi bi-arrow-down'"></i>
               </span>
             </th>
-            <th class="text-dark font-medium fs-4" (click)="setSortColumn('url')">
-                  Acciones
+            <th class="text-dark font-medium fs-4">
+              {{ 'ACCIONES' | translate }}
             </th>
           </tr>
         </thead>
@@ -107,22 +107,22 @@
                 <div class="ms-3">
                   <h5 class="mb-0 font-medium">
                     <button style="
-  background-color: #85db34; /* Color de fondo azul */
-  color: #ffffff; /* Texto blanco */
-  border: none; /* Sin borde */
-  border-radius: 5px; /* Bordes redondeados */
-  padding: 5px 10px; /* Espaciado interno */
-  font-size: 18px; /* Tamaño de fuente */
-  font-weight: bold; /* Texto en negrita */
-  cursor: pointer; /* Cursor de mano */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra */
-  transition: background-color 0.3s, transform 0.3s; /* Transiciones suaves */
-  outline: none; /* Sin contorno en enfoque */
-  text-align: center; /* Centrar texto */
-  display: inline-block; /* Alinear el botón en línea */
-">
-  {{ song.title }}  <i class="bi bi-play-circle"></i>
-</button>
+                      background-color: #85db34; /* Color de fondo azul */
+                      color: #ffffff; /* Texto blanco */
+                      border: none; /* Sin borde */
+                      border-radius: 5px; /* Bordes redondeados */
+                      padding: 5px 10px; /* Espaciado interno */
+                      font-size: 18px; /* Tamaño de fuente */
+                      font-weight: bold; /* Texto en negrita */
+                      cursor: pointer; /* Cursor de mano */
+                      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra */
+                      transition: background-color 0.3s, transform 0.3s; /* Transiciones suaves */
+                      outline: none; /* Sin contorno en enfoque */
+                      text-align: center; /* Centrar texto */
+                      display: inline-block; /* Alinear el botón en línea */
+                    ">
+                      {{ song.title }}  <i class="bi bi-play-circle"></i>
+                    </button>
                   </h5>
                 </div>
               </div>
@@ -133,7 +133,7 @@
                 <a [href]="song.url" target="_blank" rel="noopener noreferrer">
                   https://open.spotify.com/track/{{ song.title }}
                 </a>
-                </h5>
+              </h5>
             </td>
             <td>
               <span class="fs-4">{{ song.album_name }}</span>
@@ -152,41 +152,38 @@
 
       <div class="d-flex justify-content-center">
         <ngb-pagination
-        [collectionSize]="collectionSize"
-        [(page)]="currentPage"
-        [pageSize]="itemsPerPage"
-        [maxSize]="5"
-        [rotate]="true"
-        [ellipses]="false"
-        [boundaryLinks]="true"
-        (pageChange)="onPageChange($event)"
-      ></ngb-pagination>
+          [collectionSize]="collectionSize"
+          [(page)]="currentPage"
+          [pageSize]="itemsPerPage"
+          [maxSize]="5"
+          [rotate]="true"
+          [ellipses]="false"
+          [boundaryLinks]="true"
+          (pageChange)="onPageChange($event)"
+        ></ngb-pagination>
       </div>
 
-      <!-- Modal para eliminar artista -->
-<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true" [ngClass]="{'show': showModal, 'd-block': showModal}">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="deleteModalLabel">Eliminar canción</h5>
-        <button type="button" class="btn-close" (click)="closeDeleteModal()"></button>
-      </div>
-      <div class="modal-body">
-        ¿Estás seguro de que deseas eliminar la cancion {{ songToDelete?.name }}?
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" (click)="closeDeleteModal()">Cancelar</button>
-        <button type="button" class="btn btn-danger" (click)="confirmDelete()">Eliminar</button>
+      <!-- Modal para eliminar canción -->
+      <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true" [ngClass]="{'show': showModal, 'd-block': showModal}">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="deleteModalLabel">{{ 'ELIMINAR_CANCION' | translate }}</h5>
+              <button type="button" class="btn-close" (click)="closeDeleteModal()"></button>
+            </div>
+            <div class="modal-body">
+              {{ 'ESTAS_SEGURO_ELIMINAR' | translate }} {{ songToDelete?.name }}?
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" (click)="closeDeleteModal()">{{ 'CANCELAR' | translate }}</button>
+              <button type="button" class="btn btn-danger" (click)="confirmDelete()">{{ 'ELIMINAR' | translate }}</button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </div>
-
-
-    </div>
-  </div>
-</div>
-
 
 <style>
   button:hover {
