@@ -1,7 +1,7 @@
 <div class="card">
   <div class="card-body">
-    <h4 class="card-title">Lista de usuarios</h4>
-    <h5 class="card-subtitle text-muted">Listado de todos los usuarios disponibles</h5>
+    <h4 class="card-title">{{'LISTA_USUARIOS' | translate}}</h4>
+    <h5 class="card-subtitle text-muted">{{'LISTADO_USUARIOS' | translate}}</h5>
 
         <!-- Filtros de búsqueda -->
         <div class="row mb-3">
@@ -9,7 +9,7 @@
             <input
             type="text"
             class="form-control"
-            placeholder="Buscar por nombre"
+            [attr.placeholder]="placeholderName"
             [(ngModel)]="filterUsername"
             (input)="applyFilter()"
           />
@@ -18,7 +18,7 @@
             <input
             type="text"
             class="form-control"
-            placeholder="Buscar por email"
+            [attr.placeholder]="placeholderEmail"
             [(ngModel)]="filterEmail"
             (input)="applyFilter()"
           />
@@ -30,9 +30,9 @@
             (change)="applyFilter()"
             placeholder="Filtrar por activo"
           >
-            <option [ngValue]="1">Activos</option>
-            <option [ngValue]="0">Inactivos</option>
-            <option [ngValue]="-1">Busca por activos</option>
+            <option [ngValue]="1">{{'ACTIVOS' | translate}}</option>
+            <option [ngValue]="0">{{'INACTIVO' | translate}}</option>
+            <option [ngValue]="-1">{{'FILTRAR_POR' | translate}} {{'ACTIVOS' | translate}}</option>
           </select>
 
         </div>
@@ -43,16 +43,16 @@
           (change)="applyFilter()"
           placeholder="Filtrar por activo"
         >
-          <option [ngValue]="1">Eliminados</option>
-          <option [ngValue]="0">No eliminados</option>
-          <option [ngValue]="-1">Busca por eliminados</option>
+          <option [ngValue]="1">{{'ELIMINADOS' | translate}}</option>
+          <option [ngValue]="0">{{'NO_ELIMINADOS' | translate}}</option>
+          <option [ngValue]="-1">{{'FILTRAR_POR' | translate}} {{'ELIMINADOS' | translate}}</option>
         </select>
 
       </div>
 
       <div class="col">
-        <button class="btn btn-primary me-2" (click)="applyFilters()">Aplicar</button>
-        <button class="btn btn-secondary" (click)="clearFilters()">Limpiar</button>
+        <button class="btn btn-primary me-2" (click)="applyFilters()">{{'APLICAR' | translate}}</button>
+        <button class="btn btn-secondary" (click)="clearFilters()">{{'LIMPIAR' | translate}}</button>
       </div>
 
     <!-- Indicador de carga -->
@@ -86,30 +86,30 @@
         <thead>
           <tr>
             <th class="text-dark font-medium fs-4" (click)="setSortColumn('username')">
-              Nombre
+              {{'NOMBRE' | translate}}
               <span *ngIf="sortColumn === 'username'">
                 <i [ngClass]="sortDirection === 'asc' ? 'bi bi-arrow-up' : 'bi bi-arrow-down'"></i>
               </span>
             </th>
             <th class="text-dark font-medium fs-4" (click)="setSortColumn('email')">
-              Correo electrónico
+              {{'EMAIL' | translate}}
               <span *ngIf="sortColumn === 'email'">
                 <i [ngClass]="sortDirection === 'asc' ? 'bi bi-arrow-up' : 'bi bi-arrow-down'"></i>
               </span>
             </th>
             <th class="text-dark font-medium fs-4" (click)="setSortColumn('active')">
-              Activo
+              {{'ACTIVO' | translate}}
               <span *ngIf="sortColumn === 'active'">
                 <i [ngClass]="sortDirection === 'asc' ? 'bi bi-arrow-up' : 'bi bi-arrow-down'"></i>
               </span>
             </th>
             <th class="text-dark font-medium fs-4" (click)="setSortColumn('softDelete')">
-              Eliminado
+              {{'ELIMINADO' | translate}}
               <span *ngIf="sortColumn === 'softDelete'">
                 <i [ngClass]="sortDirection === 'asc' ? 'bi bi-arrow-up' : 'bi bi-arrow-down'"></i>
               </span>
             </th>
-            <th class="text-dark font-medium fs-4">Acciones</th>
+            <th class="text-dark font-medium fs-4">{{'ACCIONES' | translate}}</th>
           </tr>
         </thead>
         <tbody>
@@ -144,10 +144,10 @@
                 <i class="bi bi-trash"></i>
               </button>
               <button *ngIf="user.active===0" class="btn btn-success me-2" (click)="openActivateModal(user)">
-                <i class="bi bi-check-lg"></i> Activar
+                <i class="bi bi-check-lg"></i> {{'ACTIVAR' | translate}}
               </button>
               <button *ngIf="user.active===1" class="btn btn-success me-2" (click)="openDesactivateModal(user)">
-                <i class="bi bi-check-lg"></i> Desactivar
+                <i class="bi bi-check-lg"></i> {{'DESACTIVAR' | translate}}
               </button>
               <a class="btn btn-primary me-2" (click)="viewUserDetails(user)">
                 <i class="bi bi-eye"></i>
@@ -168,16 +168,16 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="deleteModalLabel">Eliminar Usuario</h5>
+        <h5 class="modal-title" id="deleteModalLabel">{{'ELIMINAR' | translate}} {{'USUARIO' | translate}} </h5>
         <button type="button" class="btn-close" (click)="closeDeleteModal()"></button>
       </div>
       <div class="modal-body">
-        ¿Estás seguro de que deseas eliminar al usuario {{ userToDelete?.username }}?
+        {{'ESTAS_SEGURO_ELIMINAR' |translate}} {{ userToDelete?.username }}?
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" (click)="closeDeleteModal()">Cancelar</button>
-        <button type="button" class="btn btn-danger" (click)="confirmDelete('delete')">Eliminar permanentemente</button>
-        <button type="button" class="btn btn-warning" (click)="confirmDelete('soft')">Deshabilitar</button>
+        <button type="button" class="btn btn-secondary" (click)="closeDeleteModal()">{{'CANCELAR' | translate}}</button>
+        <button type="button" class="btn btn-danger" (click)="confirmDelete('delete')">{{'ELIMINAR_PERMANENTEMENTE' | translate}}</button>
+        <button type="button" class="btn btn-warning" (click)="confirmDelete('soft')">{{'DESHABILITAR' | translate}}</button>
         <
       </div>
     </div>
@@ -189,15 +189,15 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="activateModalLabel">Activar Usuario</h5>
+        <h5 class="modal-title" id="activateModalLabel">{{'ACTIVAR' | translate}} {{'USUARIO' | translate}}</h5>
         <button type="button" class="btn-close" (click)="closeActivateModal()"></button>
       </div>
       <div class="modal-body">
-        ¿Estás seguro de que deseas {{whatis}} al usuario {{ userToActivate?.username }}?
+        {{'ESTAS_SEGURO_DESEAS' | translate}} {{whatis}} {{'AL_USUARIO' | translate}} {{ userToActivate?.username }}?
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" (click)="closeActivateModal()">Cancelar</button>
-        <button type="button" class="btn btn-success" (click)="confirmActivate()">Activar</button>
+        <button type="button" class="btn btn-secondary" (click)="closeActivateModal()">{{'CANCELAR'}}</button>
+        <button type="button" class="btn btn-success" (click)="confirmActivate()">{{'ACTIVAR'}}</button>
       </div>
     </div>
   </div>
@@ -208,7 +208,7 @@
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="detailsModalLabel">Detalles de {{selectedUser?.username}}</h5>
+        <h5 class="modal-title" id="detailsModalLabel">{{'DETALLES_DE' | translate}} {{selectedUser?.username}}</h5>
         <button type="button" class="btn-close" aria-label="Close" (click)="closeDetailsModal()"></button>
       </div>
       <div class="modal-body">
@@ -222,10 +222,10 @@
               <i class="bi bi-person"></i> <strong>ID:</strong> {{ selectedUser?.id }}
             </div>
             <div class="info-item">
-              <i class="bi bi-envelope"></i> <strong>Email:</strong> {{ selectedUser?.email }}
+              <i class="bi bi-envelope"></i> <strong>{{'EMAIL' | translate}}:</strong> {{ selectedUser?.email }}
             </div>
             <div class="info-item">
-              <i class="bi bi-check-circle"></i> <strong>Activo:</strong>
+              <i class="bi bi-check-circle"></i> <strong>{{'ACTIVO' | translate}}:</strong>
               <ng-container *ngIf="selectedUser?.active === 1">
                 <i class="bi bi-check-lg text-success" title="Activo"></i>
               </ng-container>
@@ -234,7 +234,7 @@
               </ng-container>
             </div>
             <div class="info-item">
-              <i class="bi bi-trash"></i> <strong>Soft Delete:</strong>
+              <i class="bi bi-trash"></i> <strong>{{'SOFT_DELETE' | translate}}:</strong>
               <ng-container *ngIf="selectedUser?.softDelete === 1">
                 <i class="bi bi-check-lg text-success" title="Activo"></i>
               </ng-container>
@@ -244,13 +244,13 @@
 
             </div>
             <div class="info-item">
-              <i class="bi bi-calendar"></i> <strong>Fecha de Creación:</strong> {{ selectedUser?.createdAt | date: 'dd/MM/yyyy' }}
+              <i class="bi bi-calendar"></i> <strong>{{'FECHA_CREACION' | translate}}:</strong> {{ selectedUser?.createdAt | date: 'dd/MM/yyyy' }}
             </div>
             <div class="info-item">
-              <i class="bi bi-calendar-event"></i> <strong>Fecha de Actualización:</strong> {{ selectedUser?.updatedAt | date: 'dd/MM/yyyy' }}
+              <i class="bi bi-calendar-event"></i> <strong>{{'FECHA_ACTUALIZACION' | translate}}:</strong> {{ selectedUser?.updatedAt | date: 'dd/MM/yyyy' }}
             </div>
             <div *ngIf="selectedUser?.roles && selectedUser?.roles.length > 0" class="roles-section">
-              <h5><i class="bi bi-shield-lock"></i> Roles:</h5>
+              <h5><i class="bi bi-shield-lock"></i> {{'ROLES' | translate}}:</h5>
               <ul class="list-group">
                 <li *ngFor="let role of selectedUser?.roles" class="list-group-item role-item">
                   <strong>{{ role.name }}</strong>
@@ -266,7 +266,7 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" (click)="closeDetailsModal()">Cerrar</button>
+        <button type="button" class="btn btn-secondary" (click)="closeDetailsModal()">{{'CERRAR' | translate}}</button>
       </div>
     </div>
   </div>

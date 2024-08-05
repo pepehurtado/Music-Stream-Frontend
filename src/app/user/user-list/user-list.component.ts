@@ -3,6 +3,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { User } from '../interfaces/user.interface';
 import { UserService } from '../service/user.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-user-list',
@@ -30,6 +31,8 @@ export class UserListComponent implements OnInit {
   };
   filteredUsers: User[] = [];
   public whatis = '';
+  public placeholderName = '';
+  public placeholderEmail = '';
 
   public userToActivate: User | null = null;
   public showActivateModal = false;
@@ -40,10 +43,17 @@ export class UserListComponent implements OnInit {
   filterActive: number | null = -1;
   filterDelete: number | null = -1;
 
-  constructor(private userService: UserService, private router: Router) { }
+  constructor(private userService: UserService,
+    private router: Router,
+  private translate : TranslateService) { }
 
   ngOnInit(): void {
     this.loadUsers();
+    this.translate.get(['FILTRAR_POR', 'NOMBRE', 'EMAIL'])
+      .subscribe(translations => {
+        this.placeholderName = `${translations['FILTRAR_POR']} ${translations['NOMBRE']}`;
+        this.placeholderEmail = `${translations['FILTRAR_POR']} ${translations['EMAIL']}`;
+      });
   }
 
   applyFilter(): void {

@@ -5,6 +5,7 @@ import { Routes, RouterModule } from "@angular/router";
 import { UserListComponent } from "./user-list/user-list.component";
 import { UserDetailsComponent } from './user-details/user-details.component';
 import { NgbModalModule } from "@ng-bootstrap/ng-bootstrap";
+import { TranslateModule } from "@ngx-translate/core";
 
 
 const routes: Routes = [
@@ -24,7 +25,8 @@ const routes: Routes = [
     ReactiveFormsModule,
     CommonModule,
     RouterModule.forChild(routes),
-    NgbModalModule
+    NgbModalModule,
+    TranslateModule
   ],
   declarations: [
     UserListComponent,

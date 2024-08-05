@@ -1,7 +1,7 @@
 <!-- Detalles del Usuario -->
 <div *ngIf="user" class="user-details card shadow-lg">
   <div class="card-header text-center bg-primary text-white">
-    <h2>Detalles de la Cuenta</h2>
+    <h2>{{'DETALLES_CUENTA' | translate}}</h2>
   </div>
   <div class="card-body">
     <div class="user-profile text-center mb-4">
@@ -13,25 +13,22 @@
         <i class="bi bi-person"></i> <strong>ID:</strong> {{ user.id }}
       </div>
       <div class="info-item">
-        <i class="bi bi-envelope"></i> <strong>Email:</strong> {{ user.email }}
+        <i class="bi bi-envelope"></i> <strong>{{'EMAIL' | translate}}:</strong> {{ user.email }}
       </div>
       <div class="info-item">
-        <i class="bi bi-lock"></i> <strong>Contraseña:</strong> {{ user.password }}
+        <i class="bi bi-check-circle"></i> <strong>{{'ACTIVO' | translate}}:</strong> {{ user.active }}
       </div>
       <div class="info-item">
-        <i class="bi bi-check-circle"></i> <strong>Activo:</strong> {{ user.active }}
+        <i class="bi bi-trash"></i> <strong>{{'SOFT_DELETE' | translate}}:</strong> {{ user.softDelete }}
       </div>
       <div class="info-item">
-        <i class="bi bi-trash"></i> <strong>Soft Delete:</strong> {{ user.softDelete }}
+        <i class="bi bi-calendar"></i> <strong>{{'FECHA_CREACION' |translate}}:</strong> {{ user.createdAt | date:'short' }}
       </div>
       <div class="info-item">
-        <i class="bi bi-calendar"></i> <strong>Fecha de Creación:</strong> {{ user.createdAt | date:'short' }}
-      </div>
-      <div class="info-item">
-        <i class="bi bi-calendar-event"></i> <strong>Fecha de Actualización:</strong> {{ user.updatedAt | date:'short' }}
+        <i class="bi bi-calendar-event"></i> <strong>{{'FECHA_ACTUALIZACION' | translate}}:</strong> {{ user.updatedAt | date:'short' }}
       </div>
       <div *ngIf="user.roles && user.roles.length > 0" class="roles-section">
-        <h3><i class="bi bi-shield-lock"></i> Roles:</h3>
+        <h3><i class="bi bi-shield-lock"></i> {{'ROLES' | translate}}:</h3>
         <ul class="list-group">
           <li *ngFor="let role of user.roles" class="list-group-item role-item">
             <strong>{{ role.name }}</strong>
