@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { UserService } from 'src/app/user/service/user.service';
 
 @Component({
@@ -13,8 +13,9 @@ export class NavigationComponent implements OnInit {
   public showSearch = false;
   public userName: string = '';
   public userImage: string = '';
+  public currentLanguageImage: string = '/assets/images/flags/en.png';
 
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService, private translate : TranslateService) {}
 
   ngOnInit() {
     const token = localStorage.getItem('jwt');
@@ -36,6 +37,12 @@ export class NavigationComponent implements OnInit {
         console.error('Error fetching user details:', error);
       });
     }
+  }
+
+  changeLanguage(language: string) {
+    this.translate.use(language);
+    localStorage.setItem('language', language);
+    this.currentLanguageImage = '/assets/images/flags/' + language + '.png';
   }
 
   logout() {

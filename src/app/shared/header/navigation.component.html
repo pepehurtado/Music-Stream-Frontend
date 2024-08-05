@@ -43,6 +43,32 @@
     <!-- ============================================================== -->
     <ul class="navbar-nav float-end">
       <!-- ============================================================== -->
+      <!-- Language Dropdown -->
+      <!-- ============================================================== -->
+      <li class="nav-item" ngbDropdown placement="bottom-end" style="position: relative;">
+        <a
+          ngbDropdownToggle
+          class="nav-link waves-effect waves-dark"
+          href="javascript:void(0)"
+          data-toggle="dropdown"
+          aria-haspopup="true"
+          aria-expanded="false"
+          style="display: flex; align-items: center; padding: 10px 15px;"
+        >
+          <img [src]="currentLanguageImage" alt="Language" style="width: 24px; height: 24px; margin-right: 8px;" />
+          <span class="d-none d-md-block">{{'IDIOMA' | translate}}</span>
+        </a>
+        <div class="dropdown-menu-right" ngbDropdownMenu style="padding: 0.5rem 0; border: 0px; box-shadow: 1px 1px 15px rgba(0, 0, 0, 0.1);">
+          <a class="dropdown-item" (click)="changeLanguage('en')" style="padding: 10px 15px;">
+            <img src="/assets/images/flags/en.png" alt="English" style="width: 24px; height: 24px; margin-right: 8px;" /> English
+          </a>
+          <a class="dropdown-item" (click)="changeLanguage('es')" style="padding: 10px 15px;">
+            <img src="/assets/images/flags/es.png" alt="Español" style="width: 24px; height: 24px; margin-right: 8px;" /> Español
+          </a>
+          <!-- Añade más idiomas según sea necesario -->
+        </div>
+      </li>
+      <!-- ============================================================== -->
       <!-- User profile and search -->
       <!-- ============================================================== -->
       <li class="nav-item" ngbDropdown placement="bottom-end" style="position: relative;">
@@ -68,9 +94,6 @@
           <a class="dropdown-item" style="cursor: pointer; padding: 10px 15px;" (click)="logout()">Cerrar sesión</a>
         </div>
       </li>
-      <!-- ============================================================== -->
-      <!-- User profile and search -->
-      <!-- ============================================================== -->
     </ul>
   </div>
 </nav>
