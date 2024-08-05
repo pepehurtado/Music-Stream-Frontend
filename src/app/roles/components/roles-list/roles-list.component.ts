@@ -4,6 +4,7 @@ import { Role, Permission } from '../../interfaces/role.interfaces';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap'; // Importa el servicio del modal si usas ng-bootstrap
 import { Router } from '@angular/router';
 import { PermissionService } from '../../services/permission.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-role-list',
@@ -21,17 +22,23 @@ export class RolesListComponent implements OnInit {
   selectedRole: Role | null = null;
   deleteModal: boolean = false;
   isDropdownOpen: boolean = false;
+  placeholderName: string = '';
 
   constructor(
     private roleService: RoleService,
     private modalService: NgbModal, // Usa NgbModal si usas ng-bootstrap
     private router: Router,
-    private permissionService: PermissionService
+    private permissionService: PermissionService,
+    private translate: TranslateService
   ) {}
 
   ngOnInit(): void {
     this.loadRoles();
     this.loadPermissions(); // Cargar permisos disponibles
+    this.translate.get(['FILTRAR_POR', 'NOMBRE'])
+      .subscribe(translations => {
+        this.placeholderName = `${translations['FILTRAR_POR']} ${translations['NOMBRE']}`;
+      });
   }
 
   toggleDropdown(): void {

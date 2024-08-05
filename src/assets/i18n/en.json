@@ -106,5 +106,14 @@
   "SOFT_DELETE": "Soft delete",
   "FECHA_CREACION": "Creation date",
   "FECHA_ACTUALIZACION": "Update date",
-  "DETALLES_DE" : "Details of"
+  "DETALLES_DE" : "Details of",
+  "PERMISOS": "Permissions",
+  "SELECCIONAR_PERMISOS": "Select permissions",
+  "LIMPIAR_FILTROS": "Clear filters",
+  "NO_ROLES_DISPONIBLES_FILTROS": "No roles available for the filter",
+  "PERMISOS_TOTALES": "Total permissions",
+  "PERMISOS_SELECCIONADOS": "Selected permissions",
+  "GUARDAR" : "Save",
+  "ROL_L": "role",
+  "DESARROLLADO_POR": "Developed by"
 }

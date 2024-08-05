@@ -4,7 +4,7 @@
   <input
     type="text"
     class="form-control"
-    placeholder="Buscar por nombre"
+    [attr.placeholder]="placeholderName"
     [(ngModel)]="filterText"
     (input)="applyFilter()"
   />
@@ -12,7 +12,7 @@
 <div class="col">
   <div class="dropdown-custom">
     <button class="btn btn-secondary dropdown-toggle" type="button" (click)="toggleDropdown()">
-      Seleccionar permisos
+      {{'SELECCIONAR_PERMISOS' | translate}}
     </button>
     <div class="dropdown-menu-custom" [ngClass]="{'show': isDropdownOpen}">
       <div *ngFor="let permission of allPermissions" class="dropdown-item-custom">
@@ -32,7 +32,7 @@
   </div>
   <div class="col">
     <button class="btn btn-primary" type="button" (click)="clearFilters()">
-      Limpiar filtros
+      {{'LIMPIAR_FILTROS' | translate}}
     </button>
   </div>
 </div>
@@ -48,14 +48,14 @@
     <thead>
       <tr>
         <th class="text-dark font-medium fs-4">
-          Nombre
+          {{'NOMBRE' | translate}}
           <button class="btn btn-link p-0" (click)="toggleSort()">
             <i class="bi bi-sort-alpha-down" *ngIf="!isSortedAscending"></i>
             <i class="bi bi-sort-alpha-up" *ngIf="isSortedAscending"></i>
           </button>
         </th>
-        <th class="text-dark font-medium fs-4">Permisos</th>
-        <th class="text-dark font-medium fs-4">Acciones</th>
+        <th class="text-dark font-medium fs-4">{{'PERMISOS'|translate}}</th>
+        <th class="text-dark font-medium fs-4">{{'ACCIONES'|translate}}</th>
       </tr>
     </thead>
     <tbody>
@@ -81,7 +81,7 @@
 
 <!-- Indicador de carga -->
 <div class="text-center" *ngIf="filteredRoles.length === 0 && errorMessage === ''">
-  <p>No hay roles disponibles con esos filtros</p>
+  <p>{{'NO_ROLES_DISPONIBLES_FILTROS' | translate}}</p>
 </div>
 
 <!-- Mensaje de error -->
@@ -94,11 +94,11 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="deleteModalLabel">Eliminar rol</h5>
+        <h5 class="modal-title" id="deleteModalLabel">{{'ELIMINAR' | translate}} {{'ROL' | translate}} </h5>
         <button type="button" class="btn-close" (click)="closeDeleteModal()"></button>
       </div>
       <div class="modal-body">
-        ¿Estás seguro de que deseas eliminar el rol {{ selectedRole?.name }}?
+        {{'ESTAS_SEGURO_ELIMINAR' | translate}} {{ selectedRole?.name }}?
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" (click)="closeDeleteModal()">Cancelar</button>

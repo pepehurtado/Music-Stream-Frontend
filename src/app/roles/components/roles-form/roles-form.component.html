@@ -4,7 +4,7 @@
       <button class="btn btn-primary" routerLink="/roles">
         <i class="bi bi-arrow-left"></i>
       </button>
-      {{ isEditMode ? 'Editar Rol' : 'Crear nuevo Rol' }}
+      {{ isEditMode ? ('EDITAR' | translate)  + ' ' + ('ARTISTA_L' | translate): (( 'CREAR_NUEVO' | translate) + ' ' + ('ROL_L' | translate)) }}
     </h4>
 
     <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
@@ -17,7 +17,7 @@
 
     <form [formGroup]="roleForm" (ngSubmit)="submitForm()">
       <div class="mb-3">
-        <label for="name" class="form-label">Nombre</label>
+        <label for="name" class="form-label">{{'NOMBRE' | translate}}</label>
         <input type="text" id="name" class="form-control" formControlName="name">
       </div>
 
@@ -28,7 +28,7 @@
           [cdkDropListData]="permissions"
           [cdkDropListConnectedTo]="['selectedPermissionsFull']"
           (cdkDropListDropped)="drop($event)">
-          <h3 class="text-center">Permisos totales</h3>
+          <h3 class="text-center">{{'PERMISOS_TOTALES' |translate}}</h3>
           <hr>
           <div *ngFor="let permission of permissions" cdkDrag>
             <div class="text-center">
@@ -42,7 +42,7 @@
           [cdkDropListData]="selectedPermissionsFull"
           [cdkDropListConnectedTo]="['permissions']"
           (cdkDropListDropped)="drop($event)">
-          <h3 class="text-center">Permisos seleccionados</h3>
+          <h3 class="text-center">{{'PERMISOS_SELECCIONADOS' | translate}}</h3>
           <hr>
           <div *ngFor="let permission of selectedPermissionsFull" cdkDrag>
             <div class="text-center">
@@ -51,7 +51,7 @@
           </div>
         </div>
       </div>
-      <button type="submit" class="btn btn-primary">Enviar</button>
+      <button type="submit" class="btn btn-primary">{{'GUARDAR' | translate}}</button>
     </form>
   </div>
 </div>
