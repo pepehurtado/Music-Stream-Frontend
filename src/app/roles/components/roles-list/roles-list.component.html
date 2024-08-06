@@ -1,34 +1,34 @@
 <!-- Filtro de roles por nombre -->
 <div class="row mb-3">
   <div class="col">
-  <input
-    type="text"
-    class="form-control"
-    [attr.placeholder]="placeholderName"
-    [(ngModel)]="filterText"
-    (input)="applyFilter()"
-  />
-</div>
-<div class="col">
-  <div class="dropdown-custom">
-    <button class="btn btn-secondary dropdown-toggle" type="button" (click)="toggleDropdown()">
-      {{'SELECCIONAR_PERMISOS' | translate}}
-    </button>
-    <div class="dropdown-menu-custom" [ngClass]="{'show': isDropdownOpen}">
-      <div *ngFor="let permission of allPermissions" class="dropdown-item-custom">
-        <input
-          type="checkbox"
-          class="form-check-input me-2"
-          [value]="permission.id"
-          [checked]="selectedPermissionIds.includes(permission.id)"
-          (change)="onPermissionChange($event)"
-        />
-        <label class="form-check-label">
-          {{ permission.name }} - {{ permission.entity }}
-        </label>
+    <input
+      type="text"
+      class="form-control"
+      [attr.placeholder]="placeholderName"
+      [(ngModel)]="filterText"
+      (input)="applyFilter()"
+    />
+  </div>
+  <div class="col">
+    <div class="dropdown-custom">
+      <button class="btn btn-secondary dropdown-toggle" type="button" (click)="toggleDropdown()">
+        {{'SELECCIONAR_PERMISOS' | translate}}
+      </button>
+      <div class="dropdown-menu-custom" [ngClass]="{'show': isDropdownOpen}">
+        <div *ngFor="let permissionTranslater of allTranslations" class="dropdown-item-custom">
+          <input
+            type="checkbox"
+            class="form-check-input me-2"
+            [value]="permissionTranslater.permission.id"
+            [checked]="selectedPermissionIds.includes(permissionTranslater.permission.id)"
+            (change)="onPermissionChange($event)"
+          />
+          <label class="form-check-label">
+            {{ permissionTranslater.translation }}
+          </label>
+        </div>
       </div>
     </div>
-  </div>
   </div>
   <div class="col">
     <button class="btn btn-primary" type="button" (click)="clearFilters()">
@@ -39,7 +39,6 @@
 
 <!-- Selector múltiple para permisos -->
 <div class="mb-3">
-
 </div>
 
 <!-- Tabla de roles -->
@@ -54,8 +53,8 @@
             <i class="bi bi-sort-alpha-up" *ngIf="isSortedAscending"></i>
           </button>
         </th>
-        <th class="text-dark font-medium fs-4">{{'PERMISOS'|translate}}</th>
-        <th class="text-dark font-medium fs-4">{{'ACCIONES'|translate}}</th>
+        <th class="text-dark font-medium fs-4">{{'PERMISOS' | translate}}</th>
+        <th class="text-dark font-medium fs-4">{{'ACCIONES' | translate}}</th>
       </tr>
     </thead>
     <tbody>
@@ -63,7 +62,7 @@
         <td>{{ role.name }}</td>
         <td>
           <span *ngFor="let permission of role.permissions" class="badge bg-info text-dark me-1">
-            {{ permission.name }} {{ permission.entity }}
+            {{ getTranslatedPermissionName(permission.id) }}
           </span>
         </td>
         <td>

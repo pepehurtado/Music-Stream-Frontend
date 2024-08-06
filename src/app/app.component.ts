@@ -13,7 +13,7 @@ export class AppComponent {
     translate.setDefaultLang('en');
 
     // Cambiar el idioma actual a español
-    translate.use('en');
+    translate.use('es');
   }
 
   switchLanguage(language: string) {

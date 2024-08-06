@@ -5,6 +5,8 @@ import { switchMap, tap } from 'rxjs';
 import { RoleService } from '../../services/roles.service';
 import { Permission, Role } from '../../interfaces/role.interfaces';
 import { CdkDragDrop, transferArrayItem } from '@angular/cdk/drag-drop';
+import { PermissionTranslaterService } from '../../services/permision-translater.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-role-form',
@@ -36,7 +38,9 @@ export class RolesFormComponent implements OnInit {
     private fb: FormBuilder,
     private roleService: RoleService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private permissionTranslaterService: PermissionTranslaterService,
+    private translate: TranslateService
   ) {
     this.roleForm = this.fb.group({
       name: ['', Validators.required],
@@ -98,6 +102,22 @@ export class RolesFormComponent implements OnInit {
       },
       (error) => {
         console.error('Error:', error);
+      }
+    );
+    this.translatePermissions();
+  }
+
+  translatePermissions(): void {
+      //Para cada permiso, hacer una llamada a la API para obtener los datos de ese permiso
+      this.permissions.forEach(permission => {
+        this.permissionTranslaterService.getPermissionByLanguageAndPermissionId(permission.id,this.translate.currentLang).subscribe(
+          (response) => {
+            permission.name = response.translation;
+          },
+          (error) => {
+            console.error('Error obteniendo traducción de permiso:', error);
+          }
+        );
       }
     );
   }

@@ -13,11 +13,12 @@ export class NavigationComponent implements OnInit {
   public showSearch = false;
   public userName: string = '';
   public userImage: string = '';
-  public currentLanguageImage: string = '/assets/images/flags/en.png';
+  public currentLanguageImage: string = '';
 
   constructor(private userService: UserService, private translate : TranslateService) {}
 
   ngOnInit() {
+    this.currentLanguageImage = '/assets/images/flags/' + this.translate.currentLang + '.png';
     const token = localStorage.getItem('jwt');
     console.log('Token:', token);
     if (token) {
@@ -40,6 +41,7 @@ export class NavigationComponent implements OnInit {
   }
 
   changeLanguage(language: string) {
+    console.log('Changing language to:', language, 'was:', this.translate.currentLang);
     this.translate.use(language);
     localStorage.setItem('language', language);
     this.currentLanguageImage = '/assets/images/flags/' + language + '.png';

@@ -5,6 +5,8 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap'; // Importa el servicio de
 import { Router } from '@angular/router';
 import { PermissionService } from '../../services/permission.service';
 import { TranslateService } from '@ngx-translate/core';
+import { PermissionTranslaterService } from '../../services/permision-translater.service';
+import { PermissionTranslater } from '../../interfaces/permission-translater.interfaces';
 
 @Component({
   selector: 'app-role-list',
@@ -23,18 +25,21 @@ export class RolesListComponent implements OnInit {
   deleteModal: boolean = false;
   isDropdownOpen: boolean = false;
   placeholderName: string = '';
+  allTranslations: PermissionTranslater[] = [];
 
   constructor(
     private roleService: RoleService,
     private modalService: NgbModal, // Usa NgbModal si usas ng-bootstrap
     private router: Router,
     private permissionService: PermissionService,
+    private permissionTranslaterService   : PermissionTranslaterService,
     private translate: TranslateService
   ) {}
 
   ngOnInit(): void {
     this.loadRoles();
     this.loadPermissions(); // Cargar permisos disponibles
+    this.loadTranslatedPermission(); // Cargar permisos traducidos
     this.translate.get(['FILTRAR_POR', 'NOMBRE'])
       .subscribe(translations => {
         this.placeholderName = `${translations['FILTRAR_POR']} ${translations['NOMBRE']}`;
@@ -68,6 +73,17 @@ export class RolesListComponent implements OnInit {
     );
   }
 
+  loadTranslatedPermission() : void {
+    this.permissionTranslaterService.getPermissionsByLanguage(this.translate.currentLang).subscribe(
+      (permissions: PermissionTranslater[]) => {
+        this.allTranslations = permissions;
+      },
+      (error) => {
+        this.errorMessage = 'Error loading permissions: ' + error.message;
+      }
+    );
+  }
+
   applyFilter(): void {
     this.filteredRoles = this.roles.filter(role =>
       role.name.toLowerCase().includes(this.filterText.toLowerCase()) &&
@@ -82,6 +98,7 @@ export class RolesListComponent implements OnInit {
 
   onPermissionChange(event: any): void {
     const permissionId = Number(event.target.value);
+    console.log('Permission changed:', permissionId, event.target.checked);
     if (event.target.checked) {
       this.selectedPermissionIds.push(permissionId);
     } else {
@@ -131,5 +148,10 @@ export class RolesListComponent implements OnInit {
     this.filterText = '';
     this.selectedPermissionIds = [];
     this.applyFilter();
+  }
+
+  getTranslatedPermissionName(permissionId: number): string {
+    const permission = this.allTranslations.find(p => p.permission.id === permissionId);
+    return permission ? permission.translation : 'Unknown Permission'; // Fallback en caso de que no se encuentre
   }
 }
