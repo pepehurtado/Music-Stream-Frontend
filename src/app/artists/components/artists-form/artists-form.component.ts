@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ArtistService } from '../../services/artists.service';
+import { ErrorHandlerService } from 'src/app/shared/ErrorHandlerService';
 
 @Component({
   selector: 'app-artists-form',
@@ -19,7 +20,8 @@ export class ArtistsFormComponent implements OnInit {
     private fb: FormBuilder,
     private artistService: ArtistService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private errorHandler: ErrorHandlerService
   ) {
     this.artistForm = this.fb.group({
       name: ['', Validators.required],
@@ -30,6 +32,18 @@ export class ArtistsFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    //Si tiene el rol de administrador, podrá acceder a la vista de creación de artistas. Extraer el rol del jwt almacenado en el localStorage.
+    const token = localStorage.getItem('jwt');
+    if (token) {
+      const tokenPayload = JSON.parse(atob(token.split('.')[1]));
+      console.log(tokenPayload);
+      //si el array de roles no contiene el rol de administrador, se redirige a la página de inicio.
+      if (!tokenPayload.roles.includes('ROLE_ADMIN')) {
+        this.errorHandler.handleError({ status: 403 });
+      }
+    } else {
+      this.errorHandler.handleError({ status: 403 });
+    }
     this.route.paramMap.subscribe(params => {
       const id = params.get('id');
       if (id) {
@@ -46,6 +60,7 @@ export class ArtistsFormComponent implements OnInit {
         this.artistForm.patchValue(artist);
       },
       (error) => {
+        this.errorHandler.handleError(error);
         this.errorMessage = 'Error loading artist data.' + error.error.description;
         console.error('Error loading artist data:', error);
       }

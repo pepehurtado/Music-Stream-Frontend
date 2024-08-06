@@ -7,6 +7,9 @@ import { ArtistService } from 'src/app/artists/services/artists.service';
 import { Album } from 'src/app/albums/components/interfaces/album.interfaces';
 import { AlbumService } from 'src/app/albums/services/albums.service';
 import { forkJoin, Observable, tap } from 'rxjs';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import Swal from 'sweetalert2';
+import { ErrorHandlerService } from 'src/app/shared/ErrorHandlerService';
 
 
 @Component({
@@ -34,7 +37,9 @@ export class SongsFormComponent implements OnInit {
     private artistService: ArtistService,
     private albumService: AlbumService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private translate : TranslateService,
+    private errorHandler : ErrorHandlerService
   ) {
     this.songForm = this.fb.group({
       title: ['', Validators.required],
@@ -56,6 +61,7 @@ loadAlbums(): Observable<Album[]> {
 }
 
 ngOnInit(): void {
+  this.errorHandler.checkRole('ROLE_ADMIN');
   this.route.paramMap.subscribe(params => {
     // Usamos forkJoin para cargar artistas y álbumes en paralelo
     forkJoin([this.loadArtists(), this.loadAlbums()]).subscribe({

@@ -28,6 +28,8 @@ import { TokenExpiredModalComponent } from './auth/token-expired/token-expired.c
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { ToastrModule } from 'ngx-toastr';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 // Función para crear el cargador de traducción
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
@@ -63,7 +65,14 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         useFactory: HttpLoaderFactory,
         deps: [HttpClient]
       }
-    })
+    }),
+    BrowserAnimationsModule,
+    ToastrModule.forRoot({
+      timeOut: 3000,
+      positionClass: 'toast-top-right',
+      preventDuplicates: true,
+    }),
+    SweetAlert2Module.forRoot(),
 ],
   providers: [
     {

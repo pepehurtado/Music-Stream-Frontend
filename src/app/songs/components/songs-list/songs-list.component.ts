@@ -6,6 +6,7 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { catchError, retry } from 'rxjs';
 import { HistoryService } from 'src/app/dashboard/service/history.service';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { ErrorHandlerService } from 'src/app/shared/ErrorHandlerService';
 
 @Component({
   selector: 'app-songs-list',
@@ -40,9 +41,15 @@ export class SongsListComponent implements OnInit {
 
 
 
-  constructor(private songService: SongService, private albumService: AlbumService, private sanitizer: DomSanitizer, private historyService : HistoryService, private translate : TranslateService) { }
+  constructor(private songService: SongService,
+    private albumService: AlbumService,
+    private sanitizer: DomSanitizer,
+    private historyService : HistoryService,
+    private translate : TranslateService,
+    private errorHandler : ErrorHandlerService) { }
 
   ngOnInit(): void {
+    this.errorHandler.checkRole('ROLE_USER');
     this.translate.get([
       'FILTRAR_POR',
       'TITULO',

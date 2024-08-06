@@ -7,6 +7,7 @@ import { Permission, Role } from '../../interfaces/role.interfaces';
 import { CdkDragDrop, transferArrayItem } from '@angular/cdk/drag-drop';
 import { PermissionTranslaterService } from '../../services/permision-translater.service';
 import { TranslateService } from '@ngx-translate/core';
+import { ErrorHandlerService } from 'src/app/shared/ErrorHandlerService';
 
 @Component({
   selector: 'app-role-form',
@@ -40,7 +41,8 @@ export class RolesFormComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private permissionTranslaterService: PermissionTranslaterService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private errorHandler: ErrorHandlerService
   ) {
     this.roleForm = this.fb.group({
       name: ['', Validators.required],
@@ -78,6 +80,7 @@ export class RolesFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.errorHandler.checkRole('ROLE_ADMIN');
     this.route.paramMap.pipe(
       switchMap(params => {
         const id = params.get('id');

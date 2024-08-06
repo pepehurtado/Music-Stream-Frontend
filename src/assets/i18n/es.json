@@ -132,5 +132,7 @@
   "album": "álbum",
   "genre": "género",
   "user": "usuario",
-  "CARGANDO": "Cargando"
+  "CARGANDO": "Cargando",
+  "ERROR": "Error",
+  "NO_PERMISOS": "No tienes permisos para ejecutar esta acción"
 }

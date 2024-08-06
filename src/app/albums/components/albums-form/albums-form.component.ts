@@ -6,6 +6,7 @@ import { ArtistService } from 'src/app/artists/services/artists.service';
 import { Artist } from 'src/app/artists/components/interfaces/artists.interfaces';
 import { Album } from '../../components/interfaces/album.interfaces';
 import { forkJoin, Observable, switchMap, tap } from 'rxjs';
+import { ErrorHandlerService } from 'src/app/shared/ErrorHandlerService';
 
 @Component({
   selector: 'app-albums-form',
@@ -28,7 +29,8 @@ export class AlbumsFormComponent implements OnInit {
     private albumService: AlbumService,
     private artistService: ArtistService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private errorHandler: ErrorHandlerService
   ) {
     this.albumForm = this.fb.group({
       title: ['', Validators.required],
@@ -40,6 +42,7 @@ export class AlbumsFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.errorHandler.checkRole('ROLE_ADMIN');
     this.route.paramMap.pipe(
       switchMap(params => {
         const id = params.get('id');

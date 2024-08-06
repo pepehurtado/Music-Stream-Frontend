@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { User } from '../interfaces/user.interface';
 import { UserService } from '../service/user.service';
 import { TranslateService } from '@ngx-translate/core';
+import { ErrorHandlerService } from 'src/app/shared/ErrorHandlerService';
 
 @Component({
   selector: 'app-user-list',
@@ -45,9 +46,14 @@ export class UserListComponent implements OnInit {
 
   constructor(private userService: UserService,
     private router: Router,
-  private translate : TranslateService) { }
+  private translate : TranslateService,
+  private errorHandler : ErrorHandlerService) { }
 
   ngOnInit(): void {
+    if (!this.userService.hasRole('ROLE_ADMIN')) {
+      this.errorHandler.checkRole('ROLE_ADMIN');
+    }
+    this.errorHandler.checkRole('ROLE_ADMIN');
     this.loadUsers();
     this.translate.get(['FILTRAR_POR', 'NOMBRE', 'EMAIL'])
       .subscribe(translations => {

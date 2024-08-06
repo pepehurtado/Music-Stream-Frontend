@@ -7,6 +7,7 @@ import { PermissionService } from '../../services/permission.service';
 import { TranslateService } from '@ngx-translate/core';
 import { PermissionTranslaterService } from '../../services/permision-translater.service';
 import { PermissionTranslater } from '../../interfaces/permission-translater.interfaces';
+import { ErrorHandlerService } from 'src/app/shared/ErrorHandlerService';
 
 @Component({
   selector: 'app-role-list',
@@ -32,11 +33,15 @@ export class RolesListComponent implements OnInit {
     private modalService: NgbModal, // Usa NgbModal si usas ng-bootstrap
     private router: Router,
     private permissionService: PermissionService,
-    private permissionTranslaterService   : PermissionTranslaterService,
-    private translate: TranslateService
+    private permissionTranslaterService : PermissionTranslaterService,
+    private translate: TranslateService,
+    private errorHandler : ErrorHandlerService
   ) {}
 
   ngOnInit(): void {
+    //quiero que sea sincrono el check de roles
+    this.errorHandler.checkRole('ROLE_ADMIN');
+
     this.loadRoles();
     this.loadPermissions(); // Cargar permisos disponibles
     this.loadTranslatedPermission(); // Cargar permisos traducidos

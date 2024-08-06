@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { catchError, retry } from 'rxjs';
 import { HistoryService } from 'src/app/dashboard/service/history.service';
 import { TranslateService } from '@ngx-translate/core';
+import { ErrorHandlerService } from 'src/app/shared/ErrorHandlerService';
 
 @Component({
   selector: 'app-albums-list',
@@ -44,9 +45,11 @@ export class AlbumsListComponent implements OnInit {
   constructor(private albumService: AlbumService,
     private router: Router,
     private historyService : HistoryService,
-    private translate : TranslateService) { }
+    private translate : TranslateService,
+    private errorHandler : ErrorHandlerService) { }
 
   ngOnInit(): void {
+    this.errorHandler.checkRole('ROLE_USER');
     this.translate.get(['FILTRAR_POR', 'NOMBRE', 'EDAD', 'PAIS', 'FECHA_DE_NACIMIENTO', 'TITULO', 'DESCRIPCION', 'AÑO', 'URL', 'ARTISTA_ID'])
     .subscribe(translations => {
       this.placeholderName = `${translations['FILTRAR_POR']} ${translations['NOMBRE']}`;

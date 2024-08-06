@@ -4,7 +4,8 @@ import { Artist } from '../interfaces/artists.interfaces';
 import { Router } from '@angular/router';
 import { HistoryService } from '../../../dashboard/service/history.service';
 import { TranslateService } from '@ngx-translate/core';
-
+import Swal from 'sweetalert2';
+import { ErrorHandlerService } from '../../../shared/ErrorHandlerService';
 @Component({
   selector: 'app-artists-list',
   templateUrl: './artists-list.component.html',
@@ -39,7 +40,22 @@ export class ArtistsListComponent implements OnInit {
 
   constructor(private artistService: ArtistService, private router: Router,
     private historyService : HistoryService,
-    private translate: TranslateService) { }
+    private translate: TranslateService,
+    private errorHandler : ErrorHandlerService) { }
+
+    handleError(error: any): void {
+      if (error.status === 403) {
+        this.translate.get(['ERROR', 'NO_PERMISOS']).subscribe(translations => {
+          Swal.fire({
+            icon: 'error',
+            title: translations['ERROR'],
+            text: translations['NO_PERMISOS'],
+          });
+        });
+      } else {
+        console.error('Error:', error);
+      }
+    }
 
   ngOnInit(): void {
     this.translate.get(['FILTRAR_POR', 'NOMBRE', 'EDAD', 'PAIS', 'FECHA_DE_NACIMIENTO', 'APLICAR', 'LIMPIAR', 'CARGANDO', 'ACCIONES'])
@@ -59,6 +75,7 @@ export class ArtistsListComponent implements OnInit {
         console.log('Artists:', this.collectionSize);
       },
       (error) => {
+
         console.error('Error fetching history:', error);
       }
     );
@@ -90,6 +107,7 @@ export class ArtistsListComponent implements OnInit {
           }
         },
         (error) => {
+          this.errorHandler.handleError(error);
           console.error('Error fetching artists:', error);
         }
       );
