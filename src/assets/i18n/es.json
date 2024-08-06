@@ -116,5 +116,21 @@
   "GUARDAR": "Guardar",
   "ROL_L": "rol",
   "DESARROLLADO_POR": "Desarrollado por",
-  "IDIOMA": "Idioma"
+  "IDIOMA": "Idioma",
+  "CREA_UN_NUEVO_ARTISTA": "Crea un nuevo artista",
+  "CREA_UNA_NUEVA_CANCION": "Crea una nueva canción",
+  "CREA_UN_NUEVO_ALBUM": "Crea un nuevo álbum",
+  "CREA_UN_NUEVO_ROL": "Crea un nuevo rol",
+    "CANCION_SELECCIONADA": "Canción seleccionada",
+  "NO_HAY_NINGUNA_CANCION_SELECCIONADA": "No hay ninguna canción seleccionada",
+  "MI_PERFIL": "Mi perfil",
+  "CERRAR_SESION": "Cerrar sesión",
+  "write": "escribir",
+  "read": "leer",
+  "artist": "artista",
+  "song": "canción",
+  "album": "álbum",
+  "genre": "género",
+  "user": "usuario",
+  "CARGANDO": "Cargando"
 }

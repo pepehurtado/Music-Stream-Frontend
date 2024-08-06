@@ -116,5 +116,21 @@
   "GUARDAR" : "Save",
   "ROL_L": "role",
   "DESARROLLADO_POR": "Developed by",
-  "IDIOMA": "Language"
+  "IDIOMA": "Language",
+  "CREA_UN_NUEVO_ARTISTA": "Create a new artist",
+  "CREA_UN_NUEVO_ALBUM": "Create a new album",
+  "CREA_UNA_NUEVA_CANCION": "Create a new song",
+  "CREA_UN_NUEVO_ROL": "Create a new role",
+  "CANCION_SELECCIONADA": "Selected song",
+  "NO_HAY_NINGUNA_CANCION_SELECCIONADA": "There are no song selected",
+  "MI_PERFIL": "My profile",
+  "CERRAR_SESION": "Logout",
+  "write": "write",
+  "read": "read",
+  "artist": "artist",
+  "song": "song",
+  "album": "album",
+  "genre": "genre",
+  "user": "user",
+  "CARGANDO": "Loading"
 }

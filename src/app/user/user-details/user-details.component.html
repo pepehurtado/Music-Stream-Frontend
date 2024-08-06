@@ -34,7 +34,7 @@
             <strong>{{ role.name }}</strong>
             <ul *ngIf="role.permissions && role.permissions.length > 0" class="list-group">
               <li *ngFor="let permission of role.permissions" class="list-group-item">
-                <i class="bi bi-key"></i> {{ permission.name }} ({{ permission.entity }})
+                <i class="bi bi-key"></i> {{ permission.name | translate}} ({{ permission.entity | translate}})
               </li>
             </ul>
           </li>
@@ -65,5 +65,5 @@
 
 <!-- Mensaje de carga -->
 <div *ngIf="!user" class="text-center">
-  <p>Cargando detalles del usuario...</p>
+  <p>{{'CARGANDO' | translate}}...</p>
 </div>

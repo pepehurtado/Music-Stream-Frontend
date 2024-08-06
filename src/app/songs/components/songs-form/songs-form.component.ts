@@ -93,7 +93,8 @@ ngOnInit(): void {
         //Como song.artists es un array de enteros, se debe buscar el objeto artista correspondiente
         this.selectedArtists = song.artists.map((artistId: number) => this.artists.find(artist => artist.id === artistId)!);
         //Poner el nombre del album en el campo de texto buscando el objeto correspondiente de albums por id
-        this.albumInput = song.album ? this.albums.find(album => album.id === song.album)!.title : '';
+        this.selectedAlbum = song.album ? this.albums.find(album => album.id === song.album)! : null;
+        this.albumInput = this.selectedAlbum ? this.selectedAlbum.title : '';
         this.songForm.patchValue({
           album: { id: song.album }
         });
@@ -178,7 +179,8 @@ ngOnInit(): void {
     if (this.songForm.valid) {
       const formData = this.songForm.value;
       delete formData.artistSearch;
-      if (formData.album === '') {
+      console.log('Form data:', formData);
+      if (formData.album.id === null || formData.album === '') {
         delete formData.album;
       }
       if (this.isEditMode && this.songId) {

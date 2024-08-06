@@ -23,9 +23,9 @@ export class FeedsComponent implements OnInit {
     this.historyService.getAllEntitiesByDate(today).subscribe(dataArray => {
       const types: string[] = ['Artist', 'Song', 'Album', 'Genre'];
       const typeIcons: { [key: string]: string } = {
-        'Artist': 'bi bi-mic',
+        'Artist': 'bi bi-person',
         'Song': 'bi bi-music-note',
-        'Album': 'bi bi-album',
+        'Album': 'bi bi-music-note-list',
         'Genre': 'bi bi-bookmark'
       };
 
