@@ -134,5 +134,15 @@
   "user": "user",
   "CARGANDO": "Loading",
     "ERROR": "Error",
-  "NO_PERMISOS": "You don't have permissions to do this action"
+  "NO_PERMISOS": "You don't have permissions to do this action",
+  "ESCRIBIR_ARTISTA" : "Write artist",
+  "ESCRIBIR_CANCION" : "Write song",
+  "ESCRIBIR_ALBUM" : "Write album",
+  "ESCRIBIR_GENERO" : "Write genre",
+  "ESCRIBIR_USUARIO" : "Write user",
+  "LEER_ARTISTA" : "Read artist",
+  "LEER_CANCION" : "Read song",
+  "LEER_ALBUM" : "Read album",
+  "LEER_GENERO" : "Read genre",
+  "LEER_USUARIO" : "Read user"
 }

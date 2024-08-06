@@ -32,7 +32,7 @@
           <hr>
           <div *ngFor="let permission of permissions" cdkDrag>
             <div class="text-center">
-            {{permission.name}}
+            {{permission.name | translate }}
           </div>
           </div>
         </div>
@@ -46,7 +46,7 @@
           <hr>
           <div *ngFor="let permission of selectedPermissionsFull" cdkDrag>
             <div class="text-center">
-            {{permission.name}}
+            {{permission.name | translate }}
           </div>
           </div>
         </div>

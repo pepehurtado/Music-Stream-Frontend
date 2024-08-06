@@ -134,5 +134,15 @@
   "user": "usuario",
   "CARGANDO": "Cargando",
   "ERROR": "Error",
-  "NO_PERMISOS": "No tienes permisos para ejecutar esta acción"
+  "NO_PERMISOS": "No tienes permisos para ejecutar esta acción",
+  "ESCRIBIR_ARTISTA" : "Escribir artista",
+  "ESCRIBIR_CANCION" : "Escribir canción",
+  "ESCRIBIR_ALBUM" : "Escribir álbum",
+  "ESCRIBIR_GENERO" : "Escribir género",
+  "ESCRIBIR_USUARIO" : "Escribir usuario",
+  "LEER_ARTISTA" : "Leer artista",
+  "LEER_CANCION" : "Leer canción",
+  "LEER_ALBUM" : "Leer álbum",
+  "LEER_GENERO" : "Leer género",
+  "LEER_USUARIO" : "Leer usuario"
 }

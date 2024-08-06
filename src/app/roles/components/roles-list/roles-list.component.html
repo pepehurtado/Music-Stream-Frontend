@@ -24,7 +24,7 @@
             (change)="onPermissionChange($event)"
           />
           <label class="form-check-label">
-            {{ permissionTranslater.translation }}
+            {{ permissionTranslater.translation | translate}}
           </label>
         </div>
       </div>
@@ -62,7 +62,7 @@
         <td>{{ role.name }}</td>
         <td>
           <span *ngFor="let permission of role.permissions" class="badge bg-info text-dark me-1">
-            {{ getTranslatedPermissionName(permission.id) }}
+            {{ getTranslatedPermissionName(permission.id) | translate}}
           </span>
         </td>
         <td>
